@@ -378,7 +378,7 @@ ENGINE = InnoDB;
 -- Table `mydb`.`DataInspecaoPassada`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`DataInspecaoPassada` (
-  `DataInspecaoPassada` INT NULL,
+  `DataInspecaoPassada` DATE NULL,
   `Veiculo_idVeiculo` INT NOT NULL,
   PRIMARY KEY (`Veiculo_idVeiculo`),
   CONSTRAINT `fk_DataInspecaoPassada_Veiculo1`
