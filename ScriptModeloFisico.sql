@@ -229,13 +229,13 @@ CREATE TABLE IF NOT EXISTS `mydb`.`ItemCompra` (
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`TiposConservação`
+-- Table `mydb`.`TiposConservacao`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`TiposConservação` (
-  `idTiposConservação` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `mydb`.`TiposConservacao` (
+  `idTiposConservacao` INT NOT NULL AUTO_INCREMENT,
   `Tipo` VARCHAR(45) NOT NULL,
   `Descrição` VARCHAR(200) NOT NULL,
-  PRIMARY KEY (`idTiposConservação`))
+  PRIMARY KEY (`idTiposConservacao`))
 ENGINE = InnoDB;
 
 
@@ -243,13 +243,13 @@ ENGINE = InnoDB;
 -- Table `mydb`.`ItemTipo`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`ItemTipo` (
-  `TiposConservação_idTiposConservação` INT NOT NULL,
+  `TiposConservacao_idTiposConservacao` INT NOT NULL,
   `Item_idItem` INT NOT NULL,
-  PRIMARY KEY (`TiposConservação_idTiposConservação`, `Item_idItem`),
+  PRIMARY KEY (`TiposConservacao_idTiposConservacao`, `Item_idItem`),
   INDEX `fk_ItemTipo_Item1_idx` (`Item_idItem` ASC) VISIBLE,
   CONSTRAINT `fk_ItemTipo_TiposConservação1`
-    FOREIGN KEY (`TiposConservação_idTiposConservação`)
-    REFERENCES `mydb`.`TiposConservação` (`idTiposConservação`)
+    FOREIGN KEY (`TiposConservacao_idTiposConservacao`)
+    REFERENCES `mydb`.`TiposConservacao` (`idTiposConservacao`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_ItemTipo_Item1`
@@ -289,13 +289,13 @@ ENGINE = InnoDB;
 -- Table `mydb`.`VeiculoTipo`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`VeiculoTipo` (
-  `TiposConservação_idTiposConservação` INT NOT NULL,
+  `TiposConservacao_idTiposConservacao` INT NOT NULL,
   `Veiculo_idVeiculo` INT NOT NULL,
-  PRIMARY KEY (`TiposConservação_idTiposConservação`, `Veiculo_idVeiculo`),
+  PRIMARY KEY (`TiposConservacao_idTiposConservacao`, `Veiculo_idVeiculo`),
   INDEX `fk_VeiculoTipo_Veiculo1_idx` (`Veiculo_idVeiculo` ASC) VISIBLE,
   CONSTRAINT `fk_VeiculoTipo_TiposConservação1`
-    FOREIGN KEY (`TiposConservação_idTiposConservação`)
-    REFERENCES `mydb`.`TiposConservação` (`idTiposConservação`)
+    FOREIGN KEY (`TiposConservacao_idTiposConservacao`)
+    REFERENCES `mydb`.`TiposConservacao` (`idTiposConservacao`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_VeiculoTipo_Veiculo1`
