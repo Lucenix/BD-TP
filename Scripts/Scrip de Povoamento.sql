@@ -1,14 +1,14 @@
 Use mydb;
 
 -- Tipos de Conservacao
-Insert into `TiposConservacao`(`Tipo`,`Descrição`)
-Values("Temperatura","Conservar à temperatura ambiente");
+Insert into `TiposConservacao`(`idTiposConservacao`,`Tipo`,`Descrição`)
+Values(0,"Temperatura","Conservar à temperatura ambiente");
 
-Insert into `TiposConservacao`(`Tipo`,`Descrição`)
-Values("Temperatura","Conservar a uma temperatura abaxio de 0 graus");
+Insert into `TiposConservacao`(`idTiposConservacao`,`Tipo`,`Descrição`)
+Values(1,"Temperatura","Conservar a uma temperatura abaxio de 0 graus");
 
-Insert into `TiposConservacao`(`Tipo`,`Descrição`)
-Values("Humidade","Manter em ambiente seco");
+Insert into `TiposConservacao`(`idTiposConservacao`,`Tipo`,`Descrição`)
+Values(2,"Humidade","Manter em ambiente seco");
 
 Select * from TiposConservacao;
 
@@ -31,12 +31,15 @@ Values(4,"Florbela Espanca",900.0,null,"2020-03-02",null,"Técnico Farmacêutico
 Select * from Funcionario;
 
 -- Veiculo
-Insert into `Funcionario`(`idFuncionario`,`Nome`,`Salario`,`HabilitacaoAuto`,`DataEntrada`,`DataExpiracaoHabilitacao`,`Posicao`)
-Values(4,"Florbela Espanca",900.0,null,"2020-03-02",null,"Técnico Farmacêutico");
+Insert into `Veiculo`(`idVeiculo`,`Categoria`,`Kilometragem`,`TipoCombustivel`,`DataProximaInspecao`,`EstadoOperacional`,`IUC`)
+Values(0,"CE",12,"Diesel","2023-05-02",1,130,33);
 
-Insert into `Funcionario`(`idFuncionario`,`Nome`,`Salario`,`HabilitacaoAuto`,`DataEntrada`,`DataExpiracaoHabilitacao`,`Posicao`)
-Values(4,"Florbela Espanca",900.0,null,"2020-03-02",null,"Técnico Farmacêutico");
+Insert into `Veiculo`(`idVeiculo`,`Categoria`,`Kilometragem`,`TipoCombustivel`,`DataProximaInspecao`,`EstadoOperacional`,`IUC`)
+Values(0,"B1",100,"Gasolina","2026-03-19",1,91.23);
 
-Insert into `Funcionario`(`idFuncionario`,`Nome`,`Salario`,`HabilitacaoAuto`,`DataEntrada`,`DataExpiracaoHabilitacao`,`Posicao`)
-Values(4,"Florbela Espanca",900.0,null,"2020-03-02",null,"Técnico Farmacêutico");
+Insert into `Veiculo`(`idVeiculo`,`Categoria`,`Kilometragem`,`TipoCombustivel`,`DataProximaInspecao`,`EstadoOperacional`,`IUC`)
+Values(0,"B1",29,"Gasolina","2024-07-29",1,58.31);
 
+Select * from Veiculo;
+
+-- 

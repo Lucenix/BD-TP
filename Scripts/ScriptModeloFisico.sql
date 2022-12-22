@@ -35,10 +35,9 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `mydb`.`Veiculo` (
   `idVeiculo` INT NOT NULL,
   `Categoria` VARCHAR(3) NOT NULL,
-  `Combustivel` INT NOT NULL,
   `Kilometragem` INT NOT NULL,
   `TipoCombustivel` VARCHAR(45) NOT NULL,
-  `DataProximaIspecao` DATE NOT NULL,
+  `DataProximaInspecao` DATE NOT NULL,
   `EstadoOperacional` TINYINT NOT NULL,
   `IUC` DOUBLE NOT NULL,
   PRIMARY KEY (`idVeiculo`));
@@ -66,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Percurso` (
 -- Table `mydb`.`Fornecedor`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`Fornecedor` (
-  `idFornecedor` INT NOT NULL AUTO_INCREMENT,
+  `idFornecedor` INT NOT NULL,
   `Designacao` VARCHAR(30) NOT NULL,
   `Contribuinte` VARCHAR(9) NOT NULL,
   PRIMARY KEY (`idFornecedor`))
@@ -97,18 +96,15 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`Encomenda` (
   `idEncomenda` INT NOT NULL,
-  `Rua` VARCHAR(45) NOT NULL,
-  `Localidade` VARCHAR(45) NOT NULL,
-  `CodPostal` VARCHAR(45) NOT NULL,
   `CustoTotal` VARCHAR(45) NOT NULL,
   `EstadoPagamento` TINYINT NOT NULL,
   `DataRegisto` DATETIME NOT NULL,
-  `DataSaída` DATETIME NULL,
   `EstadoEntrega` TINYINT NOT NULL,
   `ValidaçãoMédica` TINYINT NULL,
-  `HoraEntrega` DATETIME NULL,
   `DistanciaParcial` DOUBLE NOT NULL,
+  `HoraEntrega` DATETIME NOT NULL,
   `HoraPrevista` DATETIME NOT NULL,
+  `HoraEnvio` DATETIME NOT NULL,
   `Percurso_idpercurso` INT NOT NULL,
   `Cliente_idCliente` INT NOT NULL,
   `Endereco_idEndereco` INT NOT NULL,
@@ -232,7 +228,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`ItemCompra` (
 -- Table `mydb`.`TiposConservacao`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`TiposConservacao` (
-  `idTiposConservacao` INT NOT NULL AUTO_INCREMENT,
+  `idTiposConservacao` INT NOT NULL,
   `Tipo` VARCHAR(45) NOT NULL,
   `Descrição` VARCHAR(200) NOT NULL,
   PRIMARY KEY (`idTiposConservacao`))
@@ -269,9 +265,11 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Contacto` (
   `Email` VARCHAR(9) NULL,
   `Cliente_idCliente` INT NOT NULL,
   `Fornecedor_idFornecedor` INT NOT NULL,
+  `Funcionario_idFuncionario` INT NOT NULL,
   INDEX `fk_Contacto_Cliente1_idx` (`Cliente_idCliente` ASC) VISIBLE,
   INDEX `fk_Contacto_Fornecedor1_idx` (`Fornecedor_idFornecedor` ASC) VISIBLE,
   PRIMARY KEY (`Telemovel`),
+  INDEX `fk_Contacto_Funcionario1_idx` (`Funcionario_idFuncionario` ASC) VISIBLE,
   CONSTRAINT `fk_Contacto_Cliente1`
     FOREIGN KEY (`Cliente_idCliente`)
     REFERENCES `mydb`.`Cliente` (`idCliente`)
@@ -280,6 +278,11 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Contacto` (
   CONSTRAINT `fk_Contacto_Fornecedor1`
     FOREIGN KEY (`Fornecedor_idFornecedor`)
     REFERENCES `mydb`.`Fornecedor` (`idFornecedor`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Contacto_Funcionario1`
+    FOREIGN KEY (`Funcionario_idFuncionario`)
+    REFERENCES `mydb`.`Funcionario` (`idFuncionario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -378,9 +381,9 @@ ENGINE = InnoDB;
 -- Table `mydb`.`DataInspecaoPassada`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`DataInspecaoPassada` (
-  `DataInspecaoPassada` DATE NULL,
+  `DataInspecaoPassada` DATE NOT NULL,
   `Veiculo_idVeiculo` INT NOT NULL,
-  PRIMARY KEY (`Veiculo_idVeiculo`),
+  PRIMARY KEY (`Veiculo_idVeiculo`, `DataInspecaoPassada`),
   CONSTRAINT `fk_DataInspecaoPassada_Veiculo1`
     FOREIGN KEY (`Veiculo_idVeiculo`)
     REFERENCES `mydb`.`Veiculo` (`idVeiculo`)
