@@ -204,6 +204,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`ItemCompra` (
   `PrazoDeValidade` DATE NULL,
   `CustoParcial` DOUBLE NOT NULL,
   `Quantidade` INT NOT NULL,
+  `Disponiveis` INT NOT NULL,
   `Item_idItem` INT NOT NULL,
   `Compra_idCompra` INT NOT NULL,
   PRIMARY KEY (`Item_idItem`, `Compra_idCompra`),
