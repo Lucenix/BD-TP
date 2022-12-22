@@ -94,16 +94,13 @@ Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Forne
 Values(928321121,752399852,"LuisMotaPT@gmail.com",4,null,null);
 
 Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Fornecedor_idFornecedor`,`Funcionario_idFuncionario`)
-Values(928321121,752399852,"LuisMotaPT@gmail.com",5,null,null);
+Values(917810030,null,"DiogoTriSantos@gmail.com",5,null,null);
 
 Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Fornecedor_idFornecedor`,`Funcionario_idFuncionario`)
-Values(917810030,null,"DiogoTriSantos@gmail.com",6,null,null);
+Values(916146021,447129133,"GuilhermeRR@outlook.com",6,null,null);
 
 Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Fornecedor_idFornecedor`,`Funcionario_idFuncionario`)
-Values(916146021,447129133,"GuilhermeRR@outlook.com",7,null,null);
-
-Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Fornecedor_idFornecedor`,`Funcionario_idFuncionario`)
-Values(937760678,null,"antonioJoseFA@hotmail.com",8,null,null);
+Values(937760678,null,"antonioJoseFA@hotmail.com",7,null,null);
 
 -- Fornecedor
 Insert into `Fornecedor`(`idFornecedor`,`Designacao`,`Contribuinte`)
@@ -159,29 +156,45 @@ Values(8,"WHEY",0.23,"Proteína em pó, isolada, 1kg",65.99,2,0);
 
 -- Compras
 
-INSERT INTO `Compra`(`idCompra`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
+INSERT INTO `Compra`(`idCompra`, `CustoTotal`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
 VALUES (0, "2018-12-21 08:32:12", "2019-1-13 16:05:50", 0);
 
-INSERT INTO `Compra`(`idCompra`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
+INSERT INTO `Compra`(`idCompra`, `CustoTotal`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
 VALUES (1, "2020-05-07 16:30:04", "2012-5-23 15:56:03", 1);
 
-INSERT INTO `Compra`(`idCompra`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
+INSERT INTO `Compra`(`idCompra`, `CustoTotal`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
 VALUES (2, "2009-09-30 10:00:01", "2009-10-5 11:45:01", 2);
 
-INSERT INTO `Compra`(`idCompra`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
+INSERT INTO `Compra`(`idCompra`, `CustoTotal`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
 VALUES (3, "2002-09-20 17:30:00", "2002-11-01 07:00:30", 3);
 
-INSERT INTO `Compra`(`idCompra`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
+INSERT INTO `Compra`(`idCompra`, `CustoTotal`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
 VALUES (4, "2018-06-14 15:15:15", "2018-06-17 16:03:20", 4);
 
-INSERT INTO `Compra`(`idCompra`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
+INSERT INTO `Compra`(`idCompra`, `CustoTotal`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
 VALUES (5, "2019-07-20 05:59:50", "2019-07-29 19:30:30", 5);
 
-INSERT INTO `Compra`(`idCompra`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
+INSERT INTO `Compra`(`idCompra`, `CustoTotal`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
 VALUES (6, "2021-02-17 20:00:40", "2021-02-29 19:35:35", 6);
 
-INSERT INTO `Compra`(`idCompra`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
+INSERT INTO `Compra`(`idCompra`, `CustoTotal`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
 VALUES (7, "2017-05-04 12:04:06", "2017-05-20 14:27:50", 4)
+
+-- ItemCompra
+
+INSER INTO
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
