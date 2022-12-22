@@ -182,11 +182,26 @@ VALUES (7, "2017-05-04 12:04:06", "2017-05-20 14:27:50", 4)
 
 -- ItemCompra
 
-INSER INTO
+INSERT INTO `ItemCompra`(`PrazoDevalidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
+VALUES ("2023-09-00", 2.50,150 ,3 ,5)
+
+INSERT INTO `ItemCompra`(`PrazoDevalidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
+VALUES (null, 17.90 ,40 ,1 ,4)
+
+INSERT INTO `ItemCompra`(`PrazoDevalidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
+VALUES ("2030-12-31" ,40.55 ,4 ,8 ,4)
+
+INSERT INTO `ItemCompra`(`PrazoDevalidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
+VALUES ("2037-02-02" ,15.0 ,6 ,6 ,6 )
+
+INSERT INTO `ItemCompra`(`PrazoDevalidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
+VALUES ("2012-11-15" ,7.35 ,60 ,7 ,0)
 
 
 
 
+
+YYYY-MM-DD
 
 
 
