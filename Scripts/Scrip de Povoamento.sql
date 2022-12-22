@@ -30,6 +30,9 @@ Values(4,"Florbela Espanca",900.0,null,"2020-03-02",null,"Técnico Farmacêutico
 
 Select * from Funcionario;
 
+-- Contacto (dos funcionários):
+
+
 -- Veiculo
 Insert into `Veiculo`(`idVeiculo`,`Categoria`,`Kilometragem`,`TipoCombustivel`,`DataProximaInspecao`,`EstadoOperacional`,`IUC`)
 Values(0,"CE",12,"Diesel","2023-05-02",1,130,33);
@@ -50,29 +53,57 @@ Insert into `Relatorio`(`Data`,`EstadoResolucao`,`Descricao`,`Gravidade`,`Funcio
 Values("2022-12-12 11:01:01",1,"Pneu frontal furado","3",1,2);
 
 -- Cliente
-Insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`Telefone`,`Telemovel`,`Email`,`Idade`)
-Values(0,"José Firmino Fontes",197961240,null,938795478,"JFF32@gmail.com",45);
+Insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`Idade`)
+Values(0,"José Firmino Fontes",197961240,45);
 
-Insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`Telefone`,`Telemovel`,`Email`,`Idade`)
-Values(1,"Camila Andreia Nogueira da Silva",156081920,255056491,929793279,"CSilva23@hotmail.com",null);
+Insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`Idade`)
+Values(1,"Camila Andreia Nogueira da Silva",156081920,null);
 
-Insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`Telefone`,`Telemovel`,`Email`,`Idade`)
-Values(2,"Mariana Fonseca Almada",199873267,null,918483488,"MarianaFAlmada@gmail.com",22);
+Insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`Idade`)
+Values(2,"Mariana Fonseca Almada",199873267,22);
 
-Insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`Telefone`,`Telemovel`,`Email`,`Idade`)
-Values(3,"David Ribeiro Bastos",164435875,null,939925121,"DavidBastinho@outlook.com",30);
+Insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`Idade`)
+Values(3,"David Ribeiro Bastos",164435875,30);
 
-Insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`Telefone`,`Telemovel`,`Email`,`Idade`)
-Values(4,"Luís André da Mota Fraga",187174830,752399852 ,928321121,"LuisMotaPT@gmail.com",24);
+Insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`Idade`)
+Values(4,"Luís André da Mota Fraga",187174830,24);
 
-Insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`Telefone`,`Telemovel`,`Email`,`Idade`)
-Values(5,"Diogo Trigueira Santos",135951690,null,917810030,"DiogoTriSantos@gmail.com",55);
+Insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`Idade`)
+Values(5,"Diogo Trigueira Santos",135951690,55);
 
-Insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`Telefone`,`Telemovel`,`Email`,`Idade`)
-Values(6,"Guilherme Roques Ribeiro",148035736,447129133,916146021,"GuilhermeRR@outlook.com",null);
+Insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`Idade`)
+Values(6,"Guilherme Roques Ribeiro",148035736,null);
 
-Insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`Telefone`,`Telemovel`,`Email`,`Idade`)
-Values(7,"António José Fernandes Alegre",176315683,null,937760678 ,"antonioJoseFA@hotmail.com",65);
+Insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`Idade`)
+Values(7,"António José Fernandes Alegre",176315683,65);
+
+-- Contacto (dos clientes):
+Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Fornecedor_idFornecedor`,`Funcionario_idFuncionario`)
+Values(938795478,null,"JFF32@gmail.com",0,null,null);
+
+Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Fornecedor_idFornecedor`,`Funcionario_idFuncionario`)
+Values(929793279,255056491,"CSilva23@hotmail.com",1,null,null);
+
+Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Fornecedor_idFornecedor`,`Funcionario_idFuncionario`)
+Values(918483488,null,"MarianaFAlmada@gmail.com",2,null,null);
+
+Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Fornecedor_idFornecedor`,`Funcionario_idFuncionario`)
+Values(939925121,null,"DavidBastinho@outlook.com",3,null,null);
+
+Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Fornecedor_idFornecedor`,`Funcionario_idFuncionario`)
+Values(928321121,752399852,"LuisMotaPT@gmail.com",4,null,null);
+
+Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Fornecedor_idFornecedor`,`Funcionario_idFuncionario`)
+Values(928321121,752399852,"LuisMotaPT@gmail.com",5,null,null);
+
+Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Fornecedor_idFornecedor`,`Funcionario_idFuncionario`)
+Values(917810030,null,"DiogoTriSantos@gmail.com",6,null,null);
+
+Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Fornecedor_idFornecedor`,`Funcionario_idFuncionario`)
+Values(916146021,447129133,"GuilhermeRR@outlook.com",7,null,null);
+
+Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Fornecedor_idFornecedor`,`Funcionario_idFuncionario`)
+Values(937760678,null,"antonioJoseFA@hotmail.com",8,null,null);
 
 -- Fornecedor
 Insert into `Fornecedor`(`idFornecedor`,`Designacao`,`Contribuinte`)
@@ -91,7 +122,12 @@ Insert into `Fornecedor`(`idFornecedor`,`Designacao`,`Contribuinte`)
 Values(4,"GaviSA","595387704");
 
 Insert into `Fornecedor`(`idFornecedor`,`Designacao`,`Contribuinte`)
-Values(5,"BenURonaldo","571346321");
+Values(5,"BenU10","571346321");
 
 Insert into `Fornecedor`(`idFornecedor`,`Designacao`,`Contribuinte`)
 Values(6,"BroFen","535180007");
+
+-- Contacto (dos fornecedores):
+
+-- Compra
+
