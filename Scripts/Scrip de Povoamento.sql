@@ -180,6 +180,8 @@ VALUES (5, "2019-07-20 05:59:50", "2019-07-29 19:30:30", 5);
 INSERT INTO `Compra`(`idCompra`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
 VALUES (6, "2021-02-17 20:00:40", "2021-02-29 19:35:35", 6);
 
+INSERT INTO `Compra`(`idCompra`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
+VALUES (7, "2017-05-04 12:04:06", "2017-05-20 14:27:50", 4)
 
 
 
