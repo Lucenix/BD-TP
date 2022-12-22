@@ -129,5 +129,43 @@ Values(6,"BroFen","535180007");
 
 -- Contacto (dos fornecedores):
 
--- Compra
+-- Item
+Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Quantidade`,`Comparticipacao`)
+Values(0,"Voltaren",0.06,"Pomada, Bisnaga 50g",11.80,15,0);
+
+Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Quantidade`,`Comparticipacao`)
+Values(1,"Óleo de soja",0.23,"Aditivo para banho, Frasco 500 ml",17.90,20,0);
+
+Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Quantidade`,`Comparticipacao`)
+Values(2,"Bepanthene",0.23,"Creme, Bisnaga 30g",4.95,20,0);
+
+Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Quantidade`,`Comparticipacao`)
+Values(3,"Paracetamol",0.06,"Comprimido, Blister 20 unidades",2.79,50,0.37);
+
+Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Quantidade`,`Comparticipacao`)
+Values(4,"Vitaminas do complexo B",0.23,"Xarope, Frasco 100ml",5.95,6,0);
+
+Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Quantidade`,`Comparticipacao`)
+Values(5,"Noreva Reducol MD",0.06,"Cápsulas, indicado após intervenções dermocirúrgicas",20.05,5,1);
+
+Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Quantidade`,`Comparticipacao`)
+Values(5,"Noreva Reducol MD",0.06,"Cápsulas, indicado após intervenções dermocirúrgicas",20.05,5,1);
+
+Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Quantidade`,`Comparticipacao`)
+Values(6,"EMITIUM",0.06,"Cápsulas para a Síndrome do Intestino Irritável",20.35,25,0.90);
+
+Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Quantidade`,`Comparticipacao`)
+Values(7,"Tantum Verde",0.06,"Solução bucal, frasco 500ml",14.70,90,0);
+
+Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Quantidade`,`Comparticipacao`)
+Values(7,"Tantum Verde",0.06,"Solução bucal, frasco 500ml",14.70,90,0);
+
+Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Quantidade`,`Comparticipacao`)
+Values(8,"WHEY",0.23,"Proteína em pó, isolada, 1kg",65.99,2,0);
+
+
+
+
+
+
 
