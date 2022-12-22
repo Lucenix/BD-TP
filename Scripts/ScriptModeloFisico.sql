@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Cliente` (
   `Nome` VARCHAR(45) NOT NULL,
   `NIF` VARCHAR(9) NOT NULL,
   `Telefone` VARCHAR(13) NULL,
-  `Telemóvel` VARCHAR(13) NOT NULL,
+  `Telemovel` VARCHAR(13) NOT NULL,
   `Email` VARCHAR(45) NOT NULL,
   `Idade` INT NULL,
   PRIMARY KEY (`idCliente`))
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Encomenda` (
   `EstadoPagamento` TINYINT NOT NULL,
   `DataRegisto` DATETIME NOT NULL,
   `EstadoEntrega` TINYINT NOT NULL,
-  `ValidaçãoMédica` TINYINT NULL,
+  `ValidacaoMedica` TINYINT NULL,
   `DistanciaParcial` DOUBLE NOT NULL,
   `HoraEntrega` DATETIME NOT NULL,
   `HoraPrevista` DATETIME NOT NULL,
@@ -150,7 +150,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Funcionario` (
 CREATE TABLE IF NOT EXISTS `mydb`.`Compra` (
   `idCompra` INT NOT NULL,
   `CustoTotal` DOUBLE NOT NULL,
-  `DataEmisão` DATETIME NOT NULL,
+  `DataEmissao` DATETIME NOT NULL,
   `DataEntrega` DATETIME NULL,
   `Fornecedor_idFornecedor` INT NOT NULL,
   PRIMARY KEY (`idCompra`),
@@ -180,7 +180,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Item` (
 -- Table `mydb`.`EncomendaItem`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`EncomendaItem` (
-  `ValidaçaoMedica` TINYINT NULL,
+  `ValidacaoMedica` TINYINT NULL,
   `Quantidade` INT NOT NULL,
   `CustoParcial` DOUBLE NOT NULL,
   `Item_idItem` INT NOT NULL,
@@ -230,7 +230,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`ItemCompra` (
 CREATE TABLE IF NOT EXISTS `mydb`.`TiposConservacao` (
   `idTiposConservacao` INT NOT NULL,
   `Tipo` VARCHAR(45) NOT NULL,
-  `Descrição` VARCHAR(200) NOT NULL,
+  `Descricao` VARCHAR(200) NOT NULL,
   PRIMARY KEY (`idTiposConservacao`))
 ENGINE = InnoDB;
 
