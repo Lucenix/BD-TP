@@ -21,9 +21,6 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Cliente` (
   `idCliente` INT NOT NULL,
   `Nome` VARCHAR(45) NOT NULL,
   `NIF` VARCHAR(9) NOT NULL,
-  `Telefone` VARCHAR(13) NULL,
-  `Telemovel` VARCHAR(13) NOT NULL,
-  `Email` VARCHAR(45) NOT NULL,
   `Idade` INT NULL,
   PRIMARY KEY (`idCliente`))
 ENGINE = InnoDB;
@@ -262,7 +259,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `mydb`.`Contacto` (
   `Telemovel` VARCHAR(9) NOT NULL,
   `Telefone` VARCHAR(9) NULL,
-  `Email` VARCHAR(9) NULL,
+  `Email` VARCHAR(45) NULL,
   `Cliente_idCliente` INT NOT NULL,
   `Fornecedor_idFornecedor` INT NOT NULL,
   `Funcionario_idFuncionario` INT NOT NULL,
