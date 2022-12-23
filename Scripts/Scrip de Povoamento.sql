@@ -66,29 +66,29 @@ Insert into `Relatorio`(`Data`,`EstadoResolucao`,`Descricao`,`Gravidade`,`Funcio
 Values("2022-12-12 11:01:01",1,"Pneu frontal furado","3",1,2);
 
 -- Cliente
-Insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`Idade`,`Genero`)
-Values(0,"José Firmino Fontes",197961240,45,null);
+Insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`DataNascimento`,`Genero`)
+Values(0,"José Firmino Fontes",197961240,"1978-04-02",null);
 
-Insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`Idade`,`Genero`)
+Insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`DataNascimento`,`Genero`)
 Values(1,"Camila Andreia Nogueira da Silva",156081920,null,"Feminino");
 
-Insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`Idade`,`Genero`)
-Values(2,"Mariana Fonseca Almada",199873267,22,null);
+Insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`DataNascimento`,`Genero`)
+Values(2,"Mariana Fonseca Almada",199873267,"2001-01-17",null);
 
-Insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`Idade`,`Genero`)
-Values(3,"David Ribeiro Bastos",164435875,30,null);
+Insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`DataNascimento`,`Genero`)
+Values(3,"David Ribeiro Bastos",164435875,"1993-09-25",null);
 
-Insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`Idade`,`Genero`)
-Values(4,"Luís André da Mota Fraga",187174830,24,"Masculino");
+Insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`DataNascimento`,`Genero`)
+Values(4,"Luís André da Mota Fraga",187174830,"1999-12-01","Masculino");
 
-Insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`Idade`,`Genero`)
-Values(5,"Diogo Trigueira Santos",135951690,55,null);
+Insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`DataNascimento`,`Genero`)
+Values(5,"Diogo Trigueira Santos",135951690,"1968-11-11",null);
 
-Insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`Idade`,`Genero`)
+Insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`DataNascimento`,`Genero`)
 Values(6,"Guilherme Roques Ribeiro",148035736,null,null);
 
-Insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`Idade`,`Genero`)
-Values(7,"António José Fernandes Alegre",176315683,65,"Masculino");
+Insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`DataNascimento`,`Genero`)
+Values(7,"António José Fernandes Alegre",176315683,"1958-07-03","Masculino");
 
 -- Contacto (dos clientes):
 Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Fornecedor_idFornecedor`,`Funcionario_idFuncionario`)
