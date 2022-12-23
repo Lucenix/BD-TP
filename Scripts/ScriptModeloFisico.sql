@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Cliente` (
   `Nome` VARCHAR(45) NOT NULL,
   `NIF` VARCHAR(9) NOT NULL,
   `Idade` INT NULL,
+  `Genero` VARCHAR(40) NULL,
   PRIMARY KEY (`idCliente`))
 ENGINE = InnoDB;
 
@@ -75,6 +76,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`Endereco` (
   `idEndereco` INT NOT NULL,
+  `NumeroPorta` INT NOT NULL,
   `Rua` VARCHAR(45) NOT NULL,
   `Localidade` VARCHAR(45) NOT NULL,
   `CodPostal` VARCHAR(45) NOT NULL,
@@ -98,7 +100,6 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Encomenda` (
   `EstadoPagamento` TINYINT NOT NULL,
   `DataRegisto` DATETIME NOT NULL,
   `EstadoEntrega` TINYINT NOT NULL,
-  `ValidacaoMedica` TINYINT NULL,
   `DistanciaParcial` DOUBLE NOT NULL,
   `HoraEntrega` DATETIME NOT NULL,
   `HoraPrevista` DATETIME NOT NULL,
