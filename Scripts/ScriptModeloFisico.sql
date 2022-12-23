@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Cliente` (
   `idCliente` INT NOT NULL,
   `Nome` VARCHAR(45) NOT NULL,
   `NIF` VARCHAR(9) NOT NULL,
-  `Idade` INT NULL,
+  `DataNascimento` DATE NULL,
   `Genero` VARCHAR(40) NULL,
   PRIMARY KEY (`idCliente`))
 ENGINE = InnoDB;
