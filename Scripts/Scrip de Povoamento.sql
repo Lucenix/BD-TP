@@ -31,7 +31,20 @@ Values(4,"Florbela Espanca",900.0,null,"2020-03-02",null,"Técnico Farmacêutico
 Select * from Funcionario;
 
 -- Contacto (dos funcionários):
+Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Fornecedor_idFornecedor`,`Funcionario_idFuncionario`)
+Values(926735428,null,"BernardoEstevesCEO@gmail.com",null,null,0);
 
+Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Fornecedor_idFornecedor`,`Funcionario_idFuncionario`)
+Values(929844339,null,"JulioDantas@outlook.com",null,null,1);
+
+Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Fornecedor_idFornecedor`,`Funcionario_idFuncionario`)
+Values(924424531,null,"AntiDantas@gmail.com",null,null,2);
+
+Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Fornecedor_idFornecedor`,`Funcionario_idFuncionario`)
+Values(941110988,252036489,"GilVicente1465@hotmail.com",null,null,3);
+
+Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Fornecedor_idFornecedor`,`Funcionario_idFuncionario`)
+Values(966345009,null,"FlorBelaLobo@gmail.com",null,null,4);
 
 -- Veiculo
 Insert into `Veiculo`(`idVeiculo`,`Categoria`,`Kilometragem`,`TipoCombustivel`,`DataProximaInspecao`,`EstadoOperacional`,`IUC`)
@@ -91,13 +104,13 @@ Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Forne
 Values(939925121,null,"DavidBastinho@outlook.com",3,null,null);
 
 Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Fornecedor_idFornecedor`,`Funcionario_idFuncionario`)
-Values(928321121,752399852,"LuisMotaPT@gmail.com",4,null,null);
+Values(928321121,252399852,"LuisMotaPT@gmail.com",4,null,null);
 
 Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Fornecedor_idFornecedor`,`Funcionario_idFuncionario`)
 Values(917810030,null,"DiogoTriSantos@gmail.com",5,null,null);
 
 Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Fornecedor_idFornecedor`,`Funcionario_idFuncionario`)
-Values(916146021,447129133,"GuilhermeRR@outlook.com",6,null,null);
+Values(916146021,245129133,"GuilhermeRR@outlook.com",6,null,null);
 
 Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Fornecedor_idFornecedor`,`Funcionario_idFuncionario`)
 Values(937760678,null,"antonioJoseFA@hotmail.com",7,null,null);
@@ -125,6 +138,26 @@ Insert into `Fornecedor`(`idFornecedor`,`Designacao`,`Contribuinte`)
 Values(6,"BroFen","535180007");
 
 -- Contacto (dos fornecedores):
+Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Fornecedor_idFornecedor`,`Funcionario_idFuncionario`)
+Values(933161978,254009936,"geral@bigmartha.com",null,0,null);
+
+Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Fornecedor_idFornecedor`,`Funcionario_idFuncionario`)
+Values(929671239,241523002,"euromedicamentos@euromedica.com",null,1,null);
+
+Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Fornecedor_idFornecedor`,`Funcionario_idFuncionario`)
+Values(912241139,273412665,"medi@medifeliz.com",null,2,null);
+
+Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Fornecedor_idFornecedor`,`Funcionario_idFuncionario`)
+Values(931229551,275552123,"central@xaropelimitado.com",null,3,null);
+
+Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Fornecedor_idFornecedor`,`Funcionario_idFuncionario`)
+Values(921152734,266533314,"gavi@gaviSA.com",null,4,null);
+
+Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Fornecedor_idFornecedor`,`Funcionario_idFuncionario`)
+Values(937003936,285534218,"ben@benuten.com",null,5,null);
+
+Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Fornecedor_idFornecedor`,`Funcionario_idFuncionario`)
+Values(932680618,255512942,"secretaria@brofen.com",null,6,null);
 
 -- Item
 Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Quantidade`,`Comparticipacao`)
@@ -155,7 +188,6 @@ Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Quantidade`,`C
 Values(8,"WHEY",0.23,"Proteína em pó, isolada, 1kg",65.99,2,0);
 
 -- Compras
-
 INSERT INTO `Compra`(`idCompra`, `CustoTotal`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
 VALUES (0, "2018-12-21 08:32:12", "2019-1-13 16:05:50", 0);
 
@@ -178,30 +210,24 @@ INSERT INTO `Compra`(`idCompra`, `CustoTotal`, `DataEmissao`, `DataEntrega`, `Fo
 VALUES (6, "2021-02-17 20:00:40", "2021-02-29 19:35:35", 6);
 
 INSERT INTO `Compra`(`idCompra`, `CustoTotal`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
-VALUES (7, "2017-05-04 12:04:06", "2017-05-20 14:27:50", 4)
+VALUES (7, "2017-05-04 12:04:06", "2017-05-20 14:27:50", 4);
 
 -- ItemCompra
+INSERT INTO `ItemCompra`(`PrazoDevalidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
+VALUES ("2023-09-00", 2.50,150 ,3 ,5);
 
 INSERT INTO `ItemCompra`(`PrazoDevalidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
-VALUES ("2023-09-00", 2.50,150 ,3 ,5)
+VALUES (null, 17.90 ,40 ,1 ,4);
 
 INSERT INTO `ItemCompra`(`PrazoDevalidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
-VALUES (null, 17.90 ,40 ,1 ,4)
+VALUES ("2030-12-31" ,40.55 ,4 ,8 ,4);
 
 INSERT INTO `ItemCompra`(`PrazoDevalidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
-VALUES ("2030-12-31" ,40.55 ,4 ,8 ,4)
+VALUES ("2037-02-02" ,15.0 ,6 ,6 ,6 );
 
 INSERT INTO `ItemCompra`(`PrazoDevalidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
-VALUES ("2037-02-02" ,15.0 ,6 ,6 ,6 )
+VALUES ("2012-11-15" ,7.35 ,60 ,7 ,0);
 
-INSERT INTO `ItemCompra`(`PrazoDevalidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
-VALUES ("2012-11-15" ,7.35 ,60 ,7 ,0)
-
-
-
-
-
-YYYY-MM-DD
 
 
 
