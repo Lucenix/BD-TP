@@ -47,14 +47,14 @@ Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Forne
 Values(966345009,null,"FlorBelaLobo@gmail.com",null,null,4);
 
 -- Veiculo
-Insert into `Veiculo`(`idVeiculo`,`Categoria`,`Kilometragem`,`TipoCombustivel`,`DataProximaInspecao`,`EstadoOperacional`,`IUC`)
-Values(0,"CE",12,"Diesel","2023-05-02",1,130,33);
+Insert into `Veiculo`(`idVeiculo`,`Categoria`,`Kilometragem`,`TipoCombustivel`,`DataProximaInspecao`,`EstadoOperacional`,`IUC`,`Matricula`)
+Values(0,"CE",12,"Diesel","2023-05-02",1,130,33,"12-AB-34");
 
-Insert into `Veiculo`(`idVeiculo`,`Categoria`,`Kilometragem`,`TipoCombustivel`,`DataProximaInspecao`,`EstadoOperacional`,`IUC`)
-Values(1,"B1",100,"Gasolina","2026-03-19",1,91.23);
+Insert into `Veiculo`(`idVeiculo`,`Categoria`,`Kilometragem`,`TipoCombustivel`,`DataProximaInspecao`,`EstadoOperacional`,`IUC`,`Matricula`)
+Values(1,"B1",100,"Gasolina","2026-03-19",1,91.23,"20-BD-20");
 
-Insert into `Veiculo`(`idVeiculo`,`Categoria`,`Kilometragem`,`TipoCombustivel`,`DataProximaInspecao`,`EstadoOperacional`,`IUC`)
-Values(2,"A1",29,"Gasolina","2024-07-29",1,58.31);
+Insert into `Veiculo`(`idVeiculo`,`Categoria`,`Kilometragem`,`TipoCombustivel`,`DataProximaInspecao`,`EstadoOperacional`,`IUC`,`Matricula`)
+Values(2,"A1",29,"Gasolina","2024-07-29",1,58.31,"20-BD-23");
 
 Select * from Veiculo;
 
@@ -227,16 +227,4 @@ VALUES ("2037-02-02" ,15.0 ,6 ,6 ,6 );
 
 INSERT INTO `ItemCompra`(`PrazoDevalidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
 VALUES ("2012-11-15" ,7.35 ,60 ,7 ,0);
-
-
-
-
-
-
-
-
-
-
-
-
 

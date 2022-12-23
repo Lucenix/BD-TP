@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Veiculo` (
   `DataProximaInspecao` DATE NOT NULL,
   `EstadoOperacional` TINYINT NOT NULL,
   `IUC` DOUBLE NOT NULL,
+  `Matricula` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`idVeiculo`));
 
 
