@@ -115,6 +115,22 @@ Values(916146021,245129133,"GuilhermeRR@outlook.com",6,null,null);
 Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Fornecedor_idFornecedor`,`Funcionario_idFuncionario`)
 Values(937760678,null,"antonioJoseFA@hotmail.com",7,null,null);
 
+-- Endereco (dos clientes)
+INSERT INTO `Endereco`(`idEndereco`,`NumeroPorta`, `Rua`, `Localidade`, `CodPostal`, `Fornecedor_idFornecedor`)
+VALUES (0,23,"Rua dos Lagos","Braga","4700-025",null);
+
+INSERT INTO `Endereco`(`idEndereco`,`NumeroPorta`, `Rua`, `Localidade`, `CodPostal`, `Fornecedor_idFornecedor`)
+VALUES (1,10,"Rua dos Rios","Braga","4700-010",null);
+
+INSERT INTO `Endereco`(`idEndereco`,`NumeroPorta`, `Rua`, `Localidade`, `CodPostal`, `Fornecedor_idFornecedor`)
+VALUES (2,19,"Rua dos Riachos","Braga","4700-002",null);
+
+INSERT INTO `Endereco`(`idEndereco`,`NumeroPorta`, `Rua`, `Localidade`, `CodPostal`, `Fornecedor_idFornecedor`)
+VALUES (3,123,"Travessa D.Henriques","Guimarães","4800-002",null);
+
+INSERT INTO `Endereco`(`idEndereco`,`NumeroPorta`, `Rua`, `Localidade`, `CodPostal`, `Fornecedor_idFornecedor`)
+VALUES (4,12,"Rua Brofest","Famalicão","4760-025",null);
+
 -- Fornecedor
 Insert into `Fornecedor`(`idFornecedor`,`Designacao`,`Contribuinte`)
 Values(0,"BigMartha","578871061");
@@ -158,6 +174,28 @@ Values(937003936,285534218,"ben@benuten.com",null,5,null);
 
 Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Fornecedor_idFornecedor`,`Funcionario_idFuncionario`)
 Values(932680618,255512942,"secretaria@brofen.com",null,6,null);
+
+-- Endereco (dos Fornecedores)
+INSERT INTO `Endereco`(`idEndereco`,`NumeroPorta`, `Rua`, `Localidade`, `CodPostal`, `Fornecedor_idFornecedor`)
+VALUES (0,1,"Rua Martha","Famalicão","4760-005",0);
+
+INSERT INTO `Endereco`(`idEndereco`,`NumeroPorta`, `Rua`, `Localidade`, `CodPostal`, `Fornecedor_idFornecedor`)
+VALUES (1,122,"Rua Europeia","Braga","4700-030",1);
+
+INSERT INTO `Endereco`(`idEndereco`,`NumeroPorta`, `Rua`, `Localidade`, `CodPostal`, `Fornecedor_idFornecedor`)
+VALUES (2,100,"Rua Triste","Braga","4700-031",2);
+
+INSERT INTO `Endereco`(`idEndereco`,`NumeroPorta`, `Rua`, `Localidade`, `CodPostal`, `Fornecedor_idFornecedor`)
+VALUES (3,50,"Travessa com tosse","Famalicão","4760-019",3);
+
+INSERT INTO `Endereco`(`idEndereco`,`NumeroPorta`, `Rua`, `Localidade`, `CodPostal`, `Fornecedor_idFornecedor`)
+VALUES (4,32,"Rua Feliz","Braga","4700-004",4);
+
+INSERT INTO `Endereco`(`idEndereco`,`NumeroPorta`, `Rua`, `Localidade`, `CodPostal`, `Fornecedor_idFornecedor`)
+VALUES (5,21,"Rua Omni","Guimarães","4760-025",5);
+
+INSERT INTO `Endereco`(`idEndereco`,`NumeroPorta`, `Rua`, `Localidade`, `CodPostal`, `Fornecedor_idFornecedor`)
+VALUES (6,190,"Rua BigBru","Famalicão","4760-026",6);
 
 -- Item
 Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Quantidade`,`Comparticipacao`)
@@ -226,8 +264,4 @@ INSERT INTO `ItemCompra`(`PrazoDevalidade`, `CustoParcial`, `Quantidade`, `Item_
 VALUES ("2037-02-02" ,15.0 ,6 ,6 ,6 );
 
 INSERT INTO `ItemCompra`(`PrazoDevalidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
-VALUES ("2012-11-15" ,7.35 ,60 ,7 ,0);
-
--- Endereco (dos clientes)
-INSERT INTO `Endereco`(`NumeroPorta`, `Rua`, `Localidade`, `CodPostal`, ``)
 VALUES ("2012-11-15" ,7.35 ,60 ,7 ,0);
