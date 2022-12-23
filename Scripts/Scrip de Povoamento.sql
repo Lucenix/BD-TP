@@ -227,3 +227,5 @@ VALUES ("2037-02-02" ,15.0 ,6 ,6 ,6 );
 
 INSERT INTO `ItemCompra`(`PrazoDevalidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
 VALUES ("2012-11-15" ,7.35 ,60 ,7 ,0);
+
+-- 

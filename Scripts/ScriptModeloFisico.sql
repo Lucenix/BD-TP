@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Cliente` (
   `idCliente` INT NOT NULL,
   `Nome` VARCHAR(45) NOT NULL,
   `NIF` VARCHAR(9) NOT NULL,
-  `DataNascimento` DATE NULL,
+  `Idade` INT NULL,
   `Genero` VARCHAR(40) NULL,
   PRIMARY KEY (`idCliente`))
 ENGINE = InnoDB;
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Percurso` (
   `HoraPartida` DATETIME NOT NULL,
   `DistanciaTotal` DOUBLE NULL,
   `Veiculo_idVeiculo` INT NOT NULL,
-  PRIMARY KEY (`idpercurso`, `Veiculo_idVeiculo`),
+  PRIMARY KEY (`idpercurso`),
   INDEX `fk_Percurso_Veiculo1_idx` (`Veiculo_idVeiculo` ASC) VISIBLE,
   CONSTRAINT `fk_Percurso_Veiculo1`
     FOREIGN KEY (`Veiculo_idVeiculo`)
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Endereco` (
   `Rua` VARCHAR(45) NOT NULL,
   `Localidade` VARCHAR(45) NOT NULL,
   `CodPostal` VARCHAR(45) NOT NULL,
-  `Fornecedor_idFornecedor` INT NOT NULL,
+  `Fornecedor_idFornecedor` INT NULL,
   PRIMARY KEY (`idEndereco`),
   INDEX `fk_Endereco_Fornecedor1_idx` (`Fornecedor_idFornecedor` ASC) VISIBLE,
   CONSTRAINT `fk_Endereco_Fornecedor1`
@@ -107,7 +107,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Encomenda` (
   `Percurso_idpercurso` INT NOT NULL,
   `Cliente_idCliente` INT NOT NULL,
   `Endereco_idEndereco` INT NOT NULL,
-  PRIMARY KEY (`idEncomenda`, `Cliente_idCliente`, `Endereco_idEndereco`),
+  PRIMARY KEY (`idEncomenda`),
   INDEX `fk_Encomenda_Percurso1_idx` (`Percurso_idpercurso` ASC) VISIBLE,
   INDEX `fk_Encomenda_Cliente1_idx` (`Cliente_idCliente` ASC) VISIBLE,
   INDEX `fk_Encomenda_Endereco1_idx` (`Endereco_idEndereco` ASC) VISIBLE,
@@ -263,9 +263,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Contacto` (
   `Telemovel` VARCHAR(9) NOT NULL,
   `Telefone` VARCHAR(9) NULL,
   `Email` VARCHAR(45) NULL,
-  `Cliente_idCliente` INT NOT NULL,
-  `Fornecedor_idFornecedor` INT NOT NULL,
-  `Funcionario_idFuncionario` INT NOT NULL,
+  `Cliente_idCliente` INT NULL,
+  `Fornecedor_idFornecedor` INT NULL,
+  `Funcionario_idFuncionario` INT NULL,
   INDEX `fk_Contacto_Cliente1_idx` (`Cliente_idCliente` ASC) VISIBLE,
   INDEX `fk_Contacto_Fornecedor1_idx` (`Fornecedor_idFornecedor` ASC) VISIBLE,
   PRIMARY KEY (`Telemovel`),
