@@ -48,7 +48,7 @@ Values(966345009,null,"FlorBelaLobo@gmail.com",null,null,4);
 
 -- Veiculo
 Insert into `Veiculo`(`idVeiculo`,`Categoria`,`Kilometragem`,`TipoCombustivel`,`DataProximaInspecao`,`EstadoOperacional`,`IUC`,`Matricula`)
-Values(0,"CE",12,"Diesel","2023-05-02",1,130,33,"12-AB-34");
+Values(0,"CE",12,"Diesel","2023-05-02",1,130.33,"12-AB-34");
 
 Insert into `Veiculo`(`idVeiculo`,`Categoria`,`Kilometragem`,`TipoCombustivel`,`DataProximaInspecao`,`EstadoOperacional`,`IUC`,`Matricula`)
 Values(1,"B1",100,"Gasolina","2026-03-19",1,91.23,"20-BD-20");
@@ -265,3 +265,25 @@ VALUES ("2037-02-02" ,15.0 ,6 ,6 ,6 );
 
 INSERT INTO `ItemCompra`(`PrazoDevalidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
 VALUES ("2012-11-15" ,7.35 ,60 ,7 ,0);
+
+-- Percurso
+INSERT INTO `Percurso`(`idPercurso`,`HoraPartida`,`Veiculo_idVeiculo`)
+VALUES (0,"2023-01-19",0);
+
+INSERT INTO `Percurso`(`idPercurso`,`HoraChegada`,`HoraPartida`,`DistanciaTotal`,`Veiculo_idVeiculo`)
+VALUES (1,"2022-12-13","2022-12-12",0);
+
+INSERT INTO `Percurso`(`idPercurso`,`HoraChegada`,`HoraPartida`,`DistanciaTotal`,`Veiculo_idVeiculo`)
+VALUES (2,"2022-12-13","2022-12-12",12.5,0);
+
+INSERT INTO `Percurso`(`idPercurso`,`HoraPartida`,`Veiculo_idVeiculo`)
+VALUES (3,"2023-01-18",1);
+
+INSERT INTO `Percurso`(`idPercurso`,`HoraChegada`,`HoraPartida`,`DistanciaTotal`,`Veiculo_idVeiculo`)
+VALUES (4,"2022-05-25","2022-05-19",50.9,1);
+
+INSERT INTO `Percurso`(`idPercurso`,`HoraPartida`,`Veiculo_idVeiculo`)
+VALUES (5,"2023-01-19",2);
+
+INSERT INTO `Percurso`(`idPercurso`,`HoraChegada`,`HoraPartida`,`DistanciaTotal`,`Veiculo_idVeiculo`)
+VALUES (6,"2022-12-23","2022-11-11",150.6,2);
