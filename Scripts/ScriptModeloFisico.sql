@@ -47,9 +47,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Veiculo` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`Percurso` (
   `idpercurso` INT NOT NULL,
-  `HoraChegada` DATETIME NULL,
+  `HoraChegada` DATETIME NOT NULL DEFAULT "1000-01-01",
   `HoraPartida` DATETIME NOT NULL,
-  `DistanciaTotal` DOUBLE NULL,
+  `DistanciaTotal` DOUBLE NOT NULL DEFAULT 0.0,
   `Veiculo_idVeiculo` INT NOT NULL,
   PRIMARY KEY (`idpercurso`),
   INDEX `fk_Percurso_Veiculo1_idx` (`Veiculo_idVeiculo` ASC) VISIBLE,
