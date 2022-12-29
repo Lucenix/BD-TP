@@ -6,7 +6,7 @@ delete from Contacto;
 delete from Relatorio;
 delete from Cliente;
 delete from Percurso;
-delete from Funcionario_has_Percurso;
+delete from FuncionarioPercurso;
 delete from DataInspecaoPassada;
 delete from VeiculoTipo;
 delete from Item;
@@ -86,7 +86,7 @@ Insert into `Relatorio`(`Data`,`EstadoResolucao`,`Descricao`,`Gravidade`,`Funcio
 Values("2022-11-03 13:23:44",1,"Lateral do carro com alguns riscos","0",3,0);
 
 Insert into `Relatorio`(`Data`,`EstadoResolucao`,`Descricao`,`Gravidade`,`Funcionario_idFuncionario`,`Veiculo_idVeiculo`)
-Values("2022-12-12 11:01:01",1,"Pneu frontal furado","3",1,2);
+Values("2022-12-12 11:01:01",1,"Pneu frontal direito furado","3",1,2);
 
 
 -- Cliente
@@ -271,14 +271,14 @@ INSERT INTO `Compra`(`idCompra`, `CustoTotal`, `DataEmissao`, `DataEntrega`, `Fo
 VALUES (5, 0, "2019-07-20 05:59:50", "2019-07-29 19:30:30", 5);
 
 INSERT INTO `Compra`(`idCompra`, `CustoTotal`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
-VALUES (6,0, "2021-02-17 20:00:40", "2021-02-29 19:35:35", 6);
+VALUES (6,0, "2021-02-17 20:00:40", "2021-02-28 19:35:35", 6);
 
 INSERT INTO `Compra`(`idCompra`, `CustoTotal`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
 VALUES (7,0, "2017-05-04 12:04:06", "2017-05-20 14:27:50", 4);
 
 -- ItemCompra
 INSERT INTO `ItemCompra`(`PrazoDevalidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
-VALUES ("2023-09-00", 2.50,150 ,3 ,5);
+VALUES ("2023-09-01", 2.50,150 ,3 ,5);
 
 INSERT INTO `ItemCompra`(`PrazoDevalidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
 VALUES (null, 17.90 ,40 ,1 ,4);
@@ -296,7 +296,7 @@ VALUES ("2012-11-15" ,7.35 ,60 ,7 ,0);
 INSERT INTO `Percurso`(`idPercurso`,`HoraPartida`,`Veiculo_idVeiculo`)
 VALUES (0,"2023-01-19",0);
 
-INSERT INTO `Percurso`(`idPercurso`,`HoraChegada`,`HoraPartida`,`DistanciaTotal`,`Veiculo_idVeiculo`)
+INSERT INTO `Percurso`(`idPercurso`,`HoraChegada`,`HoraPartida`,`Veiculo_idVeiculo`)
 VALUES (1,"2022-12-13","2022-12-12",0);
 
 INSERT INTO `Percurso`(`idPercurso`,`HoraChegada`,`HoraPartida`,`DistanciaTotal`,`Veiculo_idVeiculo`)
@@ -313,3 +313,5 @@ VALUES (5,"2023-01-19",2);
 
 INSERT INTO `Percurso`(`idPercurso`,`HoraChegada`,`HoraPartida`,`DistanciaTotal`,`Veiculo_idVeiculo`)
 VALUES (6,"2022-12-23","2022-11-11",150.6,2);
+
+select * from percurso;
