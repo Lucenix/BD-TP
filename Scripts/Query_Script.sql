@@ -35,6 +35,12 @@ select ic.* from ItemCompra as ic
     order by ic.PrazoDeValidade ASC
     limit 1;
     
+-- Deve ser possivel verificar qual o item mais vendido----untested not POG
+select e.Item_idItem, SUM(e.Quantidade) from EncomendaItem as e
+	group by e.Item_idItem;
+    order by SUM(e.Quantidade) ASC
+    limit 1
+    
 
 
 
