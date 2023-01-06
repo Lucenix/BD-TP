@@ -1,7 +1,10 @@
 use mydb;
 
--- atualizar automaticamente o custo total de uma compra sempre que se introduzir um novo item
 drop trigger if exists compra_update_custototal;
+drop trigger if exists encomenda_update_custototal;
+drop trigger if exists percurso_update_distanciatotal;
+
+-- atualizar automaticamente o custo total de uma compra sempre que se introduzir um novo item
 delimiter $$
 	create trigger compra_update_custototal
     after insert
@@ -11,7 +14,6 @@ delimiter $$
 	end; $$
 
 -- atualizar automaticamente o custo total de uma encomenda sempre que se introduzir um novo item
-drop trigger if exists encomenda_update_custototal;
 delimiter $$
 	create trigger encomenda_update_custototal
     after insert
@@ -20,4 +22,11 @@ delimiter $$
 		update encomenda as e set e.custototal = e.custototal + EncomendaItem.custoparcial where e.idEncomenda = EncomendaItem.idEncomenda;
 	end; $$
     
--- 
+-- atualizar automaticamente a distância total de um percurso quando uma nova encomenda é adicionada
+delimiter $$
+	create trigger percurso_update_distanciatotal
+    after insert
+    on Encomenda for each row
+    begin
+		update percurso as p set p.distanciatotal = p.distanciatotal + Encomenda.distanciaparcial where e.Percurso_idPercurso = p.idPercurso;
+	end; $$
