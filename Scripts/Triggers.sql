@@ -1,9 +1,7 @@
 use mydb;
 
+-- atualizar automaticamente o custo total de uma compra sempre que se introduzir um novo item
 drop trigger if exists compra_update_custototal;
-drop trigger if exists encomenda_update_custototal;
-
--- atualizar automaticamente o custuo total de uma compra sempre que se introduzir um novo item
 delimiter $$
 	create trigger compra_update_custototal
     after insert
@@ -13,6 +11,7 @@ delimiter $$
 	end; $$
 
 -- atualizar automaticamente o custo total de uma encomenda sempre que se introduzir um novo item
+drop trigger if exists encomenda_update_custototal;
 delimiter $$
 	create trigger encomenda_update_custototal
     after insert
