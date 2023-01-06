@@ -1,7 +1,6 @@
 Use mydb;
 
 
-delete from TiposConservacao;
 delete from Contacto;
 delete from Relatorio;
 delete from Cliente;
@@ -9,6 +8,7 @@ delete from Percurso;
 delete from FuncionarioPercurso;
 delete from DataInspecaoPassada;
 delete from VeiculoTipo;
+delete from TiposConservacao;
 delete from ItemCompra;
 delete from Item;
 delete from ItemTipo;
@@ -79,6 +79,37 @@ Insert into `Veiculo`(`idVeiculo`,`Categoria`,`Kilometragem`,`TipoCombustivel`,`
 Values(2,"A1",29,"Gasolina","2024-07-29",1,58.31,"20-BD-23");
 
 Select * from Veiculo;
+
+
+-- DataInspecaoPassada
+INSERT INTO `datainspecaopassada`(`DataInspecaoPassada`, `Veiculo_idVeiculo`)
+VALUES('2023-01-06', 0);
+INSERT INTO `datainspecaopassada`(`DataInspecaoPassada`, `Veiculo_idVeiculo`)
+VALUES('2022-01-06', 0);
+INSERT INTO `datainspecaopassada`(`DataInspecaoPassada`, `Veiculo_idVeiculo`)
+VALUES('2021-05-15', 1);
+INSERT INTO `datainspecaopassada`(`DataInspecaoPassada`, `Veiculo_idVeiculo`)
+VALUES('2022-05-15', 1);
+
+-- VeiculoTipo
+
+Insert into `VeiculoTipo`(`TiposConservacao_idTiposConservacao`, `Veiculo_idVeiculo`)
+values(0,0);
+
+Insert into `VeiculoTipo`(`TiposConservacao_idTiposConservacao`, `Veiculo_idVeiculo`)
+values(0,1);
+
+Insert into `VeiculoTipo`(`TiposConservacao_idTiposConservacao`, `Veiculo_idVeiculo`)
+values(1,1);
+
+Insert into `VeiculoTipo`(`TiposConservacao_idTiposConservacao`, `Veiculo_idVeiculo`)
+values(0,2);
+
+Insert into `VeiculoTipo`(`TiposConservacao_idTiposConservacao`, `Veiculo_idVeiculo`)
+values(1,2);
+
+Insert into `VeiculoTipo`(`TiposConservacao_idTiposConservacao`, `Veiculo_idVeiculo`)
+values(2,2);
 
 
 -- Relatorio
