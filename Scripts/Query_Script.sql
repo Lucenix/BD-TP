@@ -15,6 +15,7 @@ select datediff(e.horaenvio,e.horaentrega) from encomenda as e
 		where e.idEncomenda = 1;
 
 drop procedure if exists TempoTransitoEncomenda;
+
 delimiter $$
 create procedure TempoTransitoEncomenda(in idEncomenda int, out diff datetime)
 	begin
@@ -26,3 +27,23 @@ call TempoTransitoEncomenda(1, @diff);
 select @diff as diff;
 
 -- 
+
+-- verificar qual o proximo lote a expirar
+select ic.* from ItemCompra as ic
+	inner join Item as i on i.idItem = ic.Item_iditem
+	where ic.PrazoDeValidade is not null and datediff(ic.PrazoDeValidade, CURDATE()) >= 0
+    order by ic.PrazoDeValidade ASC
+    limit 1;
+    
+
+
+
+
+
+
+	
+    
+
+
+
+
