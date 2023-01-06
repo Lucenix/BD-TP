@@ -378,6 +378,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `mydb`.`FuncionarioPercurso` (
   `Funcionario_idFuncionario` INT NOT NULL,
   `Percurso_idpercurso` INT NOT NULL,
+  `Condutor` TINYINT NOT NULL,
   PRIMARY KEY (`Funcionario_idFuncionario`, `Percurso_idpercurso`),
   INDEX `fk_FuncionarioPercurso_Percurso1_idx` (`Percurso_idpercurso` ASC) VISIBLE,
   CONSTRAINT `fk_FuncionarioPercurso_Funcionario1`

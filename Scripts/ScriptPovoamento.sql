@@ -3,7 +3,6 @@ Use mydb;
 delete from Contacto;
 delete from Relatorio;
 delete from Cliente;
-delete from Percurso;
 delete from FuncionarioPercurso;
 delete from DataInspecaoPassada;
 delete from VeiculoTipo;
@@ -16,6 +15,7 @@ delete from Endereco;
 delete from Fornecedor;
 delete from EnderecoCliente;
 delete from Funcionario;
+delete from Percurso;
 delete from Veiculo;
 
 -- Tipos de Conservacao
@@ -392,8 +392,7 @@ select * from percurso;
 
 -- FuncionarioPercurso
 
-INSERT INTO `funcionariopercurso`(`Funcionario_idFuncionario`, `Percurso_idpercurso`)
-VALUES(0, 3);
+call insertFuncionarioPercurso(1,3,1);
+call insertFuncionarioPercurso(1,5,1);
 
-INSERT INTO `funcionariopercurso`(`Funcionario_idFuncionario`, `Percurso_idpercurso`)
-VALUES(0, 3);
+select * from FuncionarioPercurso;
