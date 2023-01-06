@@ -51,3 +51,12 @@ call habilitacaoauto(1, @hab);
 call dataexpir(1, @dataexp);
 select @hab;
 select @dataexp
+drop procedure if exists isVeiculodisp;
+delimiter $$
+create procedure isVeiculodisp(in idVeiculo INT, out est TINYINT)
+	begin
+    select v.EstadoOperacional into est from Veiculo as v
+		where v.idVeiculo = idVeiculo;
+	end; $$
+call isVeiculodisp(1, @est);
+select @est;
