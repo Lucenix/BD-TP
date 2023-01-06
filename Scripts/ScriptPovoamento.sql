@@ -1,6 +1,5 @@
 Use mydb;
 
-
 delete from Contacto;
 delete from Relatorio;
 delete from Cliente;
@@ -8,10 +7,10 @@ delete from Percurso;
 delete from FuncionarioPercurso;
 delete from DataInspecaoPassada;
 delete from VeiculoTipo;
+delete from ItemTipo;
 delete from TiposConservacao;
 delete from ItemCompra;
 delete from Item;
-delete from ItemTipo;
 delete from Compra;
 delete from Endereco;
 delete from Fornecedor;
@@ -20,19 +19,24 @@ delete from Funcionario;
 delete from Veiculo;
 
 -- Tipos de Conservacao
-Insert into `TiposConservacao`(`idTiposConservacao`,`Tipo`,`Descricao`)
-Values(0,"Temperatura","Conservar à temperatura ambiente");
 
 Insert into `TiposConservacao`(`idTiposConservacao`,`Tipo`,`Descricao`)
-Values(1,"Temperatura","Conservar a uma temperatura abaixo de 0 graus");
+Values(0,"Temperatura","Conservar à temperatura ambiente.");
 
 Insert into `TiposConservacao`(`idTiposConservacao`,`Tipo`,`Descricao`)
-Values(2,"Humidade","Manter em ambiente seco");
+Values(1,"Temperatura","Conservar a uma temperatura abaixo de 0 graus.");
+
+Insert into `TiposConservacao`(`idTiposConservacao`,`Tipo`,`Descricao`)
+Values(2,"Temperatura","Conservar a temperatura refrigerada não negativa.");
+
+Insert into `TiposConservacao`(`idTiposConservacao`,`Tipo`,`Descricao`)
+Values(3,"Humidade","Manter em ambiente seco.");
 
 Select * from TiposConservacao;
 
 
 -- Funcionário
+
 Insert into `Funcionario`(`idFuncionario`,`Nome`,`Salario`,`HabilitacaoAuto`,`DataEntrada`,`DataExpiracaoHabilitacao`,`Posicao`,`DataNascimento`)
 Values(0,"Bernardo Esteves",5000.0,"BE","2020-03-02","2023-01-19","CEO","1965-08-19");
 
@@ -52,6 +56,7 @@ Select * from Funcionario;
 
 
 -- Contacto (dos funcionários):
+
 Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Fornecedor_idFornecedor`,`Funcionario_idFuncionario`)
 Values(926735428,null,"BernardoEstevesCEO@gmail.com",null,null,0);
 
@@ -69,6 +74,7 @@ Values(966345009,null,"FlorBelaLobo@gmail.com",null,null,4);
 
 
 -- Veiculo
+
 Insert into `Veiculo`(`idVeiculo`,`Categoria`,`Kilometragem`,`TipoCombustivel`,`DataProximaInspecao`,`EstadoOperacional`,`IUC`,`Matricula`)
 Values(0,"CE",12,"Diesel","2023-05-02",1,130.33,"12-AB-34");
 
@@ -82,6 +88,7 @@ Select * from Veiculo;
 
 
 -- DataInspecaoPassada
+
 INSERT INTO `datainspecaopassada`(`DataInspecaoPassada`, `Veiculo_idVeiculo`)
 VALUES('2023-01-06', 0);
 INSERT INTO `datainspecaopassada`(`DataInspecaoPassada`, `Veiculo_idVeiculo`)
@@ -172,7 +179,10 @@ Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Forne
 Values(937760678,null,"antonioJoseFA@hotmail.com",7,null,null);
 
 delete from Endereco;
+
+
 -- Endereco (dos clientes)
+
 INSERT INTO `Endereco`(`idEndereco`,`NumeroPorta`, `Rua`, `Localidade`, `CodPostal`, `Fornecedor_idFornecedor`)
 VALUES (0,23,"Rua dos Lagos","Braga","4700-025",null);
 
@@ -188,7 +198,9 @@ VALUES (3,123,"Travessa D.Henriques","Guimarães","4800-002",null);
 INSERT INTO `Endereco`(`idEndereco`,`NumeroPorta`, `Rua`, `Localidade`, `CodPostal`, `Fornecedor_idFornecedor`)
 VALUES (4,12,"Rua Brofest","Famalicão","4760-025",null);
 
+
 -- Fornecedor
+
 Insert into `Fornecedor`(`idFornecedor`,`Designacao`,`Contribuinte`)
 Values(0,"BigMartha","578871061");
 
@@ -210,7 +222,9 @@ Values(5,"BenU10","571346321");
 Insert into `Fornecedor`(`idFornecedor`,`Designacao`,`Contribuinte`)
 Values(6,"BroFen","535180007");
 
+
 -- Contacto (dos fornecedores):
+
 Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Fornecedor_idFornecedor`,`Funcionario_idFuncionario`)
 Values(933161978,254009936,"geral@bigmartha.com",null,0,null);
 
@@ -233,6 +247,7 @@ Insert into `Contacto`(`Telemovel`,`Telefone`,`Email`,`Cliente_idCliente`,`Forne
 Values(932680618,255512942,"secretaria@brofen.com",null,6,null);
 
 -- Endereco (dos Fornecedores)
+
 INSERT INTO `Endereco`(`idEndereco`,`NumeroPorta`, `Rua`, `Localidade`, `CodPostal`, `Fornecedor_idFornecedor`)
 VALUES (5,1,"Rua Martha","Famalicão","4760-005",0);
 
@@ -255,6 +270,7 @@ INSERT INTO `Endereco`(`idEndereco`,`NumeroPorta`, `Rua`, `Localidade`, `CodPost
 VALUES (11,190,"Rua BigBru","Famalicão","4760-026",6);
 
 -- Item
+
 Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Quantidade`,`Comparticipacao`)
 Values(0,"Voltaren",0.06,"Pomada, Bisnaga 50g",11.80,15,0);
 
@@ -282,7 +298,27 @@ Values(7,"Tantum Verde",0.06,"Solução bucal, frasco 500ml",14.70,90,0);
 Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Quantidade`,`Comparticipacao`)
 Values(8,"WHEY",0.23,"Proteína em pó, isolada, 1kg",65.99,2,0);
 
+
+-- ItemTipo
+
+INSERT INTO `itemtipo` (`TiposConservacao_idTiposConservacao`, `Item_idItem`)
+VALUES (0, 7);
+
+INSERT INTO `itemtipo` (`TiposConservacao_idTiposConservacao`, `Item_idItem`)
+VALUES (0, 5);
+
+INSERT INTO `itemtipo` (`TiposConservacao_idTiposConservacao`, `Item_idItem`)
+VALUES (2, 5);
+
+INSERT INTO `itemtipo` (`TiposConservacao_idTiposConservacao`, `Item_idItem`)
+VALUES (3, 5);
+
+INSERT INTO `itemtipo` (`TiposConservacao_idTiposConservacao`, `Item_idItem`)
+VALUES (3, 3);
+
+
 -- Compras
+
 INSERT INTO `Compra`(`idCompra`, `CustoTotal`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
 VALUES (0, 0, "2018-12-21 08:32:12", "2019-1-13 16:05:50", 0);
 
@@ -307,7 +343,9 @@ VALUES (6,0, "2021-02-17 20:00:40", "2021-02-28 19:35:35", 6);
 INSERT INTO `Compra`(`idCompra`, `CustoTotal`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
 VALUES (7,0, "2017-05-04 12:04:06", "2017-05-20 14:27:50", 4);
 
+
 -- ItemCompra
+
 INSERT INTO `ItemCompra`(`PrazoDevalidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
 VALUES ("2023-09-01", 2.50,150 ,3 ,5);
 
@@ -325,7 +363,9 @@ VALUES ("2012-11-15" ,7.35 ,60 ,7 ,0);
 
 select c.idCompra,c.custototal,ic.custoparcial from ItemCompra as ic inner join Compra as c on ic.Compra_idCompra = c.idCompra;
 
+
 -- Percurso
+
 INSERT INTO `Percurso`(`idPercurso`,`HoraPartida`,`Veiculo_idVeiculo`)
 VALUES (0,"2023-01-19",0);
 
@@ -348,3 +388,12 @@ INSERT INTO `Percurso`(`idPercurso`,`HoraChegada`,`HoraPartida`,`DistanciaTotal`
 VALUES (6,"2022-12-23","2022-11-11",150.6,2);
 
 select * from percurso;
+
+
+-- FuncionarioPercurso
+
+INSERT INTO `funcionariopercurso`(`Funcionario_idFuncionario`, `Percurso_idpercurso`)
+VALUES(0, 3);
+
+INSERT INTO `funcionariopercurso`(`Funcionario_idFuncionario`, `Percurso_idpercurso`)
+VALUES(0, 3);
