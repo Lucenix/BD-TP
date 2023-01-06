@@ -24,19 +24,9 @@ delimiter $$
     
 -- atualizar automaticamente a distância total de um percurso quando uma nova encomenda é adicionada
 delimiter $$
-	create trigger percurso_update_distanciatotal
+	create trigger encomenda_update_percurso_distanciatotal
     after insert
     on Encomenda for each row
-    begin
-		update percurso as p set p.distanciatotal = p.distanciatotal + Encomenda.distanciaparcial where e.Percurso_idPercurso = p.idPercurso;
-	end; $$
-    
--- atualizar o stock sempre que se efetua uma encomenda
-delimiter $$
-	create trigger percurso_update_distanciatotal
-    after insert
-    on Encomenda for each row
-    follows percurso_update_distanciatotal
     begin
 		update percurso as p set p.distanciatotal = p.distanciatotal + Encomenda.distanciaparcial where e.Percurso_idPercurso = p.idPercurso;
 	end; $$
