@@ -1,6 +1,6 @@
 use mydb;
 
--- Visualizar todos os percursos de um dado funcionário 
+-- Visualizar todos os percursos de um dado Funcionário 
 select f.Nome,fp.percurso_idpercurso as NrPercurso from (funcionario as f 
 	inner join funcionariopercurso as fp on f.idFuncionario = fp.funcionario_idFuncionario)
     where f.idFuncionario = 1;
@@ -24,3 +24,5 @@ create procedure TempoTransitoEncomenda(in idEncomenda int, out diff datetime)
 
 call TempoTransitoEncomenda(1, @diff);
 select @diff as diff;
+
+-- 
