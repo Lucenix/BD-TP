@@ -9,10 +9,10 @@ delete from Percurso;
 delete from FuncionarioPercurso;
 delete from DataInspecaoPassada;
 delete from VeiculoTipo;
+delete from ItemCompra;
 delete from Item;
 delete from ItemTipo;
 delete from Compra;
-delete from ItemCompra;
 delete from Endereco;
 delete from Fornecedor;
 delete from EnderecoCliente;
@@ -291,6 +291,8 @@ VALUES ("2037-02-02" ,15.0 ,6 ,6 ,6 );
 
 INSERT INTO `ItemCompra`(`PrazoDevalidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
 VALUES ("2012-11-15" ,7.35 ,60 ,7 ,0);
+
+select c.idCompra,c.custototal,ic.custoparcial from ItemCompra as ic inner join Compra as c on ic.Compra_idCompra = c.idCompra;
 
 -- Percurso
 INSERT INTO `Percurso`(`idPercurso`,`HoraPartida`,`Veiculo_idVeiculo`)

@@ -1,12 +1,15 @@
 use mydb;
 
+drop trigger if exists compra_update_custototal;
+drop trigger if exists encomenda_update_custototal;
+
 -- atualizar automaticamente o custuo total de uma compra sempre que se introduzir um novo item
 delimiter $$
 	create trigger compra_update_custototal
     after insert
-    on CompraItem for each row
+    on ItemCompra for each row
     begin
-		update compra as c set c.custototal = c.custototal + CompraItem.custoparcial where c.idCompra= CompraItem.idCompra;
+		update compra as c set c.custototal = c.custototal + new.custoparcial where c.idCompra = new.Compra_idCompra;
 	end; $$
 
 -- atualizar automaticamente o custo total de uma encomenda sempre que se introduzir um novo item
