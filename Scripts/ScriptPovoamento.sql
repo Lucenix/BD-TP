@@ -406,13 +406,13 @@ select * from FuncionarioPercurso;
 
 -- Exemplo de Três encomendas no mesmo percurso:
 INSERT INTO `Encomenda`(`idEncomenda`, `DataRegisto`, `EstadoEntrega`,`Percurso_idPercurso`, `Cliente_idCliente`, `Endereco_idEndereco`)
-VALUES(0,"2023-01-18 11:01:01",0,3,5,4);
+VALUES(0,"2023-01-18 11:01:01",0,null,5,4);
 
 INSERT INTO `Encomenda`(`idEncomenda`, `DataRegisto`, `EstadoEntrega`,`Percurso_idPercurso`, `Cliente_idCliente`, `Endereco_idEndereco`)
-VALUES(1,"2023-01-18 13:00:40",0,3,1,2);
+VALUES(1,"2023-01-18 13:00:40",0,null,1,2);
 
 INSERT INTO `Encomenda`(`idEncomenda`, `DataRegisto`, `EstadoEntrega`,`Percurso_idPercurso`, `Cliente_idCliente`, `Endereco_idEndereco`)
-VALUES(2,"2023-01-19 14:30:09",0,3,4,6);
+VALUES(2,"2023-01-19 14:30:09",0,null,4,6);
 
 
 INSERT INTO `Encomenda`(`idEncomenda`, `DataRegisto`, `EstadoEntrega`, `HoraPrevista`,`HoraEnvio`,`DistanciaParcial`, `Percurso_idPercurso`, `Cliente_idCliente`, `Endereco_idEndereco`)
@@ -424,3 +424,31 @@ VALUES(4,"2023-01-17 00:52:58",1,"2023-01-19 14:32:40","2023-01-19 09:00:01","20
 INSERT INTO `Encomenda`(`idEncomenda`, `DataRegisto`, `EstadoEntrega`, `HoraPrevista`,`HoraEnvio`,`HoraEntrega`,`DistanciaParcial`, `Percurso_idPercurso`, `Cliente_idCliente`, `Endereco_idEndereco`)
 VALUES(5,"2023-01-17 00:52:58",1,"2023-01-19 14:32:40","2023-01-19 09:00:01","2023-01-19 14:45:23",1020,2,1,9);
 
+-- EncomendaItem
+
+INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
+VALUES(1,5,2.79,3,0);
+
+INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
+VALUES(0,2,23.79,5,0);
+
+INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
+VALUES(0,1,2.79,3,2);
+
+INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
+VALUES(1,4,18.90,7,3);
+
+INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
+VALUES(1,1,15.50,0,4);
+
+INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
+VALUES(0,2,8.20,2,4);
+
+INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
+VALUES(0,3,7.50,4,4);
+
+INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
+VALUES(0,1,30,6,4);
+
+INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
+VALUES(0,15,75.55,8,5);
