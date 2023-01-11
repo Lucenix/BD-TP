@@ -324,29 +324,29 @@ VALUES (3, 3);
 
 -- Compras
 
-INSERT INTO `Compra`(`idCompra`, `CustoTotal`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
-VALUES (0, 0, "2018-12-21 08:32:12", "2019-1-13 16:05:50", 0);
+INSERT INTO `Compra`(`idCompra`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
+VALUES (0, "2018-12-21 08:32:12", "2019-1-13 16:05:50", 0);
 
 INSERT INTO `Compra`(`idCompra`, `CustoTotal`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
-VALUES (1, 0, "2020-05-07 16:30:04", "2012-5-23 15:56:03", 1);
+VALUES (1, "2020-05-07 16:30:04", "2012-5-23 15:56:03", 1);
 
-INSERT INTO `Compra`(`idCompra`, `CustoTotal`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
-VALUES (2, 0, "2009-09-30 10:00:01", "2009-10-5 11:45:01", 2);
+INSERT INTO `Compra`(`idCompra`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
+VALUES (2, "2009-09-30 10:00:01", "2009-10-5 11:45:01", 2);
 
-INSERT INTO `Compra`(`idCompra`, `CustoTotal`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
-VALUES (3, 0, "2002-09-20 17:30:00", "2002-11-01 07:00:30", 3);
+INSERT INTO `Compra`(`idCompra`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
+VALUES (3, "2002-09-20 17:30:00", "2002-11-01 07:00:30", 3);
 
-INSERT INTO `Compra`(`idCompra`, `CustoTotal`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
-VALUES (4, 0, "2018-06-14 15:15:15", "2018-06-17 16:03:20", 4);
+INSERT INTO `Compra`(`idCompra`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
+VALUES (4, "2018-06-14 15:15:15", "2018-06-17 16:03:20", 4);
 
-INSERT INTO `Compra`(`idCompra`, `CustoTotal`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
-VALUES (5, 0, "2019-07-20 05:59:50", "2019-07-29 19:30:30", 5);
+INSERT INTO `Compra`(`idCompra`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
+VALUES (5, "2019-07-20 05:59:50", "2019-07-29 19:30:30", 5);
 
-INSERT INTO `Compra`(`idCompra`, `CustoTotal`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
-VALUES (6,0, "2021-02-17 20:00:40", "2021-02-28 19:35:35", 6);
+INSERT INTO `Compra`(`idCompra`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
+VALUES (6, "2021-02-17 20:00:40", "2021-02-28 19:35:35", 6);
 
-INSERT INTO `Compra`(`idCompra`, `CustoTotal`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
-VALUES (7,0, "2017-05-04 12:04:06", "2017-05-20 14:27:50", 4);
+INSERT INTO `Compra`(`idCompra`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
+VALUES (7, "2017-05-04 12:04:06", "2017-05-20 14:27:50", 4);
 
 
 -- ItemCompra
