@@ -392,7 +392,8 @@ select * from percurso;
 
 -- FuncionarioPercurso
 
-call insertFuncionarioPercurso(1,3,1);
-call insertFuncionarioPercurso(1,5,1);
-
+insert into `FuncionarioPercurso`(`Funcionario_idFuncionario`, `Percurso_idPercurso`, `Condutor`)
+values(1,3,1);
+insert into `FuncionarioPercurso`(`Funcionario_idFuncionario`, `Percurso_idPercurso`, `Condutor`)
+values(1,5,1);
 select * from FuncionarioPercurso;
