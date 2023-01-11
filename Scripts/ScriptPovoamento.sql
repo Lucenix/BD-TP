@@ -397,3 +397,22 @@ values(1,3,1);
 insert into `FuncionarioPercurso`(`Funcionario_idFuncionario`, `Percurso_idPercurso`, `Condutor`)
 values(1,5,1);
 select * from FuncionarioPercurso;
+
+-- Encomenda
+
+-- Exemplo de Três encomendas no mesmo percurso:
+INSERT INTO `Encomenda`(`idEncomenda`, `DataRegisto`, `EstadoEntrega`, `DistanciaParcial`, `Percurso_idPercurso`, `Cliente_idCliente`, `Endereco_idEndereco`)
+VALUES(0,"2023-01-18 11:01:01",0,2000,3,5,4);
+
+INSERT INTO `Encomenda`(`idEncomenda`, `DataRegisto`, `EstadoEntrega`, `DistanciaParcial`, `Percurso_idPercurso`, `Cliente_idCliente`, `Endereco_idEndereco`)
+VALUES(1,"2023-01-18 13:00:40",0,3514,3,1,2);
+
+INSERT INTO `Encomenda`(`idEncomenda`, `DataRegisto`, `EstadoEntrega`, `DistanciaParcial`, `Percurso_idPercurso`, `Cliente_idCliente`, `Endereco_idEndereco`)
+VALUES(2,"2023-01-19 14:30:09",0,200,3,4,6);
+
+
+INSERT INTO `Encomenda`(`idEncomenda`, `DataRegisto`, `EstadoEntrega`, `HoraPrevista`,`HoraEnvio`,`DistanciaParcial`, `Percurso_idPercurso`, `Cliente_idCliente`, `Endereco_idEndereco`)
+VALUES(3,"2023-01-16 03:59:13",0,"2023-01-17 10:30:00","2023-01-17 09:30:00",5000,2,1,9);
+
+INSERT INTO `Encomenda`(`idEncomenda`, `DataRegisto`, `EstadoEntrega`, `HoraPrevista`,`HoraEnvio`,`HoraEntrega`,`DistanciaParcial`, `Percurso_idPercurso`, `Cliente_idCliente`, `Endereco_idEndereco`)
+VALUES(4,"2023-01-17 00:52:58",1,"2023-01-19 14:32:40","2023-01-19 09:00:01","2023-01-19 14:45:23",1020,2,1,9);
