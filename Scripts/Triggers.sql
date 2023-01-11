@@ -117,7 +117,8 @@ delimiter $$
     
 -- A Quantidade Disponível de um Item nunca pode ultrapassar a Quantidade Total, 
 -- para cada entrada no relacionamento entre Item e Compra. (RD37)
--- Check constraint na tabela
+alter table ItemCompra
+add check (Quantidade >= Disponiveis);
     
 -- atualizar automaticamente a distância total de um percurso quando uma nova encomenda é adicionada (RD38)
 delimiter $$
