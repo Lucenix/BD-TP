@@ -30,3 +30,15 @@ create procedure isVeiculodisp(in idVeiculo INT, out est TINYINT)
 	end; $$
 call isVeiculodisp(1, @est);
 select @est;
+
+drop procedure if exists DiferencaTiposVeiculoEncomenda;
+delimiter $$
+create procedure DiferencaTiposVeiculoEncomenda(in Veiculo int, in Encomenda int)
+	begin
+	select it.TiposConservacao_idTiposConservacao from EncomendaItem as ei 
+		inner join ItemTipo as it on it.Item_idItem = ei.Item_idItem
+		where ei.Encomenda_idEncomenda = new.idEncomenda and
+		it.TiposConservacao_idTiposConservacao not in (
+			select vt.TiposConservacao_idTiposConservacao from VeiculoTipo as vt 
+			where vt.Veiculo_idVeiculo = Veiculo);
+	end; $$

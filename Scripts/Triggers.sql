@@ -52,27 +52,91 @@ delimiter $$
     end; $$
     
 -- Um Veículo não pode ser utilizado se não estiver operacional (RD32)
--- Um Veículo não pode entregar um Item com Tipos de Conservação que não acomode (RD34)
+drop trigger if exists checkEncomenda_VeiculoOperacional_u;
 delimiter $$
-	create trigger checkEncomendaVeiculo
+	create trigger checkEncomenda_VeiculoOperacional
     before update
     on Encomenda for each row
     begin
 		declare Veiculo int;
         declare EstadoOpercional bool;
-        declare FaltamTipos bool;
 		if new.Percurso is not null then
-		select p.Veiculo from Percurso as p where p.idPercurso = new.Percurso into Veiculo;
-        select v.EstadoOperacional from Veiculo as v where v.Veiculo = Veiculo into EstadoOperacional;
-        if EstadoOpercaional = 0 then signal sqlstate '45000' set Message_text = "Veículo não operacional"; end if;
-        select 
-			(select it.TiposConservacao_idTiposConservacao from EncomendaItem as ei 
-				inner join ItemTipo as it on it.Item_idItem = ei.Item_idItem
-				where ei.Encomenda_idEncomenda = new.idEncomenda and
-				it.TiposConservacao_idTiposConservacao not in 
-					(select vt.TiposConservacao_idTiposConservacao from VeiculoTipo as vt 
-						where vt.Veiculo_idVeiculo = Veiculo)) 
-			is null into FaltamTipos;
-        if FaltamTipos = 1 then signal sqlstate '45000' set Message_text = "Veículo não satisfaz todos os tipos de Itens que constam do Percurso"; end if;
+			select p.Veiculo from Percurso as p where p.idPercurso = new.Percurso into Veiculo;
+			select v.EstadoOperacional from Veiculo as v where v.Veiculo = Veiculo into EstadoOperacional;
+			if EstadoOpercaional = 0 then signal sqlstate '45000' set Message_text = "Veículo não operacional"; end if;
         end if;
     end; $$ 
+
+-- Um Veículo não pode ser utilizado se não estiver operacional (RD32)
+drop trigger if exists checkEncomenda_VeiculoOperacional_i;
+delimiter $$
+	create trigger checkEncomenda_VeiculoOperacional_i
+    before insert
+    on Encomenda for each row
+    begin
+		declare Veiculo int;
+        declare EstadoOpercional bool;
+		if new.Percurso is not null then
+			select p.Veiculo from Percurso as p where p.idPercurso = new.Percurso into Veiculo;
+			select v.EstadoOperacional from Veiculo as v where v.Veiculo = Veiculo into EstadoOperacional;
+			if EstadoOpercaional = 0 then signal sqlstate '45000' set Message_text = "Veículo não operacional"; end if;
+        end if;
+    end; $$ 
+ 
+-- Um Veículo não pode entregar um Item com Tipos de Conservação que não acomode (RD34)
+drop trigger if exists checkEncomenda_VeiculoTipoConservacao_u;
+delimiter $$
+	create trigger checkEncomenda_VeiculoTipoConservacao_u
+	before update
+    on Encomenda for each row
+	begin
+		declare Veiculo int;
+        declare FaltamTipos bool;
+		if new.Percurso is not null then
+			select p.Veiculo from Percurso as p where p.idPercurso = new.Percurso into Veiculo;
+			select 
+				(select it.TiposConservacao_idTiposConservacao from EncomendaItem as ei 
+				 inner join ItemTipo as it on it.Item_idItem = ei.Item_idItem
+				 where ei.Encomenda_idEncomenda = new.idEncomenda and
+				 it.TiposConservacao_idTiposConservacao not in 
+					(select vt.TiposConservacao_idTiposConservacao from VeiculoTipo as vt 
+					 where vt.Veiculo_idVeiculo = Veiculo)) 
+			is null into FaltamTipos;
+			if FaltamTipos = 1 then signal sqlstate '45000' set Message_text = "Veículo não satisfaz todos os tipos de Itens que constam do Percurso"; end if;
+		end if;
+	end; $$
+    
+drop trigger if exists checkEncomenda_VeiculoTipoConservacao_i;
+delimiter $$
+	create trigger checkEncomenda_VeiculoTipoConservacao_i
+	before insert
+    on Encomenda for each row
+	begin
+		declare Veiculo int;
+        declare FaltamTipos bool;
+		if new.Percurso is not null then
+			select p.Veiculo from Percurso as p where p.idPercurso = new.Percurso into Veiculo;
+			select 
+				(select it.TiposConservacao_idTiposConservacao from EncomendaItem as ei 
+				 inner join ItemTipo as it on it.Item_idItem = ei.Item_idItem
+				 where ei.Encomenda_idEncomenda = new.idEncomenda and
+				 it.TiposConservacao_idTiposConservacao not in 
+					(select vt.TiposConservacao_idTiposConservacao from VeiculoTipo as vt 
+					 where vt.Veiculo_idVeiculo = Veiculo)) 
+			is null into FaltamTipos;
+			if FaltamTipos = 1 then signal sqlstate '45000' set Message_text = "Veículo não satisfaz todos os tipos de Itens que constam do Percurso"; end if;
+		end if;
+	end; $$
+    
+-- Se um Funcionário tiver Habilitação Automobilística, torna-se necessário saber a Data de Expiração da Habilitação. (RD31)
+drop trigger if exists checkFuncionario_HabilitacaoAuto;
+delimiter $$
+	create trigger checkFuncionario_HabilitacaoAuto
+	before insert
+    on Funcionario for each row
+	begin
+		if (new.HabilitacaoAutom is not null and new.DataExpiracaoHabilitacao is null) or
+		   (new.HabilitacaoAutom is null and new.DataExpiracaoHabilitacao is not null) then 
+			signal sqlstate '45000' set Message_text = "";
+		end if;
+	end; $$
