@@ -85,3 +85,28 @@ create procedure diasAteExpir(in idItem INT, in idCompra INT, out dias INT)
 call diasAteExpir(8,4, @dias);
 select @dias;
 
+-- dias até inspecao
+drop procedure if exists diasAteInsp;
+delimiter $$
+create procedure diasAteInsp(in idVeiculo INT, out dias INT)
+	begin
+    select datediff(v.DataProximaInspecao, CURDATE()) into dias from Veiculo as v
+		where v.idVeiculo = idVeiculo;
+	end; $$
+
+call diasAteInsp(0, @dias);
+select @dias;
+
+drop procedure if exists dinheiroGasto;
+delimiter $$
+create procedure dinheiroGasto(in idate DATE, in fdate DATE, out gasto DOUBLE)
+	begin
+    select SUM(c.CustoTotal) into gasto from Compra as c
+		where c.DataEmissao between idate and fdate; 
+    end; $$
+
+call dinheiroGasto(date("2002-8-01 07:00:30"), date("2002-12-01 00:00:00"), @money);
+select @money;
+
+
+
