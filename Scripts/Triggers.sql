@@ -32,7 +32,6 @@ delimiter $$
 		update percurso as p set p.distanciatotal = p.distanciatotal + Encomenda.distanciaparcial where e.Percurso_idPercurso = p.idPercurso;
 	end; $$
     
--- inserir um funcionário num percurso
 -- Um Funcionário não pode conduzir um veículo que não está habilitado (RD39)
 -- Um Funcionário não pode estar simultaneamente em dois Percursos (RD40)
 delimiter $$
@@ -51,3 +50,29 @@ delimiter $$
         where p.HoraChegada = '1000-01-01 00:00:00' into Atual;
         if Atual then signal sqlstate '45000' set Message_text = "Funcionário já em percurso atual"; end if;
     end; $$
+    
+-- Um Veículo não pode ser utilizado se não estiver operacional (RD32)
+-- Um Veículo não pode entregar um Item com Tipos de Conservação que não acomode (RD34)
+delimiter $$
+	create trigger checkEncomendaVeiculo
+    before update
+    on Encomenda for each row
+    begin
+		declare Veiculo int;
+        declare EstadoOpercional bool;
+        declare FaltamTipos bool;
+		if new.Percurso is not null then
+		select p.Veiculo from Percurso as p where p.idPercurso = new.Percurso into Veiculo;
+        select v.EstadoOperacional from Veiculo as v where v.Veiculo = Veiculo into EstadoOperacional;
+        if EstadoOpercaional = 0 then signal sqlstate '45000' set Message_text = "Veículo não operacional"; end if;
+        select 
+			(select it.TiposConservacao_idTiposConservacao from EncomendaItem as ei 
+				inner join ItemTipo as it on it.Item_idItem = ei.Item_idItem
+				where ei.Encomenda_idEncomenda = new.idEncomenda and
+				it.TiposConservacao_idTiposConservacao not in 
+					(select vt.TiposConservacao_idTiposConservacao from VeiculoTipo as vt 
+						where vt.Veiculo_idVeiculo = Veiculo)) 
+			is null into FaltamTipos;
+        if FaltamTipos = 1 then signal sqlstate '45000' set Message_text = "Veículo não satisfaz todos os tipos de Itens que constam do Percurso"; end if;
+        end if;
+    end; $$ 
