@@ -11,6 +11,7 @@ drop trigger if exists checkEncomenda_VeiculoTipoConservacao_u;
 drop trigger if exists checkEncomenda_VeiculoTipoConservacao_i;
 drop trigger if exists checkEncomenda_Percurso_u;
 drop trigger if exists checkEncomenda_Percurso_i;
+drop trigger if exists checkEncomendaItem_VeiculoTipoConservacao;
 
 -- Se um Funcionário tiver Habilitação Automobilística, torna-se necessário saber a Data de Expiração da Habilitação. (RD31)
 delimiter $$
@@ -65,13 +66,13 @@ delimiter $$
 		if new.Percurso_idPercurso is not null then
 			select p.Veiculo_idVeiculo from Percurso as p where p.idPercurso = new.Percurso_idPercurso into Veiculo;
 			select 
-				(select it.TiposConservacao_idTiposConservacao from EncomendaItem as ei 
+				exists(select it.TiposConservacao_idTiposConservacao from EncomendaItem as ei 
 				 inner join ItemTipo as it on it.Item_idItem = ei.Item_idItem
 				 where ei.Encomenda_idEncomenda = new.idEncomenda and
 				 it.TiposConservacao_idTiposConservacao not in 
 					(select vt.TiposConservacao_idTiposConservacao from VeiculoTipo as vt 
 					 where vt.Veiculo_idVeiculo = Veiculo))
-			is null into FaltamTipos;
+			into FaltamTipos;
 			if FaltamTipos = 1 then signal sqlstate '45000' set Message_text = "Veículo não satisfaz todos os tipos de Itens que constam do Percurso"; end if;
 		end if;
 	end; $$
@@ -107,13 +108,13 @@ delimiter $$
 		declare Percurso int;
         declare Veiculo int;
         declare FaltamTipos bool;
-        select p.idPercurso from Percurso as p inner join Encomenda as e on p.idPercurso = e.Percurso_idPercurso
+        select e.Percurso_idPercurso from Encomenda as e
 			where e.idEncomenda = new.Encomenda_idEncomenda into Percurso;
 		if Percurso is not null then
 			select p.Veiculo_idVeiculo from Percurso as p where p.idPercurso = Percurso into Veiculo;
 			select 
 				exists(select it.TiposConservacao_idTiposConservacao from ItemTipo as it 
-				 where new.Encomenda_idEncomenda = it.Encomenda_idEncomenda and it.Item_idItem = new.Item_idItem and
+				 where it.Item_idItem = new.Item_idItem and
 				 it.TiposConservacao_idTiposConservacao not in 
 					(select vt.TiposConservacao_idTiposConservacao from VeiculoTipo as vt 
 					 where vt.Veiculo_idVeiculo = Veiculo))
@@ -128,7 +129,7 @@ delimiter $$
     after insert
     on EncomendaItem for each row
     begin
-		update encomenda as e set e.custototal = e.custototal + EncomendaItem.custoparcial where e.idEncomenda = EncomendaItem.idEncomenda;
+		update encomenda as e set e.custototal = e.custototal + new.custoparcial where e.idEncomenda = new.Encomenda_idEncomenda;
 	end; $$
 
 -- atualizar automaticamente o custo total de uma compra sempre que se introduzir um novo item (RD36)
@@ -151,7 +152,7 @@ delimiter $$
     after insert
     on Encomenda for each row
     begin
-		update percurso as p set p.distanciatotal = p.distanciatotal + Encomenda.distanciaparcial where e.Percurso_idPercurso = p.idPercurso;
+		update percurso as p set p.distanciatotal = p.distanciatotal + new.distanciaparcial where new.Percurso_idPercurso = p.idPercurso;
 	end; $$
     
 -- Um Funcionário não pode conduzir um veículo que não está habilitado (RD39)

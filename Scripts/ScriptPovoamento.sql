@@ -2,6 +2,8 @@ Use mydb;
 
 delete from Contacto;
 delete from Relatorio;
+delete from EncomendaItem;
+delete from Encomenda;
 delete from Cliente;
 delete from FuncionarioPercurso;
 delete from DataInspecaoPassada;
@@ -398,8 +400,8 @@ select * from Percurso;
 
 insert into `FuncionarioPercurso`(`Funcionario_idFuncionario`, `Percurso_idPercurso`, `Condutor`)
 values(1,3,1);
-insert into `FuncionarioPercurso`(`Funcionario_idFuncionario`, `Percurso_idPercurso`, `Condutor`)
-values(1,5,1);
+-- insert into `FuncionarioPercurso`(`Funcionario_idFuncionario`, `Percurso_idPercurso`, `Condutor`)
+-- values(1,5,1);
 select * from FuncionarioPercurso;
 
 -- Encomenda
