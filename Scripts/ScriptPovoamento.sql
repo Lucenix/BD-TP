@@ -2,7 +2,6 @@ Use mydb;
 
 delete from Contacto;
 delete from Relatorio;
-delete from Encomenda;
 delete from Cliente;
 delete from FuncionarioPercurso;
 delete from DataInspecaoPassada;
@@ -84,6 +83,9 @@ Values(1,"B1",100,"Gasolina","2026-03-19",1,91.23,"20-BD-20");
 
 Insert into `Veiculo`(`idVeiculo`,`Categoria`,`Kilometragem`,`TipoCombustivel`,`DataProximaInspecao`,`EstadoOperacional`,`IUC`,`Matricula`)
 Values(2,"A1",29,"Gasolina","2024-07-29",1,58.31,"20-BD-23");
+
+Insert into `Veiculo`(`idVeiculo`,`Categoria`,`Kilometragem`,`TipoCombustivel`,`DataProximaInspecao`,`EstadoOperacional`,`IUC`,`Matricula`)
+Values(3,"C",13748,"Diesel","2025-07-29",1,58.31,"21-BD-23");
 
 Select * from Veiculo;
 
@@ -388,6 +390,7 @@ VALUES (5,"2023-01-19",2);
 INSERT INTO `Percurso`(`idPercurso`,`HoraChegada`,`HoraPartida`,`DistanciaTotal`,`Veiculo_idVeiculo`)
 VALUES (6,"2022-12-23","2022-11-11",150.6,2);
 
+
 select * from Percurso;
 
 
@@ -421,30 +424,3 @@ VALUES(4,"2023-01-17 00:52:58",1,"2023-01-19 14:32:40","2023-01-19 09:00:01","20
 INSERT INTO `Encomenda`(`idEncomenda`, `DataRegisto`, `EstadoEntrega`, `HoraPrevista`,`HoraEnvio`,`HoraEntrega`,`DistanciaParcial`, `Percurso_idPercurso`, `Cliente_idCliente`, `Endereco_idEndereco`)
 VALUES(5,"2023-01-17 00:52:58",1,"2023-01-19 14:32:40","2023-01-19 09:00:01","2023-01-19 14:45:23",1020,2,1,9);
 
--- EncomendaItem
-INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
-VALUES(1,5,2.79,3,0);
-
-INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
-VALUES(0,2,23.79,5,0);
-
-INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
-VALUES(0,1,2.79,3,2);
-
-INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
-VALUES(1,4,18.90,7,3);
-
-INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
-VALUES(1,1,15.50,0,4);
-
-INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
-VALUES(0,2,8.20,2,4);
-
-INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
-VALUES(0,3,7.50,4,4);
-
-INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
-VALUES(0,1,30,6,4);
-
-INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
-VALUES(0,15,75.55,8,5);

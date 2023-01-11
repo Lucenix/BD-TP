@@ -25,11 +25,25 @@ drop procedure if exists isVeiculodisp;
 delimiter $$
 create procedure isVeiculodisp(in idVeiculo INT, out est TINYINT)
 	begin
-    select v.EstadoOperacional into est from Veiculo as v
+    declare isop TINYINT;
+    declare isdisp TINYINT;
+    declare inspec TINYINT;
+    select v.EstadoOperacional, DATEDIFF(v.DataProximaInspecao,CURDATE()) > 0 into isop, inspec from Veiculo as v
 		where v.idVeiculo = idVeiculo;
+	select 
+		not exists(select p.Veiculo_idVeiculo from Percurso as p 
+			where p.Veiculo_idVeiculo = idVeiculo and p.HoraChegada = '1000-01-01')
+	into isdisp;
+    set est = isop and isdisp and inspec;
 	end; $$
-call isVeiculodisp(1, @est);
+call isVeiculodisp(3, @est);
 select @est;
+
+select p.Veiculo_idVeiculo from Percurso as p 
+			where p.Veiculo_idVeiculo = idVeiculo and p.HoraChegada = '1000-01-01'
+
+select p.Veiculo_idVeiculo from Percurso as p 
+			where p.Veiculo_idVeiculo = 3 and (p.HoraChegada != '1000-01-01' or DATEDIFF(p.HoraPartida, CURDATE()) > 0)
 
 drop procedure if exists DiferencaTiposVeiculoEncomenda;
 delimiter $$
@@ -42,3 +56,32 @@ create procedure DiferencaTiposVeiculoEncomenda(in Veiculo int, in Encomenda int
 			select vt.TiposConservacao_idTiposConservacao from VeiculoTipo as vt 
 			where vt.Veiculo_idVeiculo = Veiculo);
 	end; $$
+-- calcular o tempo gasto num percurso
+drop procedure if exists tempoPercurso;
+delimiter $$
+
+
+create procedure tempoPercurso(in idPercurso INT, out restime TIME)
+	begin
+    declare chegada DateTime;
+    declare partida DateTime;
+    select p.HoraChegada, p.HoraPartida into chegada,partida from Percurso as p
+		where p.idPercurso = idPercurso;
+	if chegada = '1000-01-01 00:00:00' then signal sqlstate '45000' set Message_text = "Percurso não terminado"; end if;
+    set restime = timediff(chegada,partida);
+	end; $$
+call tempoPercurso(2, @res);
+select @res;
+
+-- calcular quantos dias faltam para um lote expirar
+drop procedure if exists diasAteExpir;
+delimiter $$
+create procedure diasAteExpir(in idItem INT, in idCompra INT, out dias INT)
+	begin
+    select datediff(i.PrazoDeValidade, CURDATE()) into dias from ItemCompra as i
+		where i.Item_idItem = idItem and i.Compra_idCompra = idCompra;
+	end; $$
+
+call diasAteExpir(8,4, @dias);
+select @dias;
+
