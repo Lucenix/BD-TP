@@ -390,8 +390,6 @@ VALUES (5,"2023-01-19",2);
 INSERT INTO `Percurso`(`idPercurso`,`HoraChegada`,`HoraPartida`,`DistanciaTotal`,`Veiculo_idVeiculo`)
 VALUES (6,"2022-12-23","2022-11-11",150.6,2);
 
-INSERT INTO `Percurso`(`idPercurso`,`HoraPartida`,`DistanciaTotal`,`Veiculo_idVeiculo`)
-VALUES (7,"2022-11-11",150.6,3);
 
 select * from Percurso;
 
