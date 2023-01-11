@@ -327,7 +327,7 @@ VALUES (3, 3);
 INSERT INTO `Compra`(`idCompra`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
 VALUES (0, "2018-12-21 08:32:12", "2019-1-13 16:05:50", 0);
 
-INSERT INTO `Compra`(`idCompra`, `CustoTotal`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
+INSERT INTO `Compra`(`idCompra`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
 VALUES (1, "2020-05-07 16:30:04", "2012-5-23 15:56:03", 1);
 
 INSERT INTO `Compra`(`idCompra`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
