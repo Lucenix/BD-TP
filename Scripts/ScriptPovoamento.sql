@@ -90,13 +90,13 @@ Select * from Veiculo;
 
 -- DataInspecaoPassada
 
-INSERT INTO `datainspecaopassada`(`DataInspecaoPassada`, `Veiculo_idVeiculo`)
+INSERT INTO `DataInspecaoPassada`(`DataInspecaoPassada`, `Veiculo_idVeiculo`)
 VALUES('2023-01-06', 0);
-INSERT INTO `datainspecaopassada`(`DataInspecaoPassada`, `Veiculo_idVeiculo`)
+INSERT INTO `DataInspecaoPassada`(`DataInspecaoPassada`, `Veiculo_idVeiculo`)
 VALUES('2022-01-06', 0);
-INSERT INTO `datainspecaopassada`(`DataInspecaoPassada`, `Veiculo_idVeiculo`)
+INSERT INTO `DataInspecaoPassada`(`DataInspecaoPassada`, `Veiculo_idVeiculo`)
 VALUES('2021-05-15', 1);
-INSERT INTO `datainspecaopassada`(`DataInspecaoPassada`, `Veiculo_idVeiculo`)
+INSERT INTO `DataInspecaoPassada`(`DataInspecaoPassada`, `Veiculo_idVeiculo`)
 VALUES('2022-05-15', 1);
 
 -- VeiculoTipo
@@ -302,19 +302,19 @@ Values(8,"WHEY",0.23,"Proteína em pó, isolada, 1kg",65.99,2,0);
 
 -- ItemTipo
 
-INSERT INTO `itemtipo` (`TiposConservacao_idTiposConservacao`, `Item_idItem`)
+INSERT INTO `ItemTipo` (`TiposConservacao_idTiposConservacao`, `Item_idItem`)
 VALUES (0, 7);
 
-INSERT INTO `itemtipo` (`TiposConservacao_idTiposConservacao`, `Item_idItem`)
+INSERT INTO `ItemTipo` (`TiposConservacao_idTiposConservacao`, `Item_idItem`)
 VALUES (0, 5);
 
-INSERT INTO `itemtipo` (`TiposConservacao_idTiposConservacao`, `Item_idItem`)
+INSERT INTO `ItemTipo` (`TiposConservacao_idTiposConservacao`, `Item_idItem`)
 VALUES (2, 5);
 
-INSERT INTO `itemtipo` (`TiposConservacao_idTiposConservacao`, `Item_idItem`)
+INSERT INTO `ItemTipo` (`TiposConservacao_idTiposConservacao`, `Item_idItem`)
 VALUES (3, 5);
 
-INSERT INTO `itemtipo` (`TiposConservacao_idTiposConservacao`, `Item_idItem`)
+INSERT INTO `ItemTipo` (`TiposConservacao_idTiposConservacao`, `Item_idItem`)
 VALUES (3, 3);
 
 
@@ -388,7 +388,7 @@ VALUES (5,"2023-01-19",2);
 INSERT INTO `Percurso`(`idPercurso`,`HoraChegada`,`HoraPartida`,`DistanciaTotal`,`Veiculo_idVeiculo`)
 VALUES (6,"2022-12-23","2022-11-11",150.6,2);
 
-select * from percurso;
+select * from Percurso;
 
 
 -- FuncionarioPercurso
