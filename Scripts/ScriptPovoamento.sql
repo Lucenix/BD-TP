@@ -2,6 +2,7 @@ Use mydb;
 
 delete from Contacto;
 delete from Relatorio;
+delete from Encomenda;
 delete from Cliente;
 delete from FuncionarioPercurso;
 delete from DataInspecaoPassada;

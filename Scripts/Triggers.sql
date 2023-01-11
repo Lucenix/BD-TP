@@ -5,56 +5,24 @@ drop trigger if exists encomendaitem_update_encomenda_custototal;
 drop trigger if exists encomenda_update_percurso_distanciatotal;
 drop trigger if exists checkFuncionarioPercurso;
 
--- atualizar automaticamente o custo total de uma compra sempre que se introduzir um novo item
+   
+-- Se um Funcionário tiver Habilitação Automobilística, torna-se necessário saber a Data de Expiração da Habilitação. (RD31)
+drop trigger if exists checkFuncionario_HabilitacaoAuto;
 delimiter $$
-	create trigger itemcompra_update_compra_custototal
-    after insert
-    on ItemCompra for each row
-    begin
-		update compra as c set c.custototal = c.custototal + new.custoparcial where c.idCompra = new.Compra_idCompra;
+	create trigger checkFuncionario_HabilitacaoAuto
+	before insert
+    on Funcionario for each row
+	begin
+		if (new.HabilitacaoAutom is not null and new.DataExpiracaoHabilitacao is null) or
+		   (new.HabilitacaoAutom is null and new.DataExpiracaoHabilitacao is not null) then 
+			signal sqlstate '45000' set Message_text = "";
+		end if;
 	end; $$
 
--- atualizar automaticamente o custo total de uma encomenda sempre que se introduzir um novo item
-delimiter $$
-	create trigger encomendaitem_update_encomenda_custototal
-    after insert
-    on EncomendaItem for each row
-    begin
-		update encomenda as e set e.custototal = e.custototal + EncomendaItem.custoparcial where e.idEncomenda = EncomendaItem.idEncomenda;
-	end; $$
-    
--- atualizar automaticamente a distância total de um percurso quando uma nova encomenda é adicionada
-delimiter $$
-	create trigger encomenda_update_percurso_distanciatotal
-    after insert
-    on Encomenda for each row
-    begin
-		update percurso as p set p.distanciatotal = p.distanciatotal + Encomenda.distanciaparcial where e.Percurso_idPercurso = p.idPercurso;
-	end; $$
-    
--- Um Funcionário não pode conduzir um veículo que não está habilitado (RD39)
--- Um Funcionário não pode estar simultaneamente em dois Percursos (RD40)
-delimiter $$
-	create trigger checkFuncionarioPercurso
-    before insert
-    on FuncionarioPercurso for each row
-    begin
-		declare Habilitacao varchar(3);
-        declare Categoria varchar(3);
-        declare Atual int;
-		select f.HabilitacaoAuto from Funcionario as f where f.idFuncionario = new.Funcionario_idFuncionario into Habilitacao;
-        select v.Categoria from Veiculo as v inner join Percurso as p 
-			on p.idPercurso = new.Percurso_idPercurso and v.idVeiculo = p.Veiculo_idVeiculo into Categoria;
-		if Habilitacao < Categoria then signal sqlstate '45000' set Message_text = "Funcionário não habilitado para o Veículo"; end if;
-        select p.idPercurso from Percurso as p inner join FuncionarioPercurso as fp on fp.Percurso_idPercurso = p.idPercurso
-        where p.HoraChegada = '1000-01-01 00:00:00' into Atual;
-        if Atual then signal sqlstate '45000' set Message_text = "Funcionário já em percurso atual"; end if;
-    end; $$
-    
 -- Um Veículo não pode ser utilizado se não estiver operacional (RD32)
 drop trigger if exists checkEncomenda_VeiculoOperacional_u;
 delimiter $$
-	create trigger checkEncomenda_VeiculoOperacional
+	create trigger checkEncomenda_VeiculoOperacional_u
     before update
     on Encomenda for each row
     begin
@@ -82,7 +50,7 @@ delimiter $$
 			if EstadoOpercaional = 0 then signal sqlstate '45000' set Message_text = "Veículo não operacional"; end if;
         end if;
     end; $$ 
- 
+
 -- Um Veículo não pode entregar um Item com Tipos de Conservação que não acomode (RD34)
 drop trigger if exists checkEncomenda_VeiculoTipoConservacao_u;
 delimiter $$
@@ -105,7 +73,8 @@ delimiter $$
 			if FaltamTipos = 1 then signal sqlstate '45000' set Message_text = "Veículo não satisfaz todos os tipos de Itens que constam do Percurso"; end if;
 		end if;
 	end; $$
-    
+
+-- Um Veículo não pode entregar um Item com Tipos de Conservação que não acomode (RD34)
 drop trigger if exists checkEncomenda_VeiculoTipoConservacao_i;
 delimiter $$
 	create trigger checkEncomenda_VeiculoTipoConservacao_i
@@ -117,26 +86,93 @@ delimiter $$
 		if new.Percurso is not null then
 			select p.Veiculo from Percurso as p where p.idPercurso = new.Percurso into Veiculo;
 			select 
-				(select it.TiposConservacao_idTiposConservacao from EncomendaItem as ei 
+				exists(select it.TiposConservacao_idTiposConservacao from EncomendaItem as ei 
 				 inner join ItemTipo as it on it.Item_idItem = ei.Item_idItem
 				 where ei.Encomenda_idEncomenda = new.idEncomenda and
 				 it.TiposConservacao_idTiposConservacao not in 
 					(select vt.TiposConservacao_idTiposConservacao from VeiculoTipo as vt 
-					 where vt.Veiculo_idVeiculo = Veiculo)) 
-			is null into FaltamTipos;
+					 where vt.Veiculo_idVeiculo = Veiculo))
+			into FaltamTipos;
 			if FaltamTipos = 1 then signal sqlstate '45000' set Message_text = "Veículo não satisfaz todos os tipos de Itens que constam do Percurso"; end if;
 		end if;
 	end; $$
-    
--- Se um Funcionário tiver Habilitação Automobilística, torna-se necessário saber a Data de Expiração da Habilitação. (RD31)
-drop trigger if exists checkFuncionario_HabilitacaoAuto;
+
+-- atualizar automaticamente o custo total de uma encomenda sempre que se introduzir um novo item (RD35)
 delimiter $$
-	create trigger checkFuncionario_HabilitacaoAuto
-	before insert
-    on Funcionario for each row
+	create trigger encomendaitem_update_encomenda_custototal
+    after insert
+    on EncomendaItem for each row
+    begin
+		update encomenda as e set e.custototal = e.custototal + EncomendaItem.custoparcial where e.idEncomenda = EncomendaItem.idEncomenda;
+	end; $$
+
+-- atualizar automaticamente o custo total de uma compra sempre que se introduzir um novo item (RD36)
+delimiter $$
+	create trigger itemcompra_update_compra_custototal
+    after insert
+    on ItemCompra for each row
+    begin
+		update compra as c set c.custototal = c.custototal + new.custoparcial where c.idCompra = new.Compra_idCompra;
+	end; $$
+    
+-- A Quantidade Disponível de um Item nunca pode ultrapassar a Quantidade Total, 
+-- para cada entrada no relacionamento entre Item e Compra. (RD37)
+-- Check constraint na tabela
+    
+-- atualizar automaticamente a distância total de um percurso quando uma nova encomenda é adicionada (RD38)
+delimiter $$
+	create trigger encomenda_update_percurso_distanciatotal
+    after insert
+    on Encomenda for each row
+    begin
+		update percurso as p set p.distanciatotal = p.distanciatotal + Encomenda.distanciaparcial where e.Percurso_idPercurso = p.idPercurso;
+	end; $$
+    
+-- Um Funcionário não pode conduzir um veículo que não está habilitado (RD39)
+-- Um Funcionário não pode estar simultaneamente em dois Percursos (RD40)
+delimiter $$
+	create trigger checkFuncionarioPercurso
+    before insert
+    on FuncionarioPercurso for each row
+    begin
+		declare Habilitacao varchar(3);
+        declare Categoria varchar(3);
+        declare Atual int;
+		select f.HabilitacaoAuto from Funcionario as f where f.idFuncionario = new.Funcionario_idFuncionario into Habilitacao;
+        select v.Categoria from Veiculo as v inner join Percurso as p 
+			on p.idPercurso = new.Percurso_idPercurso and v.idVeiculo = p.Veiculo_idVeiculo into Categoria;
+		if Habilitacao < Categoria then signal sqlstate '45000' set Message_text = "Funcionário não habilitado para o Veículo"; end if;
+        select p.idPercurso from Percurso as p inner join FuncionarioPercurso as fp on fp.Percurso_idPercurso = p.idPercurso
+        where p.HoraChegada = '1000-01-01 00:00:00' into Atual;
+        if Atual then signal sqlstate '45000' set Message_text = "Funcionário já em percurso atual"; end if;
+    end; $$
+
+-- Quando uma Encomenda está associada a um Percurso, no registo dessa Encomenda passa a ser obrigatória 
+-- a Distância Parcial (double), e a Hora Prevista (datetime) se a Hora de Envio estiver registada.(RD41)
+drop trigger if exists checkEncomenda_Percurso_u;
+delimiter $$
+	create trigger checkEncomenda_Percurso_u
+	before update
+    on Encomenda for each row
 	begin
-		if (new.HabilitacaoAutom is not null and new.DataExpiracaoHabilitacao is null) or
-		   (new.HabilitacaoAutom is null and new.DataExpiracaoHabilitacao is not null) then 
-			signal sqlstate '45000' set Message_text = "";
-		end if;
+		if new.Percurso is not null and (
+			new.HoraEnvio != "1000-01-01 00:00" and new.HoraPrevista = "1000-01-01 00:00" or
+			new.DistanciaParcial = "0.0")
+		then 
+        signal sqlstate '45000' set Message_text = "Veículo não satisfaz todos os tipos de Itens que constam do Percurso"; end if;
+	end; $$
+
+-- Quando uma Encomenda está associada a um Percurso, no registo dessa Encomenda passa a ser obrigatória 
+-- a Distância Parcial (double), e a Hora Prevista (datetime) se a Hora de Envio estiver registada.(RD41)
+drop trigger if exists checkEncomenda_Percurso_i;
+delimiter $$
+	create trigger checkEncomenda_Percurso_i
+	before insert
+    on Encomenda for each row
+	begin
+		if new.Percurso is not null and (
+			new.HoraEnvio != "1000-01-01 00:00" and new.HoraPrevista = "1000-01-01 00:00" or
+			new.DistanciaParcial = "0.0")
+		then 
+        signal sqlstate '45000' set Message_text = "Veículo não satisfaz todos os tipos de Itens que constam do Percurso"; end if;
 	end; $$
