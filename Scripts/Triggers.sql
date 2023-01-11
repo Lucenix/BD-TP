@@ -4,55 +4,57 @@ drop trigger if exists itemcompra_update_compra_custototal;
 drop trigger if exists encomendaitem_update_encomenda_custototal;
 drop trigger if exists encomenda_update_percurso_distanciatotal;
 drop trigger if exists checkFuncionarioPercurso;
-
-   
--- Se um Funcionário tiver Habilitação Automobilística, torna-se necessário saber a Data de Expiração da Habilitação. (RD31)
 drop trigger if exists checkFuncionario_HabilitacaoAuto;
+drop trigger if exists checkEncomenda_VeiculoOperacional_u;
+drop trigger if exists checkEncomenda_VeiculoOperacional_i;
+drop trigger if exists checkEncomenda_VeiculoTipoConservacao_u;
+drop trigger if exists checkEncomenda_VeiculoTipoConservacao_i;
+drop trigger if exists checkEncomenda_Percurso_u;
+drop trigger if exists checkEncomenda_Percurso_i;
+
+-- Se um Funcionário tiver Habilitação Automobilística, torna-se necessário saber a Data de Expiração da Habilitação. (RD31)
 delimiter $$
 	create trigger checkFuncionario_HabilitacaoAuto
 	before insert
     on Funcionario for each row
 	begin
-		if (new.HabilitacaoAutom is not null and new.DataExpiracaoHabilitacao is null) or
-		   (new.HabilitacaoAutom is null and new.DataExpiracaoHabilitacao is not null) then 
+		if (new.HabilitacaoAuto is not null and new.DataExpiracaoHabilitacao is null) or
+		   (new.HabilitacaoAuto is null and new.DataExpiracaoHabilitacao is not null) then 
 			signal sqlstate '45000' set Message_text = "";
 		end if;
 	end; $$
 
 -- Um Veículo não pode ser utilizado se não estiver operacional (RD32)
-drop trigger if exists checkEncomenda_VeiculoOperacional_u;
 delimiter $$
 	create trigger checkEncomenda_VeiculoOperacional_u
     before update
     on Encomenda for each row
     begin
 		declare Veiculo int;
-        declare EstadoOpercional bool;
-		if new.Percurso is not null then
-			select p.Veiculo from Percurso as p where p.idPercurso = new.Percurso into Veiculo;
-			select v.EstadoOperacional from Veiculo as v where v.Veiculo = Veiculo into EstadoOperacional;
-			if EstadoOpercaional = 0 then signal sqlstate '45000' set Message_text = "Veículo não operacional"; end if;
+        declare EstadoOperacional bool;
+		if new.Percurso_idPercurso is not null then
+			select p.Veiculo_idVeiculo from Percurso as p where p.idPercurso = new.Percurso_idPercurso into Veiculo;
+			select v.EstadoOperacional from Veiculo as v where v.idVeiculo = Veiculo into EstadoOperacional;
+			if EstadoOperacional = 0 then signal sqlstate '45000' set Message_text = "Veículo não operacional"; end if;
         end if;
     end; $$ 
 
 -- Um Veículo não pode ser utilizado se não estiver operacional (RD32)
-drop trigger if exists checkEncomenda_VeiculoOperacional_i;
 delimiter $$
 	create trigger checkEncomenda_VeiculoOperacional_i
     before insert
     on Encomenda for each row
     begin
 		declare Veiculo int;
-        declare EstadoOpercional bool;
-		if new.Percurso is not null then
-			select p.Veiculo from Percurso as p where p.idPercurso = new.Percurso into Veiculo;
-			select v.EstadoOperacional from Veiculo as v where v.Veiculo = Veiculo into EstadoOperacional;
-			if EstadoOpercaional = 0 then signal sqlstate '45000' set Message_text = "Veículo não operacional"; end if;
+        declare EstadoOperacional bool;
+		if new.Percurso_idPercurso is not null then
+			select p.Veiculo_idVeiculo from Percurso as p where p.idPercurso = new.Percurso_idPercurso into Veiculo;
+			select v.EstadoOperacional from Veiculo as v where v.idVeiculo = Veiculo into EstadoOperacional;
+			if EstadoOperacional = 0 then signal sqlstate '45000' set Message_text = "Veículo não operacional"; end if;
         end if;
     end; $$ 
 
--- Um Veículo não pode entregar um Item com Tipos de Conservação que não acomode (RD34)
-drop trigger if exists checkEncomenda_VeiculoTipoConservacao_u;
+-- Um Veículo não pode entregar um Item com Tipos de Conservação que não acomode(RD34);
 delimiter $$
 	create trigger checkEncomenda_VeiculoTipoConservacao_u
 	before update
@@ -60,22 +62,21 @@ delimiter $$
 	begin
 		declare Veiculo int;
         declare FaltamTipos bool;
-		if new.Percurso is not null then
-			select p.Veiculo from Percurso as p where p.idPercurso = new.Percurso into Veiculo;
+		if new.Percurso_idPercurso is not null then
+			select p.Veiculo_idVeiculo from Percurso as p where p.idPercurso = new.Percurso_idPercurso into Veiculo;
 			select 
 				(select it.TiposConservacao_idTiposConservacao from EncomendaItem as ei 
 				 inner join ItemTipo as it on it.Item_idItem = ei.Item_idItem
 				 where ei.Encomenda_idEncomenda = new.idEncomenda and
 				 it.TiposConservacao_idTiposConservacao not in 
 					(select vt.TiposConservacao_idTiposConservacao from VeiculoTipo as vt 
-					 where vt.Veiculo_idVeiculo = Veiculo)) 
+					 where vt.Veiculo_idVeiculo = Veiculo))
 			is null into FaltamTipos;
 			if FaltamTipos = 1 then signal sqlstate '45000' set Message_text = "Veículo não satisfaz todos os tipos de Itens que constam do Percurso"; end if;
 		end if;
 	end; $$
 
 -- Um Veículo não pode entregar um Item com Tipos de Conservação que não acomode (RD34)
-drop trigger if exists checkEncomenda_VeiculoTipoConservacao_i;
 delimiter $$
 	create trigger checkEncomenda_VeiculoTipoConservacao_i
 	before insert
@@ -83,8 +84,8 @@ delimiter $$
 	begin
 		declare Veiculo int;
         declare FaltamTipos bool;
-		if new.Percurso is not null then
-			select p.Veiculo from Percurso as p where p.idPercurso = new.Percurso into Veiculo;
+		if new.Percurso_idPercurso is not null then
+			select p.Veiculo_idVeiculo from Percurso as p where p.idPercurso = new.Percurso_idPercurso into Veiculo;
 			select 
 				exists(select it.TiposConservacao_idTiposConservacao from EncomendaItem as ei 
 				 inner join ItemTipo as it on it.Item_idItem = ei.Item_idItem
@@ -97,6 +98,30 @@ delimiter $$
 		end if;
 	end; $$
 
+-- Um Veículo não pode entregar um Item com Tipos de Conservação que não acomode(RD34);
+delimiter $$
+	create trigger checkEncomendaItem_VeiculoTipoConservacao
+	before insert
+    on EncomendaItem for each row
+	begin
+		declare Percurso int;
+        declare Veiculo int;
+        declare FaltamTipos bool;
+        select p.idPercurso from Percurso as p inner join Encomenda as e on p.idPercurso = e.Percurso_idPercurso
+			where e.idEncomenda = new.Encomenda_idEncomenda into Percurso;
+		if Percurso is not null then
+			select p.Veiculo_idVeiculo from Percurso as p where p.idPercurso = Percurso into Veiculo;
+			select 
+				exists(select it.TiposConservacao_idTiposConservacao from ItemTipo as it 
+				 where new.Encomenda_idEncomenda = it.Encomenda_idEncomenda and it.Item_idItem = new.Item_idItem and
+				 it.TiposConservacao_idTiposConservacao not in 
+					(select vt.TiposConservacao_idTiposConservacao from VeiculoTipo as vt 
+					 where vt.Veiculo_idVeiculo = Veiculo))
+			into FaltamTipos;
+			if FaltamTipos = 1 then signal sqlstate '45000' set Message_text = "Veículo atribuído ao Percurso não satisfaz o Item adicionado"; end if;
+		end if;
+	end; $$
+    
 -- atualizar automaticamente o custo total de uma encomenda sempre que se introduzir um novo item (RD35)
 delimiter $$
 	create trigger encomendaitem_update_encomenda_custototal
@@ -150,13 +175,12 @@ delimiter $$
 
 -- Quando uma Encomenda está associada a um Percurso, no registo dessa Encomenda passa a ser obrigatória 
 -- a Distância Parcial (double), e a Hora Prevista (datetime) se a Hora de Envio estiver registada.(RD41)
-drop trigger if exists checkEncomenda_Percurso_u;
 delimiter $$
 	create trigger checkEncomenda_Percurso_u
 	before update
     on Encomenda for each row
 	begin
-		if new.Percurso is not null and (
+		if new.Percurso_idPercurso is not null and (
 			new.HoraEnvio != "1000-01-01 00:00" and new.HoraPrevista = "1000-01-01 00:00" or
 			new.DistanciaParcial = "0.0")
 		then 
@@ -165,13 +189,12 @@ delimiter $$
 
 -- Quando uma Encomenda está associada a um Percurso, no registo dessa Encomenda passa a ser obrigatória 
 -- a Distância Parcial (double), e a Hora Prevista (datetime) se a Hora de Envio estiver registada.(RD41)
-drop trigger if exists checkEncomenda_Percurso_i;
 delimiter $$
 	create trigger checkEncomenda_Percurso_i
 	before insert
     on Encomenda for each row
 	begin
-		if new.Percurso is not null and (
+		if new.Percurso_idPercurso is not null and (
 			new.HoraEnvio != "1000-01-01 00:00" and new.HoraPrevista = "1000-01-01 00:00" or
 			new.DistanciaParcial = "0.0")
 		then 
