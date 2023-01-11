@@ -1,13 +1,4 @@
 use mydb;
-
-drop procedure if exists insertEncomenda;    
-drop procedure if exists insertFuncionarioPercurso;    
--- inserir uma encomenda no sistema
-delimiter $$
-	create procedure insertEncomenda()
-    begin
-		
-	end; $$
     
 drop procedure if exists habilitacaoauto;    
 -- verificar a habilitacao automibilistica de um estafeta e quando deve ser renovada
