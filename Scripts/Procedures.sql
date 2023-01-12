@@ -110,17 +110,17 @@ create procedure dinheiroGasto(in idate DATE, in fdate DATE, out gasto DOUBLE)
 call dinheiroGasto(date("2002-8-01 07:00:30"), date("2002-12-01 00:00:00"), @money);
 select @money;
 
--- Verificar quanto dinheiro foi ganho num dado periodo de tempo
-drop procedure if exists DinheiroGanhoDeXaY;
+-- Verificar quanto dinheiro foi ganho num dado periodo de tempo -- testar
+drop procedure if exists dinheiroGanho;
 delimiter $$
-create procedure dinehiroGanho(in X DATE, in Y DATE, out ganho DOUBLE)
+create procedure dinheiroGanho(in X DATE, in Y DATE, out ganho DOUBLE)
 	begin
-	select e.CustoTotal from Encomenda as e
+	select SUM(e.CustoTotal) into ganho from Encomenda as e
 		where e.HoraEnvio BETWEEN X and Y; 
 	end; $$
 
-call dinheiroGanho(date("2002-8-01 07:00:30"), date("2002-12-01 00:00:00"), @ganho);
+call dinheiroGanho(date("2023-01-18 09:00:00"), date("2023-01-20 09:00:02"), @ganho);
 select @ganho;
 
-
+select e.idEncomenda, e.CustoTotal from Encomenda as e
 

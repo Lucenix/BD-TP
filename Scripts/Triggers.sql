@@ -129,7 +129,7 @@ delimiter $$
     after insert
     on EncomendaItem for each row
     begin
-		update encomenda as e set e.custototal = e.custototal + new.custoparcial where e.idEncomenda = new.Encomenda_idEncomenda;
+		update Encomenda as e set e.CustoTotal = e.CustoTotal + new.CustoParcial where e.idEncomenda = new.Encomenda_idEncomenda;
 	end; $$
 
 -- atualizar automaticamente o custo total de uma compra sempre que se introduzir um novo item (RD36)
@@ -138,7 +138,7 @@ delimiter $$
     after insert
     on ItemCompra for each row
     begin
-		update compra as c set c.custototal = c.custototal + new.custoparcial where c.idCompra = new.Compra_idCompra;
+		update Compra as c set c.CustoTotal = c.CustoTotal + new.CustoParcial where c.idCompra = new.Compra_idCompra;
 	end; $$
     
 -- A Quantidade Disponível de um Item nunca pode ultrapassar a Quantidade Total, 
@@ -152,7 +152,7 @@ delimiter $$
     after insert
     on Encomenda for each row
     begin
-		update percurso as p set p.distanciatotal = p.distanciatotal + new.distanciaparcial where new.Percurso_idPercurso = p.idPercurso;
+		update Percurso as p set p.DistanciaTotal = p.DistanciaTotal + new.DistanciaParcial where new.Percurso_idPercurso = p.idPercurso;
 	end; $$
     
 -- Um Funcionário não pode conduzir um veículo que não está habilitado (RD39)

@@ -41,6 +41,9 @@ select e.Item_idItem, SUM(e.Quantidade) from EncomendaItem as e
     order by SUM(e.Quantidade) ASC
     limit 1
     
+    
+
+    
 
 
 
