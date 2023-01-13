@@ -123,6 +123,9 @@ values(1,2);
 Insert into `VeiculoTipo`(`TiposConservacao_idTiposConservacao`, `Veiculo_idVeiculo`)
 values(2,2);
 
+Insert into `VeiculoTipo`(`TiposConservacao_idTiposConservacao`, `Veiculo_idVeiculo`)
+values(3,3);
+
 
 -- Relatorio
 Insert into `Relatorio`(`Data`,`EstadoResolucao`,`Descricao`,`Gravidade`,`Funcionario_idFuncionario`,`Veiculo_idVeiculo`)
@@ -352,19 +355,28 @@ VALUES (7, "2017-05-04 12:04:06", "2017-05-20 14:27:50", 4);
 -- ItemCompra
 
 INSERT INTO `ItemCompra`(`PrazoDeValidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
-VALUES ("2023-09-01", 2.50,150 ,3 ,5);
+VALUES ("2023-09-01", 0.50,150 ,3 ,5);
 
 INSERT INTO `ItemCompra`(`PrazoDeValidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
-VALUES (null, 17.90 ,40 ,1 ,4);
+VALUES (null, 14.60 ,40 ,1 ,4);
 
 INSERT INTO `ItemCompra`(`PrazoDeValidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
-VALUES ("2030-12-31" ,40.55 ,4 ,8 ,4);
+VALUES ("2030-12-31" ,40.55 ,30 ,8 ,4);
 
 INSERT INTO `ItemCompra`(`PrazoDeValidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
 VALUES ("2037-02-02" ,15.0 ,6 ,6 ,6 );
 
 INSERT INTO `ItemCompra`(`PrazoDeValidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
 VALUES ("2012-11-15" ,7.35 ,60 ,7 ,0);
+
+INSERT INTO `ItemCompra`(`PrazoDeValidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
+VALUES ("2040-10-01" ,20.05 ,50 ,5 ,5);
+
+INSERT INTO `ItemCompra`(`PrazoDeValidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
+VALUES ("2024-03-19" ,3.50 ,100 ,2 ,2);
+
+INSERT INTO `ItemCompra`(`PrazoDeValidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
+VALUES ("2025-02-24" ,4.20 ,100 ,4 ,4);
 
 -- select c.idCompra,c.custototal,ic.custoparcial from ItemCompra as ic inner join Compra as c on ic.Compra_idCompra = c.idCompra;
 
@@ -391,6 +403,9 @@ VALUES (5,"2023-01-19",2);
 
 INSERT INTO `Percurso`(`idPercurso`,`HoraChegada`,`HoraPartida`,`DistanciaTotal`,`Veiculo_idVeiculo`)
 VALUES (6,"2022-12-23","2022-11-11",150.6,2);
+
+INSERT INTO `Percurso`(`idPercurso`,`HoraChegada`,`HoraPartida`,`Veiculo_idVeiculo`)
+VALUES (7,"2023-01-03 17:00:23","2023-01-04 17:00:23",3);
 
 
 select * from Percurso;
@@ -426,6 +441,9 @@ VALUES(4,"2023-01-17 00:52:58",1,"2023-01-19 14:32:40","2023-01-19 09:00:01","20
 INSERT INTO `Encomenda`(`idEncomenda`, `DataRegisto`, `EstadoEntrega`, `HoraPrevista`,`HoraEnvio`,`HoraEntrega`,`DistanciaParcial`, `Percurso_idPercurso`, `Cliente_idCliente`, `Endereco_idEndereco`)
 VALUES(5,"2023-01-17 00:52:58",1,"2023-01-19 14:32:40","2023-01-19 09:00:01","2023-01-19 14:45:23",1020,2,1,9);
 
+INSERT INTO `Encomenda`(`idEncomenda`, `DataRegisto`, `EstadoEntrega`, `HoraPrevista`,`HoraEnvio`,`HoraEntrega`,`DistanciaParcial`, `Percurso_idPercurso`, `Cliente_idCliente`, `Endereco_idEndereco`)
+VALUES(6,"2023-01-02 14:12:41",1,"2023-01-04 07:05:22","2023-01-03 17:00:23","2023-01-04 07:15:18",1300,7,6,3);
+
 -- EncomendaItem
 
 INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
@@ -457,3 +475,12 @@ VALUES(0,1,30,6,4);
 
 INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
 VALUES(0,15,75.55,8,5);
+
+INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
+VALUES(1,2,18.90,7,4);
+
+INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
+VALUES(1,6,23.79,5,2);
+
+INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
+VALUES(0,6,2.79,3,6);
