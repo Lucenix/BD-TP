@@ -125,6 +125,7 @@ select @ganho;
 select e.idEncomenda, e.CustoTotal from Encomenda as e
 
 -- Deve ser possível saber os itens e as suas quantidades comprados por um dado Cliente.
+drop procedure if exists itensCliente;
 delimiter $$
 create procedure itensCliente(in id INT)
 	begin

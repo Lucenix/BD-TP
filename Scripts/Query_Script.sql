@@ -49,8 +49,7 @@ select C.idCliente, C.Nome, round(SUM(E.CustoTotal),2) as "Dinheiro Gasto"
             on E.Cliente_idCliente = C.idCliente
 	group by C.idCliente
     order by SUM(E.CustoTotal) DESC
-    LIMIT 3;
-
+	LIMIT 3;
 
 
 
