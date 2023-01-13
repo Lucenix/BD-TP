@@ -124,6 +124,7 @@ delimiter $$
 	end; $$
     
 -- atualizar automaticamente o custo total de uma encomenda sempre que se introduzir um novo item (RD35)
+-- colocar round(e.CustoTotal,2) para ficar com valores mais simpáticos? :D
 delimiter $$
 	create trigger encomendaitem_update_encomenda_custototal
     after insert
@@ -214,7 +215,7 @@ delimiter $$
         on IC.Item_idItem = I.idItem
 			inner join EncomendaItem as EI
             on EI.Item_idItem = I.idItem
-        where I.idItem = 8 and DateDiff(IC.PrazoDeValidade,curdate()) > 31 into quantidadeAtual;
+        where I.idItem = new.Item_idItem and DateDiff(IC.PrazoDeValidade,curdate()) > 31 into quantidadeAtual;
         
         if quantidadeAtual < new.Quantidade
         then
