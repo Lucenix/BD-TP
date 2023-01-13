@@ -286,7 +286,7 @@ Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Quantidade`,`C
 Values(2,"Bepanthene",0.23,"Creme, Bisnaga 30g",4.95,20,0);
 
 Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Quantidade`,`Comparticipacao`)
-Values(3,"Paracetamol",0.06,"Comprimido, Blister 20 unidades",2.79,50,0.37);
+Values(3,"Paracetamol",0.06,"Comprimido, Blister 20 unidades",0.50,50,0.37);
 
 Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Quantidade`,`Comparticipacao`)
 Values(4,"Vitaminas do complexo B",0.23,"Xarope, Frasco 100ml",5.95,6,0);
@@ -411,7 +411,7 @@ INSERT INTO `Encomenda`(`idEncomenda`, `DataRegisto`, `EstadoEntrega`,`Percurso_
 VALUES(0,"2023-01-18 11:01:01",0,null,5,4);
 
 INSERT INTO `Encomenda`(`idEncomenda`, `DataRegisto`, `EstadoEntrega`,`Percurso_idPercurso`, `Cliente_idCliente`, `Endereco_idEndereco`)
-VALUES(1,"2023-01-18 13:00:40",0,null,1,2);
+VALUES(1,"2023-01-18 13:00:40",0,null,7,2);
 
 INSERT INTO `Encomenda`(`idEncomenda`, `DataRegisto`, `EstadoEntrega`,`Percurso_idPercurso`, `Cliente_idCliente`, `Endereco_idEndereco`)
 VALUES(2,"2023-01-19 14:30:09",0,null,4,6);

@@ -41,6 +41,15 @@ select e.Item_idItem, SUM(e.Quantidade) from EncomendaItem as e
     order by SUM(e.Quantidade) ASC
     limit 1
 
+-- Conseguir ver o top 3 clientes que mais gastaram
+select C.idCliente, C.Nome, round(SUM(E.CustoTotal),2) as "Dinheiro Gasto"
+	from EncomendaItem as EI inner join Encomenda as E
+		on EI.encomenda_idEncomenda = E.idEncomenda
+			inner join Cliente as C
+            on E.Cliente_idCliente = C.idCliente
+	group by C.idCliente
+    order by SUM(E.CustoTotal) DESC
+    LIMIT 3;
 
 
 

@@ -129,7 +129,7 @@ delimiter $$
     after insert
     on EncomendaItem for each row
     begin
-		update Encomenda as e set e.CustoTotal = e.CustoTotal + new.CustoParcial where e.idEncomenda = new.Encomenda_idEncomenda;
+		update Encomenda as e set e.CustoTotal = e.CustoTotal + new.CustoParcial * new.Quantidade where e.idEncomenda = new.Encomenda_idEncomenda;
 	end; $$
 
 -- atualizar automaticamente o custo total de uma compra sempre que se introduzir um novo item (RD36)
