@@ -435,6 +435,9 @@ INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_
 VALUES(0,2,23.79,5,0);
 
 INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
+VALUES(0,4,2.79,3,1);
+
+INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
 VALUES(0,1,2.79,3,2);
 
 INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
