@@ -40,10 +40,7 @@ select e.Item_idItem, SUM(e.Quantidade) from EncomendaItem as e
 	group by e.Item_idItem;
     order by SUM(e.Quantidade) ASC
     limit 1
-    
-    
 
-    
 
 
 

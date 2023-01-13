@@ -124,3 +124,19 @@ select @ganho;
 
 select e.idEncomenda, e.CustoTotal from Encomenda as e
 
+-- Deve ser possível saber os itens e as suas quantidades comprados por um dado Cliente.
+delimiter $$
+	begin
+    select I.idItem, I.Nome, SUM(EI.Quantidade) as "Quantidade"
+		from Item as I inner join EncomendaItem as EI
+		on I.idItem = EI.Item_idItem
+			inner join Encomenda as E
+			on E.idEncomenda = EI.Encomenda_idEncomenda
+				inner join Cliente as C
+					on C.idCliente = E.Cliente_idCliente
+	
+		where C.idCliente = 1
+    
+		group by I.idItem
+		order by I.idItem ASC;
+
