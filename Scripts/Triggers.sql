@@ -201,3 +201,26 @@ delimiter $$
 		then 
         signal sqlstate '45000' set Message_text = "Veículo não satisfaz todos os tipos de Itens que constam do Percurso"; end if;
 	end; $$
+
+-- Trigger que verifica se uma compra pode ser efetuada verificando se há stock e se for possível altera o stock de acordo com o pedido
+delimiter $$
+	create trigger checkEAtualizaQuantidade
+    before insert
+    on EncomendaItem for each row
+    begin
+		declare quantidadeAtual INT;
+        select SUM(IC.Quantidade)
+        from ItemCompra as IC inner join Item as I
+        on IC.Item_idItem = I.idItem
+			inner join EncomendaItem as EI
+            on EI.Item_idItem = I.idItem
+        where I.idItem = 8 and DateDiff(IC.PrazoDeValidade,curdate()) > 31 into quantidadeAtual;
+        
+        if quantidadeAtual < new.Quantidade
+        then
+        signal sqlstate '45000' set Message_text = "Não Existe stock disponível para esta compra";
+        else 
+        Update ItemCompra as IC SET IC.Item_idItem = IC.Item_idItem - new.Quantidade where DateDiff(IC.PrazoDeValidade,curdate()) > 31;
+        end if;
+        
+	end; $$
