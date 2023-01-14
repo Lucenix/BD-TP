@@ -35,16 +35,17 @@ select ic.* from ItemCompra as ic
     order by ic.PrazoDeValidade ASC
     limit 1;
     
--- Deve ser possivel verificar qual o item mais vendido----untested not POG
-select e.Item_idItem, SUM(e.Quantidade) from EncomendaItem as e
-	group by e.Item_idItem
-    order by SUM(e.Quantidade) DESC
+-- Deve ser possivel verificar qual o item mais vendido----untested not POG (RM8)
+select i.idItem, i.Nome SUM(ei.Quantidade) from EncomendaItem as ei
+inner join Item as i on i.idItem = ei.Item_idItem
+	group by ei.Item_idItem
+    order by SUM(ei.Quantidade) DESC
     limit 1;
 
--- Conseguir ver o top 3 clientes que mais gastaram (RM27)
+-- Conseguir ver o top 3 clientes que mais gastaram (RM22)
 select C.idCliente, C.Nome, round(SUM(E.CustoTotal),2) as "Dinheiro Gasto"
 	from EncomendaItem as EI inner join Encomenda as E
-		on EI.encomenda_idEncomenda = E.idEncomenda
+		on EI.Encomenda_idEncomenda = E.idEncomenda
 			inner join Cliente as C
             on E.Cliente_idCliente = C.idCliente
 	group by C.idCliente
