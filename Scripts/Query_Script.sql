@@ -51,7 +51,6 @@ select C.idCliente, C.Nome, round(SUM(E.CustoTotal),2) as "Dinheiro Gasto"
     order by SUM(E.CustoTotal) DESC
 	LIMIT 3;
 
-<<<<<<< Updated upstream
 -- Localidade com maior registo de entregas (RM20)
 select E.Localidade, Count(Enco.idEncomenda) as "Número de Encomendas"
 	from Encomenda as Enco inner join Endereco as E
@@ -61,15 +60,6 @@ select E.Localidade, Count(Enco.idEncomenda) as "Número de Encomendas"
     LIMIT 1;
     
 
-	
-    
-
-
-
-
-=======
-
 -- Ver o numerode percursos feitos pelos estafetas
 select f.Nome, count(fp.funcionario_idFuncionario) as "num percursos" from Funcionario as f
     inner join FuncionarioPercurso as fp on f.idFuncionario = fp.funcionario_idFuncionario;
->>>>>>> Stashed changes
