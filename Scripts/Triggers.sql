@@ -175,6 +175,7 @@ delimiter $$
 		then 
         signal sqlstate '45000' set Message_text = "Veículo não satisfaz todos os tipos de Itens que constam do Percurso"; end if;
 	end; $$
+<<<<<<< Updated upstream
 /* 
 -- Trigger que faz o calculo dos disponiveis -> Não temos como requisito
 delimiter $$
@@ -209,3 +210,33 @@ delimiter $$
         
 	end; $$
 */
+=======
+
+-- Quando Encomenda e feita atualizar a quantidade
+delimiter $$
+    create trigger checkEncomenda_Quantidade
+    before insert
+    on Encomenda for each row
+    begin
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> Stashed changes

@@ -3,24 +3,24 @@ use mydb;
 drop procedure if exists habilitacaoauto;    
 -- verificar a habilitacao automibilistica de um estafeta e quando deve ser renovada
 delimiter $$
-create procedure habilitacaoauto(in idFuncionario INT, out habilitacao varchar(3))
+create procedure habilitacaoauto(in idFuncionario INT)
 	begin
-    select f.HabilitacaoAuto into habilitacao from Funcionario as f
+    select f.HabilitacaoAuto from Funcionario as f
 		where f.idFuncionario = idFuncionario;
 	end; $$
 
 drop procedure if exists dataexpir;
 delimiter $$
-create procedure dataexpir(in idFuncionario INT, out dataexp DATE)
+create procedure dataexpir(in idFuncionario INT)
 	begin
-    select f.DataExpiracaoHabilitacao into dataexp from Funcionario as f
+    select f.DataExpiracaoHabilitacao from Funcionario as f
 		where f.idFuncionario = idFuncionario;
 	end; $$
     
-call habilitacaoauto(1, @hab);
-call dataexpir(1, @dataexp);
-select @hab;
-select @dataexp
+call habilitacaoauto(1);
+call dataexpir(1);
+
+-- verificar se um veiculo esta operacional -- isto vou deixar com return???--fazer como funç~ao
 drop procedure if exists isVeiculodisp;
 delimiter $$
 create procedure isVeiculodisp(in idVeiculo INT, out est TINYINT)
@@ -45,6 +45,8 @@ select p.Veiculo_idVeiculo from Percurso as p
 select p.Veiculo_idVeiculo from Percurso as p 
 			where p.Veiculo_idVeiculo = 3 and (p.HoraChegada != '1000-01-01' or DATEDIFF(p.HoraPartida, CURDATE()) > 0)
 
+
+-- verifica se veiculo pode levar os tipos de uma encomenda
 drop procedure if exists DiferencaTiposVeiculoEncomenda;
 delimiter $$
 create procedure DiferencaTiposVeiculoEncomenda(in Veiculo int, in Encomenda int)
@@ -56,22 +58,22 @@ create procedure DiferencaTiposVeiculoEncomenda(in Veiculo int, in Encomenda int
 			select vt.TiposConservacao_idTiposConservacao from VeiculoTipo as vt 
 			where vt.Veiculo_idVeiculo = Veiculo);
 	end; $$
+
+    
 -- calcular o tempo gasto num percurso
 drop procedure if exists tempoPercurso;
 delimiter $$
 
-
-create procedure tempoPercurso(in idPercurso INT, out restime TIME)
+create procedure tempoPercurso(in idPercurso INT)
 	begin
     declare chegada DateTime;
     declare partida DateTime;
     select p.HoraChegada, p.HoraPartida into chegada,partida from Percurso as p
 		where p.idPercurso = idPercurso;
 	if chegada = '1000-01-01 00:00:00' then signal sqlstate '45000' set Message_text = "Percurso não terminado"; end if;
-    set restime = timediff(chegada,partida);
+    select timediff(chegada,partida);
 	end; $$
-call tempoPercurso(2, @res);
-select @res;
+call tempoPercurso(2);
 
 -- calcular quantos dias faltam para um lote expirar
 drop procedure if exists diasAteExpir;
@@ -82,44 +84,41 @@ create procedure diasAteExpir(in idItem INT, in idCompra INT)
 		where i.Item_idItem = idItem and i.Compra_idCompra = idCompra;
 	end; $$
 
-call diasAteExpir(8,4);
+c rest all diasAteExpir(8,4);
 
 -- dias até inspecao
 drop procedure if exists diasAteInsp;
 delimiter $$
-create procedure diasAteInsp(in idVeiculo INT, out dias INT)
+create procedure diasAteInsp(in idVeiculo INT)
 	begin
-    select datediff(v.DataProximaInspecao, CURDATE()) into dias from Veiculo as v
+    select datediff(v.DataProximaInspecao, CURDATE()) from Veiculo as v
 		where v.idVeiculo = idVeiculo;
 	end; $$
 
-call diasAteInsp(0, @dias);
-select @dias;
+call diasAteInsp(0);
 
 
 -- Verificar quanto dinheiro foi gasto num dado periodo de tempo
 drop procedure if exists dinheiroGasto;
 delimiter $$
-create procedure dinheiroGasto(in idate DATE, in fdate DATE, out gasto DOUBLE)
+create procedure dinheiroGasto(in idate DATE, in fdate DATE)
 	begin
-    select SUM(c.CustoTotal) into gasto from Compra as c
+    select SUM(c.CustoTotal) from Compra as c
 		where c.DataEmissao between idate and fdate; 
     end; $$
 
-call dinheiroGasto(date("2002-8-01 07:00:30"), date("2002-12-01 00:00:00"), @money);
-select @money;
+call dinheiroGasto(date("2002-8-01 07:00:30"), date("2002-12-01 00:00:00"));
 
 -- Verificar quanto dinheiro foi ganho num dado periodo de tempo -- testar
 drop procedure if exists dinheiroGanho;
 delimiter $$
-create procedure dinheiroGanho(in X DATE, in Y DATE, out ganho DOUBLE)
+create procedure dinheiroGanho(in X DATE, in Y DATE)
 	begin
-	select SUM(e.CustoTotal) into ganho from Encomenda as e
+	select SUM(e.CustoTotal) from Encomenda as e
 		where e.HoraEnvio BETWEEN X and Y; 
 	end; $$
 
-call dinheiroGanho(date("2023-01-18 09:00:00"), date("2023-01-20 09:00:02"), @ganho);
-select @ganho;
+call dinheiroGanho(date("2023-01-18 09:00:00"), date("2023-01-20 09:00:02"));
 
 select e.idEncomenda, e.CustoTotal from Encomenda as e
 
@@ -143,4 +142,25 @@ create procedure itensCliente(in id INT)
 	end; $$
 
 call itensCliente(1);
+
+-- Verificar todas as compras feitas noma certa altura
+drop procedure if exists comprasData;
+delimiter $$
+create procedure comprasData(in datai DATE, in dataf DATE)
+    begin 
+    select * from Compra as c
+        where c.DataEmissao between datai and dataf;
+    end; $$
+
+call ComprasData(date("2000-01-18 09:00:00"),date("2023-01-20 09:00:02"));
+
+
+
+
+
+
+
+
+
+
 
