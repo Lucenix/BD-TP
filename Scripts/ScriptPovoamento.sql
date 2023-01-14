@@ -351,8 +351,10 @@ VALUES (6, "2021-02-17 20:00:40", "2021-02-28 19:35:35", 6);
 INSERT INTO `Compra`(`idCompra`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
 VALUES (7, "2017-05-04 12:04:06", "2017-05-20 14:27:50", 4);
 
-
+select * from ItemCompra;
 -- ItemCompra
+INSERT INTO `ItemCompra`(`PrazoDeValidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
+VALUES ("2023-08-23", 9.20,80,0,7);
 
 INSERT INTO `ItemCompra`(`PrazoDeValidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
 VALUES ("2023-09-01", 0.50,150 ,3 ,5);

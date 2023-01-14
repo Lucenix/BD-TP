@@ -202,6 +202,16 @@ delimiter $$
 		then 
         signal sqlstate '45000' set Message_text = "Veículo não satisfaz todos os tipos de Itens que constam do Percurso"; end if;
 	end; $$
+/* 
+-- Trigger que faz o calculo dos disponiveis -> Não temos como requisito
+delimiter $$
+	create trigger atualizaDisponiveis
+    after insert
+    on ItemCompra for each row
+    begin
+		update ItemCompra as IC set IC.Disponiveis = IC.Quantidade * (DateDiff(IC.PrazoDeValidade,curdate()) > 31) where IC.Compra_idCompra = new.Compra_idCompra;
+end; $$
+
 
 -- Trigger que verifica se uma compra pode ser efetuada verificando se há stock e se for possível altera o stock de acordo com o pedido
 delimiter $$
@@ -225,3 +235,4 @@ delimiter $$
         end if;
         
 	end; $$
+*/
