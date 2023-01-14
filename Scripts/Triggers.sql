@@ -27,32 +27,28 @@ delimiter $$
 
 -- Um Veículo não pode ser utilizado se não estiver operacional (RD32)
 delimiter $$
-	create trigger checkEncomenda_VeiculoOperacional_u
+	create trigger checkPercurso_VeiculoOperacional_u
     before update
-    on Encomenda for each row
+    on Percurso for each row
     begin
 		declare Veiculo int;
         declare EstadoOperacional bool;
-		if new.Percurso_idPercurso is not null then
-			select p.Veiculo_idVeiculo from Percurso as p where p.idPercurso = new.Percurso_idPercurso into Veiculo;
-			select v.EstadoOperacional from Veiculo as v where v.idVeiculo = Veiculo into EstadoOperacional;
-			if EstadoOperacional = 0 then signal sqlstate '45000' set Message_text = "Veículo não operacional"; end if;
-        end if;
+        select new.Veiculo_idVeiculo into Veiculo;
+        set EstadoOperacional = isVeiculodisp(Veiculo);
+        if EstadoOperacional = 0 then signal sqlstate '45000' set Message_text = "Veículo não operacional"; end if;
     end; $$ 
 
 -- Um Veículo não pode ser utilizado se não estiver operacional (RD32)
 delimiter $$
-	create trigger checkEncomenda_VeiculoOperacional_i
+	create trigger checkPercurso_VeiculoOperacional_i
     before insert
-    on Encomenda for each row
+    on Percurso for each row
     begin
 		declare Veiculo int;
         declare EstadoOperacional bool;
-		if new.Percurso_idPercurso is not null then
-			select p.Veiculo_idVeiculo from Percurso as p where p.idPercurso = new.Percurso_idPercurso into Veiculo;
-			select v.EstadoOperacional from Veiculo as v where v.idVeiculo = Veiculo into EstadoOperacional;
-			if EstadoOperacional = 0 then signal sqlstate '45000' set Message_text = "Veículo não operacional"; end if;
-        end if;
+        select new.Veiculo_idVeiculo into Veiculo;
+        set EstadoOperacional = isVeiculodisp(Veiculo);
+        if EstadoOperacional = 0 then signal sqlstate '45000' set Message_text = "Veículo não operacional"; end if;
     end; $$ 
 
 -- Um Item fora de validade nunca deve ser entregue numa Encomenda (RD33);

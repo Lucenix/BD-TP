@@ -385,20 +385,17 @@ VALUES ("2025-02-24" ,4.20 ,100 ,4 ,4);
 
 -- Percurso
 
-INSERT INTO `Percurso`(`idPercurso`,`HoraPartida`,`Veiculo_idVeiculo`)
-VALUES (0,"2023-01-19",0);
-
-INSERT INTO `Percurso`(`idPercurso`,`HoraChegada`,`HoraPartida`,`Veiculo_idVeiculo`)
-VALUES (1,"2022-12-13","2022-12-12",0);
-
 INSERT INTO `Percurso`(`idPercurso`,`HoraChegada`,`HoraPartida`,`DistanciaTotal`,`Veiculo_idVeiculo`)
 VALUES (2,"2022-12-13","2022-12-12",12.5,0);
 
 INSERT INTO `Percurso`(`idPercurso`,`HoraPartida`,`Veiculo_idVeiculo`)
-VALUES (3,"2023-01-18",1);
+VALUES (0,"2023-01-19",0);
 
 INSERT INTO `Percurso`(`idPercurso`,`HoraChegada`,`HoraPartida`,`DistanciaTotal`,`Veiculo_idVeiculo`)
 VALUES (4,"2022-05-25","2022-05-19",50.9,1);
+
+INSERT INTO `Percurso`(`idPercurso`,`HoraPartida`,`Veiculo_idVeiculo`)
+VALUES (3,"2023-01-18",1);
 
 INSERT INTO `Percurso`(`idPercurso`,`HoraPartida`,`Veiculo_idVeiculo`)
 VALUES (5,"2023-01-19",2);
