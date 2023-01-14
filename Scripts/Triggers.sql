@@ -55,25 +55,17 @@ delimiter $$
         end if;
     end; $$ 
 
+-- Um Item fora de validade nunca deve ser entregue numa Encomenda (RD33);
+
 -- Um Veículo não pode entregar um Item com Tipos de Conservação que não acomode(RD34);
 delimiter $$
 	create trigger checkEncomenda_VeiculoTipoConservacao_u
 	before update
     on Encomenda for each row
 	begin
-		declare Veiculo int;
-        declare FaltamTipos bool;
 		if new.Percurso_idPercurso is not null then
-			select p.Veiculo_idVeiculo from Percurso as p where p.idPercurso = new.Percurso_idPercurso into Veiculo;
-			select 
-				exists(select it.TiposConservacao_idTiposConservacao from EncomendaItem as ei 
-				 inner join ItemTipo as it on it.Item_idItem = ei.Item_idItem
-				 where ei.Encomenda_idEncomenda = new.idEncomenda and
-				 it.TiposConservacao_idTiposConservacao not in 
-					(select vt.TiposConservacao_idTiposConservacao from VeiculoTipo as vt 
-					 where vt.Veiculo_idVeiculo = Veiculo))
-			into FaltamTipos;
-			if FaltamTipos = 1 then signal sqlstate '45000' set Message_text = "Veículo não satisfaz todos os tipos de Itens que constam do Percurso"; end if;
+			if isVeiculoPercursoValid(new.Percurso_idPercurso) = 1
+            then signal sqlstate '45000' set Message_text = "Veículo não satisfaz todos os tipos de Itens que constam do Percurso"; end if;
 		end if;
 	end; $$
 
@@ -83,19 +75,9 @@ delimiter $$
 	before insert
     on Encomenda for each row
 	begin
-		declare Veiculo int;
-        declare FaltamTipos bool;
 		if new.Percurso_idPercurso is not null then
-			select p.Veiculo_idVeiculo from Percurso as p where p.idPercurso = new.Percurso_idPercurso into Veiculo;
-			select 
-				exists(select it.TiposConservacao_idTiposConservacao from EncomendaItem as ei 
-				 inner join ItemTipo as it on it.Item_idItem = ei.Item_idItem
-				 where ei.Encomenda_idEncomenda = new.idEncomenda and
-				 it.TiposConservacao_idTiposConservacao not in 
-					(select vt.TiposConservacao_idTiposConservacao from VeiculoTipo as vt 
-					 where vt.Veiculo_idVeiculo = Veiculo))
-			into FaltamTipos;
-			if FaltamTipos = 1 then signal sqlstate '45000' set Message_text = "Veículo não satisfaz todos os tipos de Itens que constam do Percurso"; end if;
+			if isVeiculoPercursoValid(new.Percurso_idPercurso) = 1 
+            then signal sqlstate '45000' set Message_text = "Veículo não satisfaz todos os tipos de Itens que constam do Percurso"; end if;
 		end if;
 	end; $$
 
@@ -106,20 +88,11 @@ delimiter $$
     on EncomendaItem for each row
 	begin
 		declare Percurso int;
-        declare Veiculo int;
-        declare FaltamTipos bool;
         select e.Percurso_idPercurso from Encomenda as e
 			where e.idEncomenda = new.Encomenda_idEncomenda into Percurso;
 		if Percurso is not null then
-			select p.Veiculo_idVeiculo from Percurso as p where p.idPercurso = Percurso into Veiculo;
-			select 
-				exists(select it.TiposConservacao_idTiposConservacao from ItemTipo as it 
-				 where it.Item_idItem = new.Item_idItem and
-				 it.TiposConservacao_idTiposConservacao not in 
-					(select vt.TiposConservacao_idTiposConservacao from VeiculoTipo as vt 
-					 where vt.Veiculo_idVeiculo = Veiculo))
-			into FaltamTipos;
-			if FaltamTipos = 1 then signal sqlstate '45000' set Message_text = "Veículo atribuído ao Percurso não satisfaz o Item adicionado"; end if;
+			if isVeiculoPercursoValid(Percurso) = 1 
+            then signal sqlstate '45000' set Message_text = "Veículo atribuído ao Percurso não satisfaz o Item adicionado"; end if;
 		end if;
 	end; $$
     
