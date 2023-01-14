@@ -37,9 +37,9 @@ select ic.* from ItemCompra as ic
     
 -- Deve ser possivel verificar qual o item mais vendido----untested not POG
 select e.Item_idItem, SUM(e.Quantidade) from EncomendaItem as e
-	group by e.Item_idItem;
-    order by SUM(e.Quantidade) ASC
-    limit 1
+	group by e.Item_idItem
+    order by SUM(e.Quantidade) DESC
+    limit 1;
 
 -- Conseguir ver o top 3 clientes que mais gastaram (RM27)
 select C.idCliente, C.Nome, round(SUM(E.CustoTotal),2) as "Dinheiro Gasto"
