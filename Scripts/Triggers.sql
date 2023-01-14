@@ -124,12 +124,13 @@ delimiter $$
 	end; $$
     
 -- atualizar automaticamente o custo total de uma encomenda sempre que se introduzir um novo item (RD35)
+-- colocar round(e.CustoTotal,2) para ficar com valores mais simpáticos? :D
 delimiter $$
 	create trigger encomendaitem_update_encomenda_custototal
     after insert
     on EncomendaItem for each row
     begin
-		update Encomenda as e set e.CustoTotal = e.CustoTotal + new.CustoParcial where e.idEncomenda = new.Encomenda_idEncomenda;
+		update Encomenda as e set e.CustoTotal = e.CustoTotal + new.CustoParcial * new.Quantidade where e.idEncomenda = new.Encomenda_idEncomenda;
 	end; $$
 
 -- atualizar automaticamente o custo total de uma compra sempre que se introduzir um novo item (RD36)
@@ -201,3 +202,37 @@ delimiter $$
 		then 
         signal sqlstate '45000' set Message_text = "Veículo não satisfaz todos os tipos de Itens que constam do Percurso"; end if;
 	end; $$
+/* 
+-- Trigger que faz o calculo dos disponiveis -> Não temos como requisito
+delimiter $$
+	create trigger atualizaDisponiveis
+    after insert
+    on ItemCompra for each row
+    begin
+		update ItemCompra as IC set IC.Disponiveis = IC.Quantidade * (DateDiff(IC.PrazoDeValidade,curdate()) > 31) where IC.Compra_idCompra = new.Compra_idCompra;
+end; $$
+
+
+-- Trigger que verifica se uma compra pode ser efetuada verificando se há stock e se for possível altera o stock de acordo com o pedido
+delimiter $$
+	create trigger checkEAtualizaQuantidade
+    before insert
+    on EncomendaItem for each row
+    begin
+		declare quantidadeAtual INT;
+        select SUM(IC.Quantidade)
+        from ItemCompra as IC inner join Item as I
+        on IC.Item_idItem = I.idItem
+			inner join EncomendaItem as EI
+            on EI.Item_idItem = I.idItem
+        where I.idItem = new.Item_idItem and DateDiff(IC.PrazoDeValidade,curdate()) > 31 into quantidadeAtual;
+        
+        if quantidadeAtual < new.Quantidade
+        then
+        signal sqlstate '45000' set Message_text = "Não Existe stock disponível para esta compra";
+        else 
+        Update ItemCompra as IC SET IC.Item_idItem = IC.Item_idItem - new.Quantidade where DateDiff(IC.PrazoDeValidade,curdate()) > 31;
+        end if;
+        
+	end; $$
+*/

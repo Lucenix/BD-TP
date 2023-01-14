@@ -76,14 +76,13 @@ select @res;
 -- calcular quantos dias faltam para um lote expirar
 drop procedure if exists diasAteExpir;
 delimiter $$
-create procedure diasAteExpir(in idItem INT, in idCompra INT, out dias INT)
+create procedure diasAteExpir(in idItem INT, in idCompra INT)
 	begin
-    select datediff(i.PrazoDeValidade, CURDATE()) into dias from ItemCompra as i
+    select datediff(i.PrazoDeValidade, CURDATE()) from ItemCompra as i
 		where i.Item_idItem = idItem and i.Compra_idCompra = idCompra;
 	end; $$
 
-call diasAteExpir(8,4, @dias);
-select @dias;
+call diasAteExpir(8,4);
 
 -- dias até inspecao
 drop procedure if exists diasAteInsp;
@@ -123,4 +122,25 @@ call dinheiroGanho(date("2023-01-18 09:00:00"), date("2023-01-20 09:00:02"), @ga
 select @ganho;
 
 select e.idEncomenda, e.CustoTotal from Encomenda as e
+
+-- Deve ser possível saber os itens e as suas quantidades comprados por um dado Cliente.
+drop procedure if exists itensCliente;
+delimiter $$
+create procedure itensCliente(in id INT)
+	begin
+    select I.idItem, I.Nome, SUM(EI.Quantidade) as "Quantidade"
+		from Item as I inner join EncomendaItem as EI
+		on I.idItem = EI.Item_idItem
+			inner join Encomenda as E
+			on E.idEncomenda = EI.Encomenda_idEncomenda
+				inner join Cliente as C
+					on C.idCliente = E.Cliente_idCliente
+	
+		where C.idCliente = id
+    
+		group by I.idItem
+		order by I.idItem ASC;
+	end; $$
+
+call itensCliente(1);
 
