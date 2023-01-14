@@ -1,6 +1,6 @@
 use mydb;
 
-create function 
+drop function if exists isVeiculoPercursoValid;
 delimiter $$
 create function isVeiculoPercursoValid(Percurso int)
 returns tinyint
