@@ -155,6 +155,44 @@ create procedure comprasData(in datai DATE, in dataf DATE)
 call ComprasData(date("2000-01-18 09:00:00"),date("2023-01-20 09:00:02"));
 
 
+drop procedure if exists insereClienteEncomenda;
+
+delimiter $$
+create procedure insereClienteEncomenda(
+    --cliente
+    in idCliente,
+    in Nome,
+    in NIF,
+    in DataNascimento,
+    in Genero,
+    -- Encomenda
+    in idEnvomenda,
+    in EstadoPagamento,
+    in HoraPrevista,
+    in HoraEnvio,
+    in Percurso_idPercurso,
+    in Endereco_idEndereco)
+
+    begin
+    start transaction;
+    DECLARE ErroTransacao BOOL DEFAULT 0;
+
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET ErroTransacao = 1;
+
+    declare existsclient TINYINT;
+    set existsclient = exists(select c.idCliente from Cliente as c where c.idCliente = idCliente;)
+    if existsclient then
+        insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`DataNascimento`,`Genero`)
+        values(idCliente,Nome,NIF,DataNascimento,Genero);
+    end if;
+    insert into `Encomenda`(`idEncomenda`, `EstadoPagamento`, `DataRegisto`, `HoraPrevista`,`HoraEnvio`, `Percurso_idPercurso`, `Cliente_idCliente`, `Endereco_idEndereco`)
+    values(idEncomenda, EstadoPagamento, CURDATE(), HoraPartida, HoraEnvio, Percurso_idPercurso, idCliente, Endereco_idEndereco);
+
+    if ErroTransacao = 1 then rollback;
+    else commit;
+
+    end if;
+
 
 
 
