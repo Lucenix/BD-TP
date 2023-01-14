@@ -172,16 +172,20 @@ delimiter $$
         signal sqlstate '45000' set Message_text = "Veículo não satisfaz todos os tipos de Itens que constam do Percurso"; end if;
 	end; $$
     
-/* 
--- Trigger que faz o calculo dos disponiveis -> Não temos como requisito
+
+-- Trigger que faz o calculo dos disponiveis (RD37 e RD44) 
 delimiter $$
-	create trigger atualizaDisponiveis
-    after insert
+	create trigger atualizaDisponiveisInicial
+    before insert
     on ItemCompra for each row
     begin
-		update ItemCompra as IC set IC.Disponiveis = IC.Quantidade * (DateDiff(IC.PrazoDeValidade,curdate()) > 31) where IC.Compra_idCompra = new.Compra_idCompra;
+		if new.PrazoDeValidade != null
+        then
+        set new.Disponiveis = new.Quantidade * (DateDiff(new.PrazoDeValidade,curdate()) > 31);
+		else
+        set new.Disponiveis = new.Quantidade;
+        end if;
 end; $$
-
 
 -- Trigger que verifica se uma compra pode ser efetuada verificando se há stock e se for possível altera o stock de acordo com o pedido
 delimiter $$
@@ -190,27 +194,19 @@ delimiter $$
     on EncomendaItem for each row
     begin
 		declare quantidadeAtual INT;
-        select SUM(IC.Quantidade)
+        select SUM(IC.Disponiveis)
         from ItemCompra as IC inner join Item as I
         on IC.Item_idItem = I.idItem
 			inner join EncomendaItem as EI
             on EI.Item_idItem = I.idItem
-        where I.idItem = new.Item_idItem and DateDiff(IC.PrazoDeValidade,curdate()) > 31 into quantidadeAtual;
+        where I.idItem = new.Item_idItem
+        into quantidadeAtual;
         
         if quantidadeAtual < new.Quantidade
         then
         signal sqlstate '45000' set Message_text = "Não Existe stock disponível para esta compra";
         else 
-        Update ItemCompra as IC SET IC.Item_idItem = IC.Item_idItem - new.Quantidade where DateDiff(IC.PrazoDeValidade,curdate()) > 31;
+        Update ItemCompra as IC SET IC.Disponiveis = IC.Disponiveis - new.Quantidade where IC.Item_idItem = new.Item_idItem;
         end if;
         
-	end; $$
-*/
-
--- Quando Encomenda e feita atualizar a quantidade
-delimiter $$
-    create trigger checkEncomenda_Quantidade
-    before insert
-    on Encomenda for each row
-    begin
 	end; $$
