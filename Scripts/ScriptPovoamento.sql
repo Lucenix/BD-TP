@@ -34,7 +34,7 @@ Values(2,"Temperatura","Conservar a temperatura refrigerada não negativa.");
 Insert into `TiposConservacao`(`idTiposConservacao`,`Tipo`,`Descricao`)
 Values(3,"Humidade","Manter em ambiente seco.");
 
-Select * from TiposConservacao;
+-- Select * from TiposConservacao;
 
 
 -- Funcionário
@@ -54,7 +54,7 @@ Values(3,"Gil Vicente",890.0,"C1E","2020-03-02","2030-05-21","Estafeta","1965-04
 Insert into `Funcionario`(`idFuncionario`,`Nome`,`Salario`,`HabilitacaoAuto`,`DataEntrada`,`DataExpiracaoHabilitacao`,`Posicao`,`DataNascimento`)
 Values(4,"Florbela Espanca",900.0,null,"2020-03-02",null,"Técnico Farmacêutico","1994-12-08");
 
-Select * from Funcionario;
+-- Select * from Funcionario;
 
 
 -- Contacto (dos funcionários):
@@ -89,7 +89,7 @@ Values(2,"A1",29,"Gasolina","2024-07-29",1,58.31,"20-BD-23");
 Insert into `Veiculo`(`idVeiculo`,`Categoria`,`Kilometragem`,`TipoCombustivel`,`DataProximaInspecao`,`EstadoOperacional`,`IUC`,`Matricula`)
 Values(3,"C",13748,"Diesel","2025-07-29",1,58.31,"21-BD-23");
 
-Select * from Veiculo;
+-- Select * from Veiculo;
 
 
 -- DataInspecaoPassada
@@ -351,7 +351,7 @@ VALUES (6, "2021-02-17 20:00:40", "2021-02-28 19:35:35", 6);
 INSERT INTO `Compra`(`idCompra`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
 VALUES (7, "2017-05-04 12:04:06", "2017-05-20 14:27:50", 4);
 
-select * from ItemCompra;
+-- select * from ItemCompra;
 -- ItemCompra
 INSERT INTO `ItemCompra`(`PrazoDeValidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
 VALUES ("2023-08-23", 9.20,80,0,7);
@@ -397,26 +397,32 @@ VALUES (4,"2022-05-25","2022-05-19",50.9,1);
 INSERT INTO `Percurso`(`idPercurso`,`HoraPartida`,`Veiculo_idVeiculo`)
 VALUES (3,"2023-01-18",1);
 
-INSERT INTO `Percurso`(`idPercurso`,`HoraPartida`,`Veiculo_idVeiculo`)
-VALUES (5,"2023-01-19",2);
-
 INSERT INTO `Percurso`(`idPercurso`,`HoraChegada`,`HoraPartida`,`DistanciaTotal`,`Veiculo_idVeiculo`)
 VALUES (6,"2022-12-23","2022-11-11",150.6,2);
+
+INSERT INTO `Percurso`(`idPercurso`,`HoraPartida`,`Veiculo_idVeiculo`)
+VALUES (5,"2023-01-19",2);
 
 INSERT INTO `Percurso`(`idPercurso`,`HoraChegada`,`HoraPartida`,`Veiculo_idVeiculo`)
 VALUES (7,"2023-01-03 17:00:23","2023-01-04 17:00:23",3);
 
 
-select * from Percurso;
+-- select * from Percurso;
 
 
 -- FuncionarioPercurso
+insert into `FuncionarioPercurso`(`Funcionario_idFuncionario`, `Percurso_idPercurso`, `Condutor`)
+values(1,0,1);
 
 insert into `FuncionarioPercurso`(`Funcionario_idFuncionario`, `Percurso_idPercurso`, `Condutor`)
-values(1,3,1);
--- insert into `FuncionarioPercurso`(`Funcionario_idFuncionario`, `Percurso_idPercurso`, `Condutor`)
--- values(1,5,1);
-select * from FuncionarioPercurso;
+values(1,2,1);
+
+insert into `FuncionarioPercurso`(`Funcionario_idFuncionario`, `Percurso_idPercurso`, `Condutor`)
+values(0,2,0); -- Dr. Bernardo vai como passageiro
+
+insert into `FuncionarioPercurso`(`Funcionario_idFuncionario`, `Percurso_idPercurso`, `Condutor`)
+values(3,7,1);
+-- select * from FuncionarioPercurso;
 
 -- Encomenda
 

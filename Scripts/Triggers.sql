@@ -138,7 +138,7 @@ delimiter $$
 		select f.HabilitacaoAuto from Funcionario as f where f.idFuncionario = new.Funcionario_idFuncionario into Habilitacao;
         select v.Categoria from Veiculo as v inner join Percurso as p 
 			on p.idPercurso = new.Percurso_idPercurso and v.idVeiculo = p.Veiculo_idVeiculo into Categoria;
-		if Habilitacao < Categoria then signal sqlstate '45000' set Message_text = "Funcionário não habilitado para o Veículo"; end if;
+		if Habilitacao < Categoria and new.Condutor then signal sqlstate '45000' set Message_text = "Funcionário não habilitado para o Veículo"; end if;
         select p.idPercurso from Percurso as p inner join FuncionarioPercurso as fp on fp.Percurso_idPercurso = p.idPercurso
         where p.HoraChegada = '1000-01-01 00:00:00' into Atual;
         if Atual then signal sqlstate '45000' set Message_text = "Funcionário já em percurso atual"; end if;
