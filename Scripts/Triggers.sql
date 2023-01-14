@@ -206,6 +206,7 @@ delimiter $$
         then
         signal sqlstate '45000' set Message_text = "Não Existe stock disponível para esta compra";
         else 
+        -- Os triggers são atómicos então respeitam o ACID
         Update ItemCompra as IC SET IC.Disponiveis = IC.Disponiveis - new.Quantidade where IC.Item_idItem = new.Item_idItem;
         Update Item as I set I.Quantidade = I.Quantidade - new.Quantidade where I.idItem = new.Item_idItem;
         end if;
