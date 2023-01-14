@@ -486,3 +486,9 @@ VALUES(1,6,23.79,5,2);
 
 INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
 VALUES(0,6,2.79,3,6);
+
+select p.idPercurso, p.Veiculo_idVeiculo, e.idEncomenda, ei.Item_idItem, vt.TipoConservacao_idTipoConservacao from Percurso as p 
+inner join Encomenda as e on e.Percurso_idPercurso = p.idPercurso
+inner join EncomendaItem as ei on ei.Encomenda_idEncomenda = e.idEncomenda
+inner join VeiculoTipo as vt on vt.Veiculo_idVeiculo = p.Veiculo_idVeiculo
+inner join ItemTipo as it on it.Item_idItem = ei.Item_idItem;
