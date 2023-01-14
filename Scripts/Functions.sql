@@ -20,3 +20,21 @@ select exists(
 		where vt.Veiculo_idVeiculo = Veiculo)) into FaltaTipos;
 return FaltaTipos;
 end; $$
+
+drop function if exists isVeiculodisp;
+delimiter $$
+create function isVeiculodisp(idVeiculo INT)
+returns tinyint
+DETERMINISTIC
+	begin
+    declare isop TINYINT;
+    declare isdisp TINYINT;
+    declare inspec TINYINT;
+    select v.EstadoOperacional, DATEDIFF(v.DataProximaInspecao,CURDATE()) > 0 into isop, inspec from Veiculo as v
+		where v.idVeiculo = idVeiculo;
+	select 
+		not exists(select p.Veiculo_idVeiculo from Percurso as p 
+			where p.Veiculo_idVeiculo = idVeiculo and p.HoraChegada = '1000-01-01')
+	into isdisp;
+    return isop and isdisp and inspec;
+	end; $$
