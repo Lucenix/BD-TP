@@ -34,7 +34,7 @@ Values(2,"Temperatura","Conservar a temperatura refrigerada não negativa.");
 Insert into `TiposConservacao`(`idTiposConservacao`,`Tipo`,`Descricao`)
 Values(3,"Humidade","Manter em ambiente seco.");
 
-Select * from TiposConservacao;
+-- Select * from TiposConservacao;
 
 
 -- Funcionário
@@ -54,7 +54,7 @@ Values(3,"Gil Vicente",890.0,"C1E","2020-03-02","2030-05-21","Estafeta","1965-04
 Insert into `Funcionario`(`idFuncionario`,`Nome`,`Salario`,`HabilitacaoAuto`,`DataEntrada`,`DataExpiracaoHabilitacao`,`Posicao`,`DataNascimento`)
 Values(4,"Florbela Espanca",900.0,null,"2020-03-02",null,"Técnico Farmacêutico","1994-12-08");
 
-Select * from Funcionario;
+-- Select * from Funcionario;
 
 
 -- Contacto (dos funcionários):
@@ -89,7 +89,7 @@ Values(2,"A1",29,"Gasolina","2024-07-29",1,58.31,"20-BD-23");
 Insert into `Veiculo`(`idVeiculo`,`Categoria`,`Kilometragem`,`TipoCombustivel`,`DataProximaInspecao`,`EstadoOperacional`,`IUC`,`Matricula`)
 Values(3,"C",13748,"Diesel","2025-07-29",1,58.31,"21-BD-23");
 
-Select * from Veiculo;
+-- Select * from Veiculo;
 
 
 -- DataInspecaoPassada
@@ -122,6 +122,9 @@ values(1,2);
 
 Insert into `VeiculoTipo`(`TiposConservacao_idTiposConservacao`, `Veiculo_idVeiculo`)
 values(2,2);
+
+Insert into `VeiculoTipo`(`TiposConservacao_idTiposConservacao`, `Veiculo_idVeiculo`)
+values(3,3);
 
 
 -- Relatorio
@@ -348,17 +351,19 @@ VALUES (6, "2021-02-17 20:00:40", "2021-02-28 19:35:35", 6);
 INSERT INTO `Compra`(`idCompra`, `DataEmissao`, `DataEntrega`, `Fornecedor_idFornecedor`)
 VALUES (7, "2017-05-04 12:04:06", "2017-05-20 14:27:50", 4);
 
-
+-- select * from ItemCompra;
 -- ItemCompra
+INSERT INTO `ItemCompra`(`PrazoDeValidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
+VALUES ("2023-08-23", 9.20,80,0,7);
 
 INSERT INTO `ItemCompra`(`PrazoDeValidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
-VALUES ("2023-09-01", 2.50,150 ,3 ,5);
+VALUES ("2023-09-01", 0.50,150 ,3 ,5);
 
 INSERT INTO `ItemCompra`(`PrazoDeValidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
-VALUES (null, 17.90 ,40 ,1 ,4);
+VALUES (null, 14.60 ,40 ,1 ,4);
 
 INSERT INTO `ItemCompra`(`PrazoDeValidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
-VALUES ("2030-12-31" ,40.55 ,4 ,8 ,4);
+VALUES ("2030-12-31" ,40.55 ,30 ,8 ,4);
 
 INSERT INTO `ItemCompra`(`PrazoDeValidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
 VALUES ("2037-02-02" ,15.0 ,6 ,6 ,6 );
@@ -366,43 +371,58 @@ VALUES ("2037-02-02" ,15.0 ,6 ,6 ,6 );
 INSERT INTO `ItemCompra`(`PrazoDeValidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
 VALUES ("2012-11-15" ,7.35 ,60 ,7 ,0);
 
+INSERT INTO `ItemCompra`(`PrazoDeValidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
+VALUES ("2040-10-01" ,20.05 ,50 ,5 ,5);
+
+INSERT INTO `ItemCompra`(`PrazoDeValidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
+VALUES ("2024-03-19" ,3.50 ,100 ,2 ,2);
+
+INSERT INTO `ItemCompra`(`PrazoDeValidade`, `CustoParcial`, `Quantidade`, `Item_iditem`, `Compra_idCompra`)
+VALUES ("2025-02-24" ,4.20 ,100 ,4 ,4);
+
 -- select c.idCompra,c.custototal,ic.custoparcial from ItemCompra as ic inner join Compra as c on ic.Compra_idCompra = c.idCompra;
 
 
 -- Percurso
 
-INSERT INTO `Percurso`(`idPercurso`,`HoraPartida`,`Veiculo_idVeiculo`)
-VALUES (0,"2023-01-19",0);
-
-INSERT INTO `Percurso`(`idPercurso`,`HoraChegada`,`HoraPartida`,`Veiculo_idVeiculo`)
-VALUES (1,"2022-12-13","2022-12-12",0);
-
 INSERT INTO `Percurso`(`idPercurso`,`HoraChegada`,`HoraPartida`,`DistanciaTotal`,`Veiculo_idVeiculo`)
 VALUES (2,"2022-12-13","2022-12-12",12.5,0);
 
 INSERT INTO `Percurso`(`idPercurso`,`HoraPartida`,`Veiculo_idVeiculo`)
-VALUES (3,"2023-01-18",1);
+VALUES (0,"2023-01-19",0);
 
 INSERT INTO `Percurso`(`idPercurso`,`HoraChegada`,`HoraPartida`,`DistanciaTotal`,`Veiculo_idVeiculo`)
 VALUES (4,"2022-05-25","2022-05-19",50.9,1);
 
 INSERT INTO `Percurso`(`idPercurso`,`HoraPartida`,`Veiculo_idVeiculo`)
-VALUES (5,"2023-01-19",2);
+VALUES (3,"2023-01-18",1);
 
 INSERT INTO `Percurso`(`idPercurso`,`HoraChegada`,`HoraPartida`,`DistanciaTotal`,`Veiculo_idVeiculo`)
 VALUES (6,"2022-12-23","2022-11-11",150.6,2);
 
+INSERT INTO `Percurso`(`idPercurso`,`HoraPartida`,`Veiculo_idVeiculo`)
+VALUES (5,"2023-01-19",2);
 
-select * from Percurso;
+INSERT INTO `Percurso`(`idPercurso`,`HoraChegada`,`HoraPartida`,`Veiculo_idVeiculo`)
+VALUES (7,"2023-01-03 17:00:23","2023-01-04 17:00:23",3);
+
+
+-- select * from Percurso;
 
 
 -- FuncionarioPercurso
+insert into `FuncionarioPercurso`(`Funcionario_idFuncionario`, `Percurso_idPercurso`, `Condutor`)
+values(1,0,1);
 
 insert into `FuncionarioPercurso`(`Funcionario_idFuncionario`, `Percurso_idPercurso`, `Condutor`)
-values(1,3,1);
--- insert into `FuncionarioPercurso`(`Funcionario_idFuncionario`, `Percurso_idPercurso`, `Condutor`)
--- values(1,5,1);
-select * from FuncionarioPercurso;
+values(1,2,1);
+
+insert into `FuncionarioPercurso`(`Funcionario_idFuncionario`, `Percurso_idPercurso`, `Condutor`)
+values(0,2,0); -- Dr. Bernardo vai como passageiro
+
+insert into `FuncionarioPercurso`(`Funcionario_idFuncionario`, `Percurso_idPercurso`, `Condutor`)
+values(3,7,1);
+-- select * from FuncionarioPercurso;
 
 -- Encomenda
 
@@ -425,6 +445,9 @@ VALUES(4,"2023-01-17 00:52:58",1,"2023-01-19 14:32:40","2023-01-19 09:00:01","20
 
 INSERT INTO `Encomenda`(`idEncomenda`, `DataRegisto`, `EstadoEntrega`, `HoraPrevista`,`HoraEnvio`,`HoraEntrega`,`DistanciaParcial`, `Percurso_idPercurso`, `Cliente_idCliente`, `Endereco_idEndereco`)
 VALUES(5,"2023-01-17 00:52:58",1,"2023-01-19 14:32:40","2023-01-19 09:00:01","2023-01-19 14:45:23",1020,2,1,9);
+
+INSERT INTO `Encomenda`(`idEncomenda`, `DataRegisto`, `EstadoEntrega`, `HoraPrevista`,`HoraEnvio`,`HoraEntrega`,`DistanciaParcial`, `Percurso_idPercurso`, `Cliente_idCliente`, `Endereco_idEndereco`)
+VALUES(6,"2023-01-02 14:12:41",1,"2023-01-04 07:05:22","2023-01-03 17:00:23","2023-01-04 07:15:18",1300,7,6,3);
 
 -- EncomendaItem
 
@@ -457,3 +480,19 @@ VALUES(0,1,30,6,4);
 
 INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
 VALUES(0,15,75.55,8,5);
+
+INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
+VALUES(1,2,18.90,7,4);
+
+INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
+VALUES(1,6,23.79,5,2);
+
+INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
+VALUES(0,6,2.79,3,6);
+
+select e.idEncomenda, p.idPercurso, p.Veiculo_idVeiculo, e.idEncomenda, ei.Item_idItem, vt.TiposConservacao_idTiposConservacao, it.TiposConservacao_idTiposConservacao
+from Percurso as p 
+inner join Encomenda as e on e.Percurso_idPercurso = p.idPercurso
+inner join EncomendaItem as ei on ei.Encomenda_idEncomenda = e.idEncomenda
+inner join VeiculoTipo as vt on vt.Veiculo_idVeiculo = p.Veiculo_idVeiculo
+inner join ItemTipo as it on it.Item_idItem = ei.Item_idItem;

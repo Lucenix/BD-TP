@@ -35,29 +35,32 @@ select ic.* from ItemCompra as ic
     order by ic.PrazoDeValidade ASC
     limit 1;
     
--- Deve ser possivel verificar qual o item mais vendido----untested not POG
-select e.Item_idItem, SUM(e.Quantidade) from EncomendaItem as e
-	group by e.Item_idItem;
-    order by SUM(e.Quantidade) ASC
-    limit 1
+-- Deve ser possivel verificar qual o item mais vendido----untested not POG (RM8)
+select i.idItem, i.Nome SUM(ei.Quantidade) from EncomendaItem as ei
+inner join Item as i on i.idItem = ei.Item_idItem
+	group by ei.Item_idItem
+    order by SUM(ei.Quantidade) DESC
+    limit 1;
 
--- Conseguir ver o top 3 clientes que mais gastaram
+-- Conseguir ver o top 3 clientes que mais gastaram (RM22)
 select C.idCliente, C.Nome, round(SUM(E.CustoTotal),2) as "Dinheiro Gasto"
 	from EncomendaItem as EI inner join Encomenda as E
-		on EI.encomenda_idEncomenda = E.idEncomenda
+		on EI.Encomenda_idEncomenda = E.idEncomenda
 			inner join Cliente as C
             on E.Cliente_idCliente = C.idCliente
 	group by C.idCliente
     order by SUM(E.CustoTotal) DESC
 	LIMIT 3;
 
-
-
-
-
-	
+-- Localidade com maior registo de entregas (RM20)
+select E.Localidade, Count(Enco.idEncomenda) as "Número de Encomendas"
+	from Encomenda as Enco inner join Endereco as E
+    on Enco.Endereco_idEndereco = E.idEndereco
+    group by E.Localidade
+    order by Count(Enco.idEncomenda) DESC
+    LIMIT 1;
     
 
-
-
-
+-- Ver o numerode percursos feitos pelos estafetas
+select f.Nome, count(fp.funcionario_idFuncionario) as "num percursos" from Funcionario as f
+    inner join FuncionarioPercurso as fp on f.idFuncionario = fp.funcionario_idFuncionario;

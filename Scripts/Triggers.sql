@@ -27,33 +27,31 @@ delimiter $$
 
 -- Um Veículo não pode ser utilizado se não estiver operacional (RD32)
 delimiter $$
-	create trigger checkEncomenda_VeiculoOperacional_u
+	create trigger checkPercurso_VeiculoOperacional_u
     before update
-    on Encomenda for each row
+    on Percurso for each row
     begin
 		declare Veiculo int;
         declare EstadoOperacional bool;
-		if new.Percurso_idPercurso is not null then
-			select p.Veiculo_idVeiculo from Percurso as p where p.idPercurso = new.Percurso_idPercurso into Veiculo;
-			select v.EstadoOperacional from Veiculo as v where v.idVeiculo = Veiculo into EstadoOperacional;
-			if EstadoOperacional = 0 then signal sqlstate '45000' set Message_text = "Veículo não operacional"; end if;
-        end if;
+        select new.Veiculo_idVeiculo into Veiculo;
+        set EstadoOperacional = isVeiculodisp(Veiculo);
+        if EstadoOperacional = 0 then signal sqlstate '45000' set Message_text = "Veículo não operacional"; end if;
     end; $$ 
 
 -- Um Veículo não pode ser utilizado se não estiver operacional (RD32)
 delimiter $$
-	create trigger checkEncomenda_VeiculoOperacional_i
+	create trigger checkPercurso_VeiculoOperacional_i
     before insert
-    on Encomenda for each row
+    on Percurso for each row
     begin
 		declare Veiculo int;
         declare EstadoOperacional bool;
-		if new.Percurso_idPercurso is not null then
-			select p.Veiculo_idVeiculo from Percurso as p where p.idPercurso = new.Percurso_idPercurso into Veiculo;
-			select v.EstadoOperacional from Veiculo as v where v.idVeiculo = Veiculo into EstadoOperacional;
-			if EstadoOperacional = 0 then signal sqlstate '45000' set Message_text = "Veículo não operacional"; end if;
-        end if;
+        select new.Veiculo_idVeiculo into Veiculo;
+        set EstadoOperacional = isVeiculodisp(Veiculo);
+        if EstadoOperacional = 0 then signal sqlstate '45000' set Message_text = "Veículo não operacional"; end if;
     end; $$ 
+
+-- Um Item fora de validade nunca deve ser entregue numa Encomenda (RD33);
 
 -- Um Veículo não pode entregar um Item com Tipos de Conservação que não acomode(RD34);
 delimiter $$
@@ -62,18 +60,10 @@ delimiter $$
     on Encomenda for each row
 	begin
 		declare Veiculo int;
-        declare FaltamTipos bool;
 		if new.Percurso_idPercurso is not null then
-			select p.Veiculo_idVeiculo from Percurso as p where p.idPercurso = new.Percurso_idPercurso into Veiculo;
-			select 
-				exists(select it.TiposConservacao_idTiposConservacao from EncomendaItem as ei 
-				 inner join ItemTipo as it on it.Item_idItem = ei.Item_idItem
-				 where ei.Encomenda_idEncomenda = new.idEncomenda and
-				 it.TiposConservacao_idTiposConservacao not in 
-					(select vt.TiposConservacao_idTiposConservacao from VeiculoTipo as vt 
-					 where vt.Veiculo_idVeiculo = Veiculo))
-			into FaltamTipos;
-			if FaltamTipos = 1 then signal sqlstate '45000' set Message_text = "Veículo não satisfaz todos os tipos de Itens que constam do Percurso"; end if;
+			select p.Veiculo_idVeiculo from Percurso as p where p.idPercurso = e.Percurso_idPercurso into Veiculo;
+			if isVeiculoEncomendaValid(Veiculo, new) = 1
+            then signal sqlstate '45000' set Message_text = "Veículo não satisfaz todos os tipos de Itens que constam do Percurso"; end if;
 		end if;
 	end; $$
 
@@ -84,18 +74,10 @@ delimiter $$
     on Encomenda for each row
 	begin
 		declare Veiculo int;
-        declare FaltamTipos bool;
 		if new.Percurso_idPercurso is not null then
-			select p.Veiculo_idVeiculo from Percurso as p where p.idPercurso = new.Percurso_idPercurso into Veiculo;
-			select 
-				exists(select it.TiposConservacao_idTiposConservacao from EncomendaItem as ei 
-				 inner join ItemTipo as it on it.Item_idItem = ei.Item_idItem
-				 where ei.Encomenda_idEncomenda = new.idEncomenda and
-				 it.TiposConservacao_idTiposConservacao not in 
-					(select vt.TiposConservacao_idTiposConservacao from VeiculoTipo as vt 
-					 where vt.Veiculo_idVeiculo = Veiculo))
-			into FaltamTipos;
-			if FaltamTipos = 1 then signal sqlstate '45000' set Message_text = "Veículo não satisfaz todos os tipos de Itens que constam do Percurso"; end if;
+			select p.Veiculo_idVeiculo from Percurso as p where p.idPercurso = e.Percurso_idPercurso into Veiculo;
+			if isVeiculoEncomendaValid(Veiculo, new) = 1
+            then signal sqlstate '45000' set Message_text = "Veículo não satisfaz todos os tipos de Itens que constam do Percurso"; end if;
 		end if;
 	end; $$
 
@@ -107,23 +89,24 @@ delimiter $$
 	begin
 		declare Percurso int;
         declare Veiculo int;
-        declare FaltamTipos bool;
+        declare FaltaTipos tinyint;
         select e.Percurso_idPercurso from Encomenda as e
-			where e.idEncomenda = new.Encomenda_idEncomenda into Percurso;
+            where e.idEncomenda = new.Encomenda_idEncomenda into Percurso;
 		if Percurso is not null then
-			select p.Veiculo_idVeiculo from Percurso as p where p.idPercurso = Percurso into Veiculo;
-			select 
-				exists(select it.TiposConservacao_idTiposConservacao from ItemTipo as it 
-				 where it.Item_idItem = new.Item_idItem and
-				 it.TiposConservacao_idTiposConservacao not in 
-					(select vt.TiposConservacao_idTiposConservacao from VeiculoTipo as vt 
-					 where vt.Veiculo_idVeiculo = Veiculo))
-			into FaltamTipos;
-			if FaltamTipos = 1 then signal sqlstate '45000' set Message_text = "Veículo atribuído ao Percurso não satisfaz o Item adicionado"; end if;
+			select p.Veiculo_idVeiculo from Percurso as p where p.idPercurso = e.Percurso_idPercurso into Veiculo;
+			select exists(
+				select it.TiposConservacao_idTiposConservacao 
+				from ItemTipo as it where it.Item_idItem = new.Item_idItem and
+				it.TiposConservacao_idTiposConservacao not in 
+				(select vt.TiposConservacao_idTiposConservacao from VeiculoTipo as vt 
+					where vt.Veiculo_idVeiculo = Veiculo)) into FaltaTipos;
+			if FaltaTipos = 1 then 
+            signal sqlstate '45000' set Message_text = "Veículo atribuído ao Percurso não satisfaz o Item adicionado"; end if;
 		end if;
 	end; $$
     
 -- atualizar automaticamente o custo total de uma encomenda sempre que se introduzir um novo item (RD35)
+-- colocar round(e.CustoTotal,2) para ficar com valores mais simpáticos? :D
 delimiter $$
 	create trigger encomendaitem_update_encomenda_custototal
     after insert
@@ -168,7 +151,7 @@ delimiter $$
 		select f.HabilitacaoAuto from Funcionario as f where f.idFuncionario = new.Funcionario_idFuncionario into Habilitacao;
         select v.Categoria from Veiculo as v inner join Percurso as p 
 			on p.idPercurso = new.Percurso_idPercurso and v.idVeiculo = p.Veiculo_idVeiculo into Categoria;
-		if Habilitacao < Categoria then signal sqlstate '45000' set Message_text = "Funcionário não habilitado para o Veículo"; end if;
+		if Habilitacao < Categoria and new.Condutor then signal sqlstate '45000' set Message_text = "Funcionário não habilitado para o Veículo"; end if;
         select p.idPercurso from Percurso as p inner join FuncionarioPercurso as fp on fp.Percurso_idPercurso = p.idPercurso
         where p.HoraChegada = '1000-01-01 00:00:00' into Atual;
         if Atual then signal sqlstate '45000' set Message_text = "Funcionário já em percurso atual"; end if;
@@ -201,3 +184,46 @@ delimiter $$
 		then 
         signal sqlstate '45000' set Message_text = "Veículo não satisfaz todos os tipos de Itens que constam do Percurso"; end if;
 	end; $$
+    
+
+-- Trigger que faz o calculo dos disponiveis (RD37 e RD44) 
+delimiter $$
+	create trigger atualizaDisponiveisInicial
+    before insert
+    on ItemCompra for each row
+    begin
+		if new.PrazoDeValidade != null
+        then
+        set new.Disponiveis = new.Quantidade * (DateDiff(new.PrazoDeValidade,curdate()) > 31);
+		else
+        set new.Disponiveis = new.Quantidade;
+        end if;
+end; $$
+
+-- Trigger que verifica se uma compra pode ser efetuada verificando se há stock e se for possível altera o stock de acordo com o pedido
+delimiter $$
+	create trigger checkEAtualizaQuantidade
+    before insert
+    on EncomendaItem for each row
+    begin
+		declare quantidadeAtual INT;
+        select SUM(IC.Disponiveis)
+        from ItemCompra as IC inner join Item as I
+        on IC.Item_idItem = I.idItem
+			inner join EncomendaItem as EI
+            on EI.Item_idItem = I.idItem
+        where I.idItem = new.Item_idItem
+        into quantidadeAtual;
+        
+        if quantidadeAtual < new.Quantidade
+        then
+        signal sqlstate '45000' set Message_text = "Não Existe stock disponível para esta compra";
+        else 
+        -- Os triggers são atómicos então respeitam o ACID
+        Update ItemCompra as IC SET IC.Disponiveis = IC.Disponiveis - new.Quantidade where IC.Item_idItem = new.Item_idItem;
+        Update Item as I set I.Quantidade = I.Quantidade - new.Quantidade where I.idItem = new.Item_idItem;
+        end if;
+        
+	end; $$
+    
+    
