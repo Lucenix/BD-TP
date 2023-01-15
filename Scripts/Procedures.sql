@@ -159,28 +159,28 @@ drop procedure if exists insereClienteEncomenda;
 
 delimiter $$
 create procedure insereClienteEncomenda(
-    --cliente
-    in idCliente,
-    in Nome,
-    in NIF,
-    in DataNascimento,
-    in Genero,
+    -- cliente
+    in idCliente INT,
+    in Nome VARCHAR(45),
+    in NIF VARCHAR(9),
+    in DataNascimento DATE,
+    in Genero VARCHAR(40),
     -- Encomenda
-    in idEnvomenda,
-    in EstadoPagamento,
-    in HoraPrevista,
-    in HoraEnvio,
-    in Percurso_idPercurso,
-    in Endereco_idEndereco)
+    in idEncomenda INT,
+    in EstadoPagamento TINYINT,
+    in HoraPrevista DATETIME,
+    in HoraEnvio DATETIME,
+    in Percurso_idPercurso INT,
+    in Endereco_idEndereco INT)
 
     begin
-    start transaction;
+        
     DECLARE ErroTransacao BOOL DEFAULT 0;
-
     DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET ErroTransacao = 1;
-
-    declare existsclient TINYINT;
-    set existsclient = exists(select c.idCliente from Cliente as c where c.idCliente = idCliente;)
+    DECLARE existsclient TINYINT;
+    
+    start transaction;
+    set existsclient = exists(select c.idCliente from Cliente as c where c.idCliente = idCliente);
     if existsclient then
         insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`DataNascimento`,`Genero`)
         values(idCliente,Nome,NIF,DataNascimento,Genero);
@@ -193,7 +193,7 @@ create procedure insereClienteEncomenda(
 
     end if;
 
-
+end; $$
 
 
 
