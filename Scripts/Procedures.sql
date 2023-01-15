@@ -168,29 +168,50 @@ create procedure insereClienteEncomenda(
     -- Encomenda
     in idEncomenda INT,
     in EstadoPagamento TINYINT,
-    in HoraPrevista DATETIME,
-    in HoraEnvio DATETIME,
-    in Percurso_idPercurso INT,
-    in Endereco_idEndereco INT)
+    -- in HoraPrevista DATETIME,
+    -- in HoraEnvio DATETIME,
+    in idEndereco INT,
+    in NumeroPorta INT,
+    in Rua VARCHAR(45),
+    in Localidade VARCHAR(45),
+    in CodPostal VARCHAR(45),
+    -- Mensagem de erro
+    OUT pResultado VARCHAR(150))
 
-    begin
+    insereClienteEncomenda:begin
         
     DECLARE ErroTransacao BOOL DEFAULT 0;
     DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET ErroTransacao = 1;
     DECLARE existsclient TINYINT;
+    DECLARE existsendereco TINYINT;
     
     start transaction;
+    set existsendereco = exists(select e.idEndereco from Endereco as e where e.idEndereco = idEndereco);
+    if not existsendereco then
+		insert into `Endereco`(`idEndereco`,`NumeroPorta`,`Rua`,`Localidade`,`CodPostal`)
+        values(idEndereco,NumeroPorta,Rua,Localidade,CodPostal);
+        if ErroTransacao = 1 then rollback; 
+			SET pResultado = 'Transação abortada - Inserir Novo Endereco.';
+			LEAVE insereClienteEncomenda;
+		end if;
+	end if;
     set existsclient = exists(select c.idCliente from Cliente as c where c.idCliente = idCliente);
-    if existsclient then
+    if not existsclient then
         insert into `Cliente`(`idCliente`,`Nome`,`NIF`,`DataNascimento`,`Genero`)
         values(idCliente,Nome,NIF,DataNascimento,Genero);
+        if ErroTransacao = 1 then rollback; 
+			SET pResultado = 'Transação abortada - Inserir Novo Cliente.';
+			LEAVE insereClienteEncomenda;
+		end if;
     end if;
-    insert into `Encomenda`(`idEncomenda`, `EstadoPagamento`, `DataRegisto`, `HoraPrevista`,`HoraEnvio`, `Percurso_idPercurso`, `Cliente_idCliente`, `Endereco_idEndereco`)
-    values(idEncomenda, EstadoPagamento, CURDATE(), HoraPartida, HoraEnvio, Percurso_idPercurso, idCliente, Endereco_idEndereco);
+    
+    insert into `Encomenda`(`idEncomenda`, `EstadoPagamento`, `DataRegisto`, `Percurso_idPercurso`, `Cliente_idCliente`, `Endereco_idEndereco`)
+    values(idEncomenda, EstadoPagamento, CURDATE(), null, idCliente, idEndereco);
 
-    if ErroTransacao = 1 then rollback;
+    if ErroTransacao = 1 then rollback; 
+		SET pResultado = 'Transação abortada - Inserir Encomenda.';
+		LEAVE insereClienteEncomenda;
     else commit;
-
     end if;
 
 end; $$

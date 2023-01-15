@@ -61,6 +61,7 @@ select E.Localidade, Count(Enco.idEncomenda) as "Número de Encomendas"
     LIMIT 1;
     
 
--- Ver o numerode percursos feitos pelos estafetas
+-- Ver o número de percursos feitos pelos estafetas
 select f.Nome, count(fp.funcionario_idFuncionario) as "num percursos" from Funcionario as f
     inner join FuncionarioPercurso as fp on f.idFuncionario = fp.funcionario_idFuncionario;
+

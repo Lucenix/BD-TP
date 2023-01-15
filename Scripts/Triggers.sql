@@ -21,7 +21,7 @@ delimiter $$
 	begin
 		if (new.HabilitacaoAuto is not null and new.DataExpiracaoHabilitacao is null) or
 		   (new.HabilitacaoAuto is null and new.DataExpiracaoHabilitacao is not null) then 
-			signal sqlstate '45000' set Message_text = "";
+			signal sqlstate '45000' set Message_text = "Funcionário adicionado com combinação Habilitação-Data de Expiração inválida.";
 		end if;
 	end; $$
 
