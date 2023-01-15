@@ -1,2 +1,2 @@
 use mydb;
-drop schema mydb;
+drop schema if exists mydb;

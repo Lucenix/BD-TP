@@ -5,6 +5,8 @@ drop trigger if exists encomendaitem_update_encomenda_custototal;
 drop trigger if exists encomenda_update_percurso_distanciatotal;
 drop trigger if exists checkFuncionarioPercurso;
 drop trigger if exists checkFuncionario_HabilitacaoAuto;
+drop trigger if exists checkPercurso_VeiculoOperacional_u;
+drop trigger if exists checkPercurso_VeiculoOperacional_i;
 drop trigger if exists checkEncomenda_VeiculoOperacional_u;
 drop trigger if exists checkEncomenda_VeiculoOperacional_i;
 drop trigger if exists checkEncomenda_VeiculoTipoConservacao_u;
@@ -12,6 +14,8 @@ drop trigger if exists checkEncomenda_VeiculoTipoConservacao_i;
 drop trigger if exists checkEncomenda_Percurso_u;
 drop trigger if exists checkEncomenda_Percurso_i;
 drop trigger if exists checkEncomendaItem_VeiculoTipoConservacao;
+drop trigger if exists atualizaDisponiveisInicial;
+drop trigger if exists checkEAtualizaQuantidade;
 
 -- Se um Funcionário tiver Habilitação Automobilística, torna-se necessário saber a Data de Expiração da Habilitação. (RD31)
 delimiter $$
@@ -61,7 +65,7 @@ delimiter $$
 	begin
 		declare Veiculo int;
 		if new.Percurso_idPercurso is not null then
-			select p.Veiculo_idVeiculo from Percurso as p where p.idPercurso = e.Percurso_idPercurso into Veiculo;
+			select p.Veiculo_idVeiculo from Percurso as p where p.idPercurso = new.Percurso_idPercurso into Veiculo;
 			if isVeiculoEncomendaValid(Veiculo, new) = 1
             then signal sqlstate '45000' set Message_text = "Veículo não satisfaz todos os tipos de Itens que constam do Percurso"; end if;
 		end if;
@@ -75,7 +79,7 @@ delimiter $$
 	begin
 		declare Veiculo int;
 		if new.Percurso_idPercurso is not null then
-			select p.Veiculo_idVeiculo from Percurso as p where p.idPercurso = e.Percurso_idPercurso into Veiculo;
+			select p.Veiculo_idVeiculo from Percurso as p where p.idPercurso = new.Percurso_idPercurso into Veiculo;
 			if isVeiculoEncomendaValid(Veiculo, new) = 1
             then signal sqlstate '45000' set Message_text = "Veículo não satisfaz todos os tipos de Itens que constam do Percurso"; end if;
 		end if;

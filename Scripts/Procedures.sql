@@ -154,7 +154,8 @@ create procedure comprasData(in datai DATE, in dataf DATE)
 
 call ComprasData(date("2000-01-18 09:00:00"),date("2023-01-20 09:00:02"));
 
-
+-- Um Cliente deve ser inserido no Sistema no momento em que faz a sua primeira Encomenda. (RM9)
+-- Sempre que um Cliente fizer uma Encomenda para um certo Endereço, esse Endereço é inserido no sistema (RM10)
 drop procedure if exists insereClienteEncomenda;
 
 delimiter $$

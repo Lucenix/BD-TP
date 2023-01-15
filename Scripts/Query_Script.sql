@@ -1,5 +1,8 @@
 use mydb;
 
+-- Deve ser possivel mostrar todas as Encomendas que não foram pagas (RM1)
+select * from Encomenda as e where e.EstadoPagamento = 0;
+
 -- Visualizar todos os percursos de um dado Funcionário 
 select f.Nome,fp.percurso_idpercurso as NrPercurso from (funcionario as f 
 	inner join funcionariopercurso as fp on f.idFuncionario = fp.funcionario_idFuncionario)
