@@ -59,8 +59,10 @@ delimiter $$
 	before update
     on Encomenda for each row
 	begin
+		declare Veiculo int;
 		if new.Percurso_idPercurso is not null then
-			if isVeiculoPercursoValid(new.Percurso_idPercurso) = 1
+			select p.Veiculo_idVeiculo from Percurso as p where p.idPercurso = e.Percurso_idPercurso into Veiculo;
+			if isVeiculoEncomendaValid(Veiculo, new) = 1
             then signal sqlstate '45000' set Message_text = "Veículo não satisfaz todos os tipos de Itens que constam do Percurso"; end if;
 		end if;
 	end; $$
@@ -71,8 +73,10 @@ delimiter $$
 	before insert
     on Encomenda for each row
 	begin
+		declare Veiculo int;
 		if new.Percurso_idPercurso is not null then
-			if isVeiculoPercursoValid(new.Percurso_idPercurso) = 1 
+			select p.Veiculo_idVeiculo from Percurso as p where p.idPercurso = e.Percurso_idPercurso into Veiculo;
+			if isVeiculoEncomendaValid(Veiculo, new) = 1
             then signal sqlstate '45000' set Message_text = "Veículo não satisfaz todos os tipos de Itens que constam do Percurso"; end if;
 		end if;
 	end; $$
@@ -84,11 +88,20 @@ delimiter $$
     on EncomendaItem for each row
 	begin
 		declare Percurso int;
+        declare Veiculo int;
+        declare FaltaTipos tinyint;
         select e.Percurso_idPercurso from Encomenda as e
-			where e.idEncomenda = new.Encomenda_idEncomenda into Percurso;
+            where e.idEncomenda = new.Encomenda_idEncomenda into Percurso;
 		if Percurso is not null then
-			if isVeiculoPercursoValid(Percurso) = 1 
-            then signal sqlstate '45000' set Message_text = "Veículo atribuído ao Percurso não satisfaz o Item adicionado"; end if;
+			select p.Veiculo_idVeiculo from Percurso as p where p.idPercurso = e.Percurso_idPercurso into Veiculo;
+			select exists(
+				select it.TiposConservacao_idTiposConservacao 
+				from ItemTipo as it where it.Item_idItem = new.Item_idItem and
+				it.TiposConservacao_idTiposConservacao not in 
+				(select vt.TiposConservacao_idTiposConservacao from VeiculoTipo as vt 
+					where vt.Veiculo_idVeiculo = Veiculo)) into FaltaTipos;
+			if FaltaTipos = 1 then 
+            signal sqlstate '45000' set Message_text = "Veículo atribuído ao Percurso não satisfaz o Item adicionado"; end if;
 		end if;
 	end; $$
     
