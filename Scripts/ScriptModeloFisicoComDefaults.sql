@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Veiculo` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`Percurso` (
   `idpercurso` INT NOT NULL,
-  `HoraChegada` DATETIME NOT NULL DEFAULT "1000-01-01",
+  `HoraChegada` DATETIME NOT NULL DEFAULT "1000-01-01 00:00",
   `HoraPartida` DATETIME NOT NULL,
   `DistanciaTotal` DOUBLE NOT NULL DEFAULT 0.0,
   `Veiculo_idVeiculo` INT NOT NULL,

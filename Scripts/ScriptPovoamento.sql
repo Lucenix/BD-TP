@@ -129,10 +129,10 @@ values(3,3);
 
 -- Relatorio
 Insert into `Relatorio`(`Data`,`EstadoResolucao`,`Descricao`,`Gravidade`,`Funcionario_idFuncionario`,`Veiculo_idVeiculo`)
-Values("2022-11-03 13:23:44",1,"Lateral do carro com alguns riscos","0",3,0);
+Values("2022-11-03 13:23:44",1,"Lateral do carro com alguns riscos","L",3,0);
 
 Insert into `Relatorio`(`Data`,`EstadoResolucao`,`Descricao`,`Gravidade`,`Funcionario_idFuncionario`,`Veiculo_idVeiculo`)
-Values("2022-12-12 11:01:01",1,"Pneu frontal direito furado","3",1,2);
+Values("2022-12-12 11:01:01",1,"Pneu frontal direito furado","C",1,2);
 
 
 -- Cliente
