@@ -188,7 +188,6 @@ Values(937760678,null,"antonioJoseFA@hotmail.com",7,null,null);
 
 delete from Endereco;
 
-
 -- Endereco (dos clientes)
 
 INSERT INTO `Endereco`(`idEndereco`,`NumeroPorta`, `Rua`, `Localidade`, `CodPostal`, `Fornecedor_idFornecedor`)
@@ -206,6 +205,17 @@ VALUES (3,123,"Travessa D.Henriques","Guimarães","4800-002",null);
 INSERT INTO `Endereco`(`idEndereco`,`NumeroPorta`, `Rua`, `Localidade`, `CodPostal`, `Fornecedor_idFornecedor`)
 VALUES (4,12,"Rua Brofest","Famalicão","4760-025",null);
 
+-- EnderecoCliente
+INSERT INTO `EnderecoCliente`(`Cliente_idCliente`,`Endereco_idEndereco`)
+VALUES(0,0);
+INSERT INTO `EnderecoCliente`(`Cliente_idCliente`,`Endereco_idEndereco`)
+VALUES(1,1);
+INSERT INTO `EnderecoCliente`(`Cliente_idCliente`,`Endereco_idEndereco`)
+VALUES(2,2);
+INSERT INTO `EnderecoCliente`(`Cliente_idCliente`,`Endereco_idEndereco`)
+VALUES(3,3);
+
+select * from EnderecoCliente;
 
 -- Fornecedor
 
