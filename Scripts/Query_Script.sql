@@ -89,7 +89,3 @@ select i.idItem as "id", i.Nome, i.Quantidade, sum(ic.Quantidade) as "Soma Quant
 	(ItemCompra as ic inner join Item as i on i.idItem = ic.Item_idItem)
 	on n.Item_idItem = ic.Item_idItem
 	group by i.idItem;
-    
-select * from EncomendaItem as ei right outer join 
-	(ItemCompra as ic inner join Item as i on i.idItem = ic.Item_idItem)
-	on ei.Item_idItem = ic.Item_idItem;
