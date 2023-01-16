@@ -14,6 +14,7 @@ As
 select * from Clientes;
 
 -- Vista? Conseguir visualizar o Stock atual (RM23)
+-- A soma dos disponíveis e da quantidade serve apenas para demonstrar que a Quantidade no Item está correta
 drop View if exists Stock;
 Create View Stock
 As
