@@ -167,6 +167,7 @@ create procedure insereClienteEncomenda(
     DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET ErroTransacao = 1;
     DECLARE existsclient TINYINT;
     DECLARE existsendereco TINYINT;
+    DECLARE existsClienteEndereco TINYINT;
     
     start transaction;
     set existsendereco = exists(select e.idEndereco from Endereco as e where e.idEndereco = idEndereco);
@@ -187,7 +188,16 @@ create procedure insereClienteEncomenda(
 			LEAVE insere;
 		end if;
     end if;
-    
+    set existsClienteEndereco = exists(select ec.Cliente_idCliente from EnderecoCliente as ec 
+    where ec.Endereco_idEndereco = idEndereco and ec.Cliente_idCliente = idCliente);
+    if not existsClienteEndereco then
+    insert into `EnderecoCliente`(`Cliente_idCliente`,`Endereco_idEndereco`)
+        values(idCliente,idEnderco);
+        if ErroTransacao = 1 then rollback; 
+			SET pResultado = 'Transação abortada - Inserir Novo Endereço relacionado com Cliente.';
+			LEAVE insere;
+		end if;
+	end if;
     insert into `Encomenda`(`idEncomenda`, `EstadoPagamento`, `DataRegisto`, `Percurso_idPercurso`, `Cliente_idCliente`, `Endereco_idEndereco`)
     values(idEncomenda, EstadoPagamento, CURDATE(), null, idCliente, idEndereco);
 
