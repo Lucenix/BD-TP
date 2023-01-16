@@ -20,24 +20,6 @@ create procedure dataexpir(in idFuncionario INT)
 call habilitacaoauto(1);
 call dataexpir(1);
 
--- verificar se um veiculo esta operacional -- isto vou deixar com return???--fazer como funç~ao
-drop procedure if exists isVeiculodisp;
-delimiter $$
-create procedure isVeiculodisp(in idVeiculo INT, out est TINYINT)
-	begin
-    declare isop TINYINT;
-    declare isdisp TINYINT;
-    declare inspec TINYINT;
-    select v.EstadoOperacional, DATEDIFF(v.DataProximaInspecao,CURDATE()) > 0 into isop, inspec from Veiculo as v
-		where v.idVeiculo = idVeiculo;
-	select 
-		not exists(select p.Veiculo_idVeiculo from Percurso as p 
-			where p.Veiculo_idVeiculo = idVeiculo and p.HoraChegada = '1000-01-01')
-	into isdisp;
-    set est = isop and isdisp and inspec;
-	end; $$
-call isVeiculodisp(3, @est);
-select @est;
 
 select p.Veiculo_idVeiculo from Percurso as p 
 			where p.Veiculo_idVeiculo = idVeiculo and p.HoraChegada = '1000-01-01'
