@@ -10,7 +10,6 @@ drop trigger if exists checkPercurso_VeiculoOperacional_i;
 drop trigger if exists checkEncomenda_VeiculoOperacional_u;
 drop trigger if exists checkEncomenda_VeiculoOperacional_i;
 drop trigger if exists checkEncomenda_VeiculoTipoConservacao_u;
-drop trigger if exists checkEncomenda_VeiculoTipoConservacao_i;
 drop trigger if exists checkEncomenda_Percurso_u;
 drop trigger if exists checkEncomenda_Percurso_i;
 drop trigger if exists checkEncomendaItem_VeiculoTipoConservacao;
@@ -37,7 +36,7 @@ delimiter $$
     begin
 		declare Veiculo int;
         declare EstadoOperacional bool;
-        select new.Veiculo_idVeiculo into Veiculo;
+        select new.Veiculo_idVeiculo into Veiculo where new.Veiculo_idVeiculo != old.Veiculo_idVeiculo;
         set EstadoOperacional = isVeiculodisp(Veiculo);
         if EstadoOperacional = 0 then signal sqlstate '45000' set Message_text = "Veículo não operacional"; end if;
     end; $$ 
@@ -56,6 +55,7 @@ delimiter $$
     end; $$ 
 
 -- Um Item fora de validade nunca deve ser entregue numa Encomenda (RD33);
+-- Vai ser um procedimento que "correrá todos os dias", garantido que os Disponíveis não contabilizam itens fora de validade (RM4).
 
 -- Um Veículo não pode entregar um Item com Tipos de Conservação que não acomode(RD34);
 delimiter $$
@@ -66,21 +66,7 @@ delimiter $$
 		declare Veiculo int;
 		if new.Percurso_idPercurso is not null then
 			select p.Veiculo_idVeiculo from Percurso as p where p.idPercurso = new.Percurso_idPercurso into Veiculo;
-			if isVeiculoEncomendaValid(Veiculo, new) = 1
-            then signal sqlstate '45000' set Message_text = "Veículo não satisfaz todos os tipos de Itens que constam do Percurso"; end if;
-		end if;
-	end; $$
-
--- Um Veículo não pode entregar um Item com Tipos de Conservação que não acomode (RD34)
-delimiter $$
-	create trigger checkEncomenda_VeiculoTipoConservacao_i
-	before insert
-    on Encomenda for each row
-	begin
-		declare Veiculo int;
-		if new.Percurso_idPercurso is not null then
-			select p.Veiculo_idVeiculo from Percurso as p where p.idPercurso = new.Percurso_idPercurso into Veiculo;
-			if isVeiculoEncomendaValid(Veiculo, new) = 1
+			if isVeiculoEncomendaValid(Veiculo, new.idEncomenda) = 1
             then signal sqlstate '45000' set Message_text = "Veículo não satisfaz todos os tipos de Itens que constam do Percurso"; end if;
 		end if;
 	end; $$
@@ -97,7 +83,7 @@ delimiter $$
         select e.Percurso_idPercurso from Encomenda as e
             where e.idEncomenda = new.Encomenda_idEncomenda into Percurso;
 		if Percurso is not null then
-			select p.Veiculo_idVeiculo from Percurso as p where p.idPercurso = e.Percurso_idPercurso into Veiculo;
+			select p.Veiculo_idVeiculo from Percurso as p where p.idPercurso = Percurso into Veiculo;
 			select exists(
 				select it.TiposConservacao_idTiposConservacao 
 				from ItemTipo as it where it.Item_idItem = new.Item_idItem and
@@ -136,7 +122,7 @@ add check (Quantidade >= Disponiveis);
 -- atualizar automaticamente a distância total de um percurso quando uma nova encomenda é adicionada (RD38)
 delimiter $$
 	create trigger encomenda_update_percurso_distanciatotal
-    after insert
+    before insert
     on Encomenda for each row
     begin
 		update Percurso as p set p.DistanciaTotal = p.DistanciaTotal + new.DistanciaParcial where new.Percurso_idPercurso = p.idPercurso;
@@ -210,6 +196,10 @@ delimiter $$
     before insert
     on EncomendaItem for each row
     begin
+		declare counter int default 0;
+        declare disponiveis int;
+        declare item int;
+        declare compra int;
 		declare quantidadeAtual INT;
         select SUM(IC.Disponiveis)
         from ItemCompra as IC inner join Item as I
@@ -223,9 +213,31 @@ delimiter $$
         then
         signal sqlstate '45000' set Message_text = "Não Existe stock disponível para esta compra";
         else 
+        
+        while quantidadeAtual > 0 do
+        
+        select IC.Disponiveis, IC.Item_idItem, IC.Compra_idCompra 
+        from ItemCompra as IC where IC.Disponiveis > 0 limit counter, 1 
+        into disponiveis, item, compra;
+        
+        if disponiveis <= quantidadeAtual then
+        update ItemCompra as IC set IC.Disponiveis = 0 
+        where IC.Item = item and IC.Compra = compra;
+        set quantidadeAtual = quantidadeAtual - disponiveis;
+        else
+        update ItemCompra as IC set IC.Disponiveis = IC.Disponiveis - quantidadeAtual 
+        where IC.Item = item and IC.Compra = compra;
+        set quantidadeAtual = 0;
+        end if;
+        
+        Update Item as I set I.Quantidade = I.Quantidade - disponiveis where I.idItem = item;
+        set counter = counter + 1;
+        
+        end while;
+        
         -- Os triggers são atómicos então respeitam o ACID
-        Update ItemCompra as IC SET IC.Disponiveis = IC.Disponiveis - new.Quantidade where IC.Item_idItem = new.Item_idItem;
-        Update Item as I set I.Quantidade = I.Quantidade - new.Quantidade where I.idItem = new.Item_idItem;
+        -- Update ItemCompra as IC SET IC.Disponiveis = IC.Disponiveis - new.Quantidade where IC.Item_idItem = new.Item_idItem;
+        -- Update Item as I set I.Quantidade = I.Quantidade - new.Quantidade where I.idItem = new.Item_idItem;
         end if;
         
 	end; $$

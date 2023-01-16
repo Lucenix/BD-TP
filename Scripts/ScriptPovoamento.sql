@@ -437,9 +437,6 @@ INSERT INTO `Encomenda`(`idEncomenda`, `DataRegisto`, `EstadoEntrega`,`Percurso_
 VALUES(2,"2023-01-19 14:30:09",0,null,4,6);
 
 
-INSERT INTO `Encomenda`(`idEncomenda`, `DataRegisto`, `EstadoEntrega`, `HoraPrevista`,`HoraEnvio`,`DistanciaParcial`, `Percurso_idPercurso`, `Cliente_idCliente`, `Endereco_idEndereco`)
-VALUES(3,"2023-01-16 03:59:13",0,"2023-01-17 10:30:00","2023-01-17 09:30:00",5000,2,1,9);
-
 INSERT INTO `Encomenda`(`idEncomenda`, `DataRegisto`, `EstadoEntrega`, `HoraPrevista`,`HoraEnvio`,`HoraEntrega`,`DistanciaParcial`, `Percurso_idPercurso`, `Cliente_idCliente`, `Endereco_idEndereco`)
 VALUES(4,"2023-01-17 00:52:58",1,"2023-01-19 14:32:40","2023-01-19 09:00:01","2023-01-19 14:45:23",1020,2,1,9);
 
@@ -448,6 +445,9 @@ VALUES(5,"2023-01-17 00:52:58",1,"2023-01-19 14:32:40","2023-01-19 09:00:01","20
 
 INSERT INTO `Encomenda`(`idEncomenda`, `DataRegisto`, `EstadoEntrega`, `HoraPrevista`,`HoraEnvio`,`HoraEntrega`,`DistanciaParcial`, `Percurso_idPercurso`, `Cliente_idCliente`, `Endereco_idEndereco`)
 VALUES(6,"2023-01-02 14:12:41",1,"2023-01-04 07:05:22","2023-01-03 17:00:23","2023-01-04 07:15:18",1300,7,6,3);
+
+INSERT INTO `Encomenda`(`idEncomenda`, `DataRegisto`, `EstadoEntrega`, `HoraPrevista`,`HoraEnvio`,`DistanciaParcial`, `Percurso_idPercurso`, `Cliente_idCliente`, `Endereco_idEndereco`)
+VALUES(3,"2023-01-16 03:59:13",0,"2023-01-17 10:30:00","2023-01-17 09:30:00",5000,2,1,9);
 
 -- EncomendaItem
 

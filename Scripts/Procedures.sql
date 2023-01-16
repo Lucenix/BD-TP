@@ -179,7 +179,7 @@ create procedure insereClienteEncomenda(
     -- Mensagem de erro
     OUT pResultado VARCHAR(150))
 
-    insereClienteEncomenda:begin
+    insere:begin
         
     DECLARE ErroTransacao BOOL DEFAULT 0;
     DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET ErroTransacao = 1;
@@ -193,7 +193,7 @@ create procedure insereClienteEncomenda(
         values(idEndereco,NumeroPorta,Rua,Localidade,CodPostal);
         if ErroTransacao = 1 then rollback; 
 			SET pResultado = 'Transação abortada - Inserir Novo Endereco.';
-			LEAVE insereClienteEncomenda;
+			LEAVE insere;
 		end if;
 	end if;
     set existsclient = exists(select c.idCliente from Cliente as c where c.idCliente = idCliente);
@@ -202,7 +202,7 @@ create procedure insereClienteEncomenda(
         values(idCliente,Nome,NIF,DataNascimento,Genero);
         if ErroTransacao = 1 then rollback; 
 			SET pResultado = 'Transação abortada - Inserir Novo Cliente.';
-			LEAVE insereClienteEncomenda;
+			LEAVE insere;
 		end if;
     end if;
     
@@ -211,16 +211,25 @@ create procedure insereClienteEncomenda(
 
     if ErroTransacao = 1 then rollback; 
 		SET pResultado = 'Transação abortada - Inserir Encomenda.';
-		LEAVE insereClienteEncomenda;
+		LEAVE insere;
     else commit;
     end if;
 
 end; $$
 
+-- Um Item fora de validade nunca deve ser entregue numa Encomenda (RD33);
+-- Todos os dias os lotes devem ser verificados. Qualquer fora de validade deve ser considerado indisponível (RM4).
+drop procedure if exists checkValidadeItensDiario;
+delimiter $$
+create procedure checkValidadeItensDiario ()
+begin
+	update ItemCompra as ic, Item as i
+    SET IC.Disponiveis = 0, I.Quantidade = I.Quantidade - IC.Disponiveis 
+    where datediff(curdate(), ic.PrazoDeValidade) >= 31 and i.idItem = ic.Item_idItem;
+end; $$
 
-
-
-
-
-
-
+select i.idItem, ic.Disponiveis, ic.PrazoDeValidade, i.Quantidade from ItemCompra as ic
+inner join Item as i on ic.Item_idItem = i.idItem;
+call checkValidadeItensDiario;
+select i.idItem, ic.Disponiveis, ic.PrazoDeValidade, i.Quantidade from ItemCompra as ic
+inner join Item as i on ic.Item_idItem = i.idItem;
