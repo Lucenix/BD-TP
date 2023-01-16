@@ -58,10 +58,8 @@ inner join Item as i on i.idItem = ei.Item_idItem
 
 -- Conseguir ver o top 3 clientes que mais gastaram (RM21)
 select C.idCliente, C.Nome, round(SUM(E.CustoTotal),2) as "Dinheiro Gasto"
-	from EncomendaItem as EI inner join Encomenda as E
-		on EI.Encomenda_idEncomenda = E.idEncomenda
-			inner join Cliente as C
-            on E.Cliente_idCliente = C.idCliente
+	from Encomenda as E inner join Cliente as C
+	on E.Cliente_idCliente = C.idCliente
 	group by C.idCliente
     order by SUM(E.CustoTotal) DESC
 	LIMIT 3;

@@ -320,6 +320,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Relatorio` (
   `EstadoResolucao` TINYINT NOT NULL DEFAULT 0,
   `Descricao` VARCHAR(200) NOT NULL,
   `Gravidade` VARCHAR(1) NOT NULL DEFAULT 'L',
+  constraint `dominio_gravidade` check (`Gravidade` = 'L' or `Gravidade` = 'M' or `Gravidade` = 'H' or `Gravidade` = 'C'),
+  #L - Low; M - Medium; H - High; C - Critical
   PRIMARY KEY (`Funcionario_idFuncionario`, `Veiculo_idVeiculo`, `Data`),
   INDEX `fk_Funcionario_has_Veiculo_Veiculo1_idx` (`Veiculo_idVeiculo` ASC) VISIBLE,
   INDEX `fk_Funcionario_has_Veiculo_Funcionario1_idx` (`Funcionario_idFuncionario` ASC) VISIBLE,
