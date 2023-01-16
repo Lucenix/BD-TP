@@ -222,11 +222,11 @@ delimiter $$
         
         if disponiveis <= quantidadeAtual then
         update ItemCompra as IC set IC.Disponiveis = 0 
-        where IC.Item = item and IC.Compra = compra;
+        where IC.Item_idItem = item and IC.Compra_idCompra = compra;
         set quantidadeAtual = quantidadeAtual - disponiveis;
         else
         update ItemCompra as IC set IC.Disponiveis = IC.Disponiveis - quantidadeAtual 
-        where IC.Item = item and IC.Compra = compra;
+        where IC.Item_idItem = item and IC.Compra_idCompra = compra;
         set quantidadeAtual = 0;
         end if;
         
