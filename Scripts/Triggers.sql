@@ -200,41 +200,40 @@ delimiter $$
         declare disponiveis int;
         declare item int;
         declare compra int;
-		declare quantidadeAtual INT;
-        select SUM(IC.Disponiveis)
-        from ItemCompra as IC inner join Item as I
-        on IC.Item_idItem = I.idItem
-			inner join EncomendaItem as EI
-            on EI.Item_idItem = I.idItem
-        where I.idItem = new.Item_idItem
-        into quantidadeAtual;
+		declare quantidadeTotal INT;
+        declare quantidadeInserir INT;
         
-        if quantidadeAtual < new.Quantidade
+        select SUM(IC.Disponiveis)
+        from ItemCompra as IC 
+        where IC.Item_idItem = new.Item_idItem
+        into quantidadeTotal;
+        
+        if quantidadeTotal < new.Quantidade
         then
         signal sqlstate '45000' set Message_text = "Não Existe stock disponível para esta compra";
         else 
         
-        while quantidadeAtual > 0 do
+        select new.Quantidade into quantidadeInserir;
         
-        select IC.Disponiveis, IC.Item_idItem, IC.Compra_idCompra 
-        from ItemCompra as IC where IC.Disponiveis > 0 limit counter, 1 
-        into disponiveis, item, compra;
+        while quantidadeInserir > 0 do
         
-        if disponiveis <= quantidadeAtual then
+        select IC.Disponiveis, IC.Compra_idCompra 
+        from ItemCompra as IC where IC.Disponiveis > 0 and IC.Item_idItem = new.Item_idItem
+        limit 1 into disponiveis, compra;
+        
+        if disponiveis <= quantidadeInserir then
         update ItemCompra as IC set IC.Disponiveis = 0 
-        where IC.Item_idItem = item and IC.Compra_idCompra = compra;
-        set quantidadeAtual = quantidadeAtual - disponiveis;
+        where IC.Item_idItem = new.Item_idItem and IC.Compra_idCompra = compra;
+        set quantidadeInserir = quantidadeInserir - disponiveis;
         else
-        update ItemCompra as IC set IC.Disponiveis = IC.Disponiveis - quantidadeAtual 
-        where IC.Item_idItem = item and IC.Compra_idCompra = compra;
-        set quantidadeAtual = 0;
+        update ItemCompra as IC set IC.Disponiveis = IC.Disponiveis - quantidadeInserir 
+        where IC.Item_idItem = new.Item_idItem and IC.Compra_idCompra = compra;
+        set quantidadeInserir = 0;
         end if;
-        
-        Update Item as I set I.Quantidade = I.Quantidade - disponiveis where I.idItem = item;
-        set counter = counter + 1;
+        #set counter = counter + 1;
         
         end while;
-        
+        Update Item as I set I.Quantidade = I.Quantidade - new.Quantidade where I.idItem = item;
         -- Os triggers são atómicos então respeitam o ACID
         -- Update ItemCompra as IC SET IC.Disponiveis = IC.Disponiveis - new.Quantidade where IC.Item_idItem = new.Item_idItem;
         -- Update Item as I set I.Quantidade = I.Quantidade - new.Quantidade where I.idItem = new.Item_idItem;
