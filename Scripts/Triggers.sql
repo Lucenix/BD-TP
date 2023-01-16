@@ -185,12 +185,19 @@ delimiter $$
 		if new.PrazoDeValidade != null
         then
         set new.Disponiveis = new.Quantidade * (DateDiff(new.PrazoDeValidade,curdate()) > 31);
+        update Item as i
+        set i.Quantidade = i.Quantidade + new.Quantidade * (DateDiff(new.PrazoDeValidade,curdate()) > 31)
+        where i.idItem = new.Item_idItem;
 		else
         set new.Disponiveis = new.Quantidade;
+        update Item as i
+        set i.Quantidade = i.Quantidade + new.Quantidade
+        where i.idItem = new.Item_idItem;
         end if;
 end; $$
 
 -- Trigger que verifica se uma compra pode ser efetuada verificando se há stock e se for possível altera o stock de acordo com o pedido (RD44)
+-- Cada Encomenda apenas pode ser registada se houver Stock para tal.
 delimiter $$
 	create trigger checkEAtualizaQuantidade
     before insert
@@ -233,7 +240,7 @@ delimiter $$
         #set counter = counter + 1;
         
         end while;
-        Update Item as I set I.Quantidade = I.Quantidade - new.Quantidade where I.idItem = item;
+        Update Item as I set I.Quantidade = I.Quantidade - new.Quantidade where I.idItem = new.Item_idItem;
         -- Os triggers são atómicos então respeitam o ACID
         -- Update ItemCompra as IC SET IC.Disponiveis = IC.Disponiveis - new.Quantidade where IC.Item_idItem = new.Item_idItem;
         -- Update Item as I set I.Quantidade = I.Quantidade - new.Quantidade where I.idItem = new.Item_idItem;

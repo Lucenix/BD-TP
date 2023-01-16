@@ -279,32 +279,32 @@ VALUES (11,190,"Rua BigBru","Famalicão","4760-026",6);
 
 -- Item
 
-Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Quantidade`,`Comparticipacao`)
-Values(0,"Voltaren",0.06,"Pomada, Bisnaga 50g",11.80,15,0);
+Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Comparticipacao`)
+Values(0,"Voltaren",0.06,"Pomada, Bisnaga 50g",11.80,0);
 
-Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Quantidade`,`Comparticipacao`)
-Values(1,"Óleo de soja",0.23,"Aditivo para banho, Frasco 500 ml",17.90,20,0);
+Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Comparticipacao`)
+Values(1,"Óleo de soja",0.23,"Aditivo para banho, Frasco 500 ml",17.90,0);
 
-Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Quantidade`,`Comparticipacao`)
-Values(2,"Bepanthene",0.23,"Creme, Bisnaga 30g",4.95,20,0);
+Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Comparticipacao`)
+Values(2,"Bepanthene",0.23,"Creme, Bisnaga 30g",4.95,0);
 
-Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Quantidade`,`Comparticipacao`)
-Values(3,"Paracetamol",0.06,"Comprimido, Blister 20 unidades",0.50,50,0.37);
+Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Comparticipacao`)
+Values(3,"Paracetamol",0.06,"Comprimido, Blister 20 unidades",0.50,0.37);
 
-Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Quantidade`,`Comparticipacao`)
-Values(4,"Vitaminas do complexo B",0.23,"Xarope, Frasco 100ml",5.95,6,0);
+Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Comparticipacao`)
+Values(4,"Vitaminas do complexo B",0.23,"Xarope, Frasco 100ml",5.95,0);
 
-Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Quantidade`,`Comparticipacao`)
-Values(5,"Noreva Reducol MD",0.06,"Cápsulas, indicado após intervenções dermocirúrgicas",20.05,5,1);
+Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Comparticipacao`)
+Values(5,"Noreva Reducol MD",0.06,"Cápsulas, indicado após intervenções dermocirúrgicas",20.05,1);
 
-Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Quantidade`,`Comparticipacao`)
-Values(6,"EMITIUM",0.06,"Cápsulas para a Síndrome do Intestino Irritável",20.35,25,0.90);
+Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Comparticipacao`)
+Values(6,"EMITIUM",0.06,"Cápsulas para a Síndrome do Intestino Irritável",20.35,0.90);
 
-Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Quantidade`,`Comparticipacao`)
-Values(7,"Tantum Verde",0.06,"Solução bucal, frasco 500ml",14.70,90,0);
+Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Comparticipacao`)
+Values(7,"Tantum Verde",0.06,"Solução bucal, frasco 500ml",14.70,0);
 
-Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Quantidade`,`Comparticipacao`)
-Values(8,"WHEY",0.23,"Proteína em pó, isolada, 1kg",65.99,2,0);
+Insert into `Item`(`idItem`,`Nome`,`Imposto`,`Descricao`,`Custo`,`Comparticipacao`)
+Values(8,"WHEY",0.23,"Proteína em pó, isolada, 1kg",65.99,0);
 
 
 -- ItemTipo
@@ -451,6 +451,10 @@ VALUES(3,"2023-01-16 03:59:13",0,"2023-01-17 10:30:00","2023-01-17 09:30:00",500
 
 -- EncomendaItem
 
+select i.Quantidade, sum(ic.Quantidade) from Item as i inner join ItemCompra as ic
+on i.idItem = ic.Item_idItem
+group by i.idItem;
+
 INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
 VALUES(1,5,2.79,3,0);
 
@@ -490,9 +494,6 @@ VALUES(1,6,23.79,5,2);
 INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
 VALUES(0,6,2.79,3,6);
 
-select e.idEncomenda, p.idPercurso, p.Veiculo_idVeiculo, e.idEncomenda, ei.Item_idItem, vt.TiposConservacao_idTiposConservacao, it.TiposConservacao_idTiposConservacao
-from Percurso as p 
-inner join Encomenda as e on e.Percurso_idPercurso = p.idPercurso
-inner join EncomendaItem as ei on ei.Encomenda_idEncomenda = e.idEncomenda
-inner join VeiculoTipo as vt on vt.Veiculo_idVeiculo = p.Veiculo_idVeiculo
-inner join ItemTipo as it on it.Item_idItem = ei.Item_idItem;
+select i.Quantidade, sum(ic.Quantidade) from Item as i inner join ItemCompra as ic
+on i.idItem = ic.Item_idItem
+group by i.idItem;

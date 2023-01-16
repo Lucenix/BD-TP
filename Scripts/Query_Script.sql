@@ -79,3 +79,17 @@ select E.Localidade, Count(Enco.idEncomenda) as "Número de Encomendas"
 select f.Nome, count(fp.funcionario_idFuncionario) as "num percursos" from Funcionario as f
     inner join FuncionarioPercurso as fp on f.idFuncionario = fp.funcionario_idFuncionario;
 
+select * from ItemCompra;
+
+-- Ver o stock contra o total dos encomendados
+select i.idItem as "id", i.Nome, i.Quantidade, sum(ic.Quantidade) as "Soma Quantidades Lotes", sum(ic.Disponiveis) as "Soma Disponíveis Lotes", n.`Encomendados`
+	from (select ei.Item_idItem, ifnull(sum(ei.quantidade), "Indisponível") as "Encomendados" 
+		  from EncomendaItem as ei
+          group by ei.Item_idItem) as n right outer join 
+	(ItemCompra as ic inner join Item as i on i.idItem = ic.Item_idItem)
+	on n.Item_idItem = ic.Item_idItem
+	group by i.idItem;
+    
+select * from EncomendaItem as ei right outer join 
+	(ItemCompra as ic inner join Item as i on i.idItem = ic.Item_idItem)
+	on ei.Item_idItem = ic.Item_idItem;

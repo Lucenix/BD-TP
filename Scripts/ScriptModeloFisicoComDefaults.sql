@@ -171,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Item` (
   `Imposto` DOUBLE NOT NULL,
   `Descricao` VARCHAR(255) NOT NULL,
   `Custo` DOUBLE NOT NULL,
-  `Quantidade` INT NOT NULL,
+  `Quantidade` INT NOT NULL default 0,
   `Comparticipacao` DOUBLE NOT NULL,
   PRIMARY KEY (`idItem`));
 

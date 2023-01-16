@@ -12,3 +12,17 @@ As
             from Cliente as C;
 
 select * from Clientes;
+
+-- Vista? Conseguir visualizar o Stock atual (RM23)
+drop View if exists Stock;
+Create View Stock
+As
+	select i.idItem as "id", i.Nome, i.Quantidade as "Quantidade Total Disponível", sum(ic.Quantidade) as "Soma Quantidades Lotes", sum(ic.Disponiveis) as "Soma Disponíveis Lotes", n.`Encomendados`
+	from (select ei.Item_idItem, ifnull(sum(ei.quantidade), "Indisponível") as "Encomendados" 
+		  from EncomendaItem as ei
+          group by ei.Item_idItem) as n right outer join 
+	(ItemCompra as ic inner join Item as i on i.idItem = ic.Item_idItem)
+	on n.Item_idItem = ic.Item_idItem
+	group by i.idItem;
+        
+select * from Stock;
