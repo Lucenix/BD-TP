@@ -1,5 +1,6 @@
 use mydb;
 
+-- Deve ser possível verificar se um item/uma encomenda pode ser transportado num determinado veículo (RM16)
 drop function if exists isVeiculoEncomendaValid;
 delimiter $$
 create function isVeiculoEncomendaValid(Veiculo int, Encomenda int)
@@ -18,6 +19,7 @@ select exists(
 return FaltaTipos;
 end; $$
 
+-- Deve ser possível verificar se um dado veículo está disponível em algum momento (conservação/revisão/utilização) (RM11)
 drop function if exists isVeiculodisp;
 delimiter $$
 create function isVeiculodisp(idVeiculo INT)

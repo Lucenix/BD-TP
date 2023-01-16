@@ -176,7 +176,7 @@ delimiter $$
 	end; $$
     
 
--- Trigger que faz o calculo dos disponiveis (RD37 e RD44) 
+-- Trigger que faz o calculo dos disponiveis (RD37 e RD42) 
 delimiter $$
 	create trigger atualizaDisponiveisInicial
     before insert
@@ -190,7 +190,7 @@ delimiter $$
         end if;
 end; $$
 
--- Trigger que verifica se uma compra pode ser efetuada verificando se há stock e se for possível altera o stock de acordo com o pedido
+-- Trigger que verifica se uma compra pode ser efetuada verificando se há stock e se for possível altera o stock de acordo com o pedido (RD44)
 delimiter $$
 	create trigger checkEAtualizaQuantidade
     before insert

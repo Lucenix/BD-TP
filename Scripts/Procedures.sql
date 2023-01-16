@@ -227,9 +227,3 @@ begin
     SET IC.Disponiveis = 0, I.Quantidade = I.Quantidade - IC.Disponiveis 
     where datediff(curdate(), ic.PrazoDeValidade) >= 31 and i.idItem = ic.Item_idItem;
 end; $$
-
-select i.idItem, ic.Disponiveis, ic.PrazoDeValidade, i.Quantidade from ItemCompra as ic
-inner join Item as i on ic.Item_idItem = i.idItem;
-call checkValidadeItensDiario;
-select i.idItem, ic.Disponiveis, ic.PrazoDeValidade, i.Quantidade from ItemCompra as ic
-inner join Item as i on ic.Item_idItem = i.idItem;

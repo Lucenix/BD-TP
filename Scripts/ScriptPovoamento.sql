@@ -451,32 +451,14 @@ VALUES(3,"2023-01-16 03:59:13",0,"2023-01-17 10:30:00","2023-01-17 09:30:00",500
 
 -- EncomendaItem
 
-select * from ItemCompra;
-select * from EncomendaItem as ei inner join ItemCompra as ic on ei.Item_idItem = ic.Item_idItem;
-
 INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
 VALUES(1,5,2.79,3,0);
-
-select IC.Disponiveis, IC.Compra_idCompra 
-        from ItemCompra as IC where IC.Disponiveis > 0 and IC.Item_idItem = 3
-        limit 0, 1;
-select * from ItemCompra;
-
-INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
-VALUES(0,2,23.79,5,0);
-
-select SUM(IC.Disponiveis)
-        from ItemCompra as IC 
-        where IC.Item_idItem = 3
-        into quantidadeAtual;
 
 INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
 VALUES(0,4,2.79,3,1);
 
-select IC.Disponiveis, IC.Compra_idCompra 
-        from ItemCompra as IC where IC.Disponiveis > 0 and IC.Item_idItem = 3
-        limit 0, 1;
-select * from ItemCompra;
+INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
+VALUES(0,2,23.79,5,0);
 
 INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
 VALUES(0,1,2.79,3,2);
@@ -498,8 +480,6 @@ VALUES(0,1,30,6,4);
 
 INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
 VALUES(0,15,75.55,8,5);
-
-select * from EncomendaItem as ei inner join ItemCompra as ic on ei.Item_idItem = ic.Item_idItem;
 
 INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
 VALUES(1,2,18.90,7,4);
