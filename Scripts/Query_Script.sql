@@ -28,19 +28,17 @@ select r.descricao,r.gravidade,v.idVeiculo,v.Matricula from relatorio as r
 	where r.veiculo_idveiculo = 2 or r.Veiculo_idVeiculo = "20-BD-23";
     
 -- Deve ser possível verificar quanto tempo uma Encomenda esteve em trânsito (RM4)
-select datediff(e.horaenvio,e.horaentrega) from encomenda as e
-		where e.idEncomenda = 1;
-
-
+select timestampdiff(hour, e.horaenvio, e.horaentrega) as "Tempo de trânsito (horas)" from encomenda as e
+	where e.idEncomenda = 4;
 
 delimiter $$
 create procedure TempoTransitoEncomenda(in idEncomenda int)
 	begin
-	select datediff(e.HoraEnvio,e.HoraEntrega) from Encomenda as e
+	select timestampdiff(hour, e.HoraEnvio,e.HoraEntrega) as "Tempo de Trânsito (horas)" from Encomenda as e
 		where e.idEncomenda = idEncomenda;
 	end; $$
 
-call TempoTransitoEncomenda(1);
+call TempoTransitoEncomenda(4);
 
 
 -- verificar qual o proximo lote a expirar (RM5)
