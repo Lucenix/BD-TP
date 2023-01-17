@@ -49,7 +49,7 @@ select ic.* from ItemCompra as ic
     limit 1;
     
 -- Deve ser possivel verificar qual o item mais vendido (RM8)
-select i.idItem, i.Nome, SUM(ei.Quantidade) from EncomendaItem as ei
+select i.idItem, i.Nome, SUM(ei.Quantidade) as "Quantidade Comprada" from EncomendaItem as ei
 inner join Item as i on i.idItem = ei.Item_idItem
 	group by ei.Item_idItem
     order by SUM(ei.Quantidade) DESC
@@ -73,7 +73,7 @@ select E.Localidade, Count(Enco.idEncomenda) as "Número de Encomendas"
     
 
 -- Ver o número de percursos feitos pelos estafetas
-select f.Nome, count(fp.funcionario_idFuncionario) as "num percursos" from Funcionario as f
+select f.Nome, count(fp.funcionario_idFuncionario) as "Número Percursos" from Funcionario as f
     inner join FuncionarioPercurso as fp on f.idFuncionario = fp.funcionario_idFuncionario
     group by f.Nome;
 
