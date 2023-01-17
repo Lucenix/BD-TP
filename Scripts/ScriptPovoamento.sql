@@ -1,24 +1,25 @@
 Use mydb;
 
+
+delete from FuncionarioPercurso;
+delete from EnderecoCliente;
+delete from EncomendaItem;
 delete from Contacto;
 delete from Relatorio;
-delete from EncomendaItem;
-delete from Encomenda;
-delete from Cliente;
-delete from FuncionarioPercurso;
-delete from DataInspecaoPassada;
 delete from VeiculoTipo;
 delete from ItemTipo;
-delete from TiposConservacao;
+delete from Encomenda;
+delete from Cliente;
+delete from DataInspecaoPassada;
 delete from ItemCompra;
 delete from Item;
 delete from Compra;
 delete from Endereco;
 delete from Fornecedor;
-delete from EnderecoCliente;
 delete from Funcionario;
 delete from Percurso;
 delete from Veiculo;
+delete from TiposConservacao;
 
 -- Tipos de Conservacao
 
@@ -215,7 +216,7 @@ VALUES(2,2);
 INSERT INTO `EnderecoCliente`(`Cliente_idCliente`,`Endereco_idEndereco`)
 VALUES(3,3);
 
-select * from EnderecoCliente;
+-- select * from EnderecoCliente;
 
 -- Fornecedor
 
@@ -459,11 +460,10 @@ VALUES(6,"2023-01-02 14:12:41",1,"2023-01-04 07:05:22","2023-01-03 17:00:23","20
 INSERT INTO `Encomenda`(`idEncomenda`, `DataRegisto`, `EstadoEntrega`, `HoraPrevista`,`HoraEnvio`,`DistanciaParcial`, `Percurso_idPercurso`, `Cliente_idCliente`, `Endereco_idEndereco`)
 VALUES(3,"2023-01-16 03:59:13",0,"2023-01-17 10:30:00","2023-01-17 09:30:00",5000,2,1,9);
 
--- EncomendaItem
+INSERT INTO `Encomenda`(`idEncomenda`, `DataRegisto`, `EstadoEntrega`, `HoraPrevista`,`HoraEnvio`,`DistanciaParcial`, `Percurso_idPercurso`, `Cliente_idCliente`, `Endereco_idEndereco`)
+VALUES(7,"2022-01-15 03:59:13",1,"2022-01-22 11:31:00","2022-01-22 08:00:00",300,3,2,8);
 
-select i.Quantidade, sum(ic.Quantidade) from Item as i inner join ItemCompra as ic
-on i.idItem = ic.Item_idItem
-group by i.idItem;
+-- EncomendaItem
 
 INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
 VALUES(1,5,2.79,3,0);
@@ -504,6 +504,8 @@ VALUES(1,6,23.79,5,2);
 INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
 VALUES(0,6,2.79,3,6);
 
-select i.Quantidade, sum(ic.Quantidade) from Item as i inner join ItemCompra as ic
-on i.idItem = ic.Item_idItem
-group by i.idItem;
+INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
+VALUES(1,2,3,2,7);
+
+INSERT INTO `EncomendaItem`(`ValidacaoMedica`,`Quantidade`,`CustoParcial`,`Item_idItem`,`Encomenda_idEncomenda`)
+VALUES(0,5,4.8,4,7);
