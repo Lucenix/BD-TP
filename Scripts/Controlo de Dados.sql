@@ -1,3 +1,5 @@
+Use mydb;
+
 CREATE ROLE Estafeta;
 
 Grant Select
@@ -28,8 +30,6 @@ Grant Estafeta to 'dantas';
 -- drop user 'dantas'@'localhost'
 
 -- select * from mysql.user;
-
-select USER from
     
 flush privileges;
 
@@ -44,3 +44,5 @@ Create User 'Bernardo'@'localhost'
 Grant Administrador to 'Bernardo';
 
 -- Drop role Administrador
+
+-- Caso a role não esteja a funcionar após ser dado a um utilizador: set role all;
