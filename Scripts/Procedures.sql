@@ -1,6 +1,6 @@
 use mydb;
     
-drop procedure if exists habilitacaoauto;    
+drop procedure if exists habilitacaoauto; 
 -- verificar a habilitacao automibilistica de um estafeta e quando deve ser renovada
 delimiter $$
 create procedure habilitacaoauto(in idFuncionario INT)
@@ -164,10 +164,10 @@ create procedure insereClienteEncomenda(
     insere:begin
         
     DECLARE ErroTransacao BOOL DEFAULT 0;
-    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET ErroTransacao = 1;
     DECLARE existsclient TINYINT;
     DECLARE existsendereco TINYINT;
     DECLARE existsClienteEndereco TINYINT;
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET ErroTransacao = 1;
     
     start transaction;
     set existsendereco = exists(select e.idEndereco from Endereco as e where e.idEndereco = idEndereco);
