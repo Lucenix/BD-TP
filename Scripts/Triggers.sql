@@ -59,6 +59,21 @@ delimiter $$
 
 -- Um Veículo não pode entregar um Item com Tipos de Conservação que não acomode(RD34);
 delimiter $$
+	create trigger checkPercurso_VeiculoTipoConservacao_u
+	before update
+    on Percurso for each row
+	begin
+		declare oldVeiculo int;
+        select p.Veiculo from Percurso as p
+        where p.idPercurso = new.idPercurso;
+		if new.Veiculo != oldVeiculo then
+			if isVeiculoEncomendaValid(Veiculo, new.idEncomenda) = 1
+            then signal sqlstate '45000' set Message_text = "Veículo não satisfaz todos os tipos de Itens que constam do Percurso"; end if;
+		end if;
+	end; $$
+
+-- Um Veículo não pode entregar um Item com Tipos de Conservação que não acomode(RD34);
+delimiter $$
 	create trigger checkEncomenda_VeiculoTipoConservacao_u
 	before update
     on Encomenda for each row
