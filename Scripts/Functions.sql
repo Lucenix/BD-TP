@@ -1,6 +1,6 @@
 use mydb;
 
--- Deve ser possível verificar se um item/uma encomenda pode ser transportado num determinado veículo (RM16)
+-- Deve ser possível verificar se uma encomenda pode ser transportado num determinado veículo (RM16)
 drop function if exists isVeiculoEncomendaValid;
 delimiter $$
 create function isVeiculoEncomendaValid(Veiculo int, Encomenda int)
