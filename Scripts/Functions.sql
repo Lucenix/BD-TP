@@ -26,9 +26,9 @@ create function isVeiculodisp(idVeiculo INT)
 returns tinyint
 DETERMINISTIC
 	begin
-    declare isop TINYINT;
-    declare isdisp TINYINT;
-    declare inspec TINYINT;
+    declare isop TINYINT; -- Operacional
+    declare inspec TINYINT; -- Inspeção
+    declare isdisp TINYINT; -- Disponível
     select v.EstadoOperacional, DATEDIFF(v.DataProximaInspecao,CURDATE()) > 0 into isop, inspec from Veiculo as v
 		where v.idVeiculo = idVeiculo;
 	select 
