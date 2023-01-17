@@ -6,7 +6,7 @@ drop procedure if exists TempoTransitoEncomenda;
 select * from Encomenda as e where e.EstadoPagamento = 0;
 
 -- Deve ser possivel mostrar todas as Encomendas sem Percurso (RM2)
-select * from Encomenda as e where e.Percurso_idPercurso = null;
+select * from Encomenda as e where e.Percurso_idPercurso is null;
 
 -- Visualizar todos os percursos de um dado Funcionário (RM26)
 select f.Nome,fp.Percurso_idPercurso as NrPercurso from (Funcionario as f 
