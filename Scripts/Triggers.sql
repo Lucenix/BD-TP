@@ -64,10 +64,20 @@ delimiter $$
     on Percurso for each row
 	begin
 		declare oldVeiculo int;
-        select p.Veiculo from Percurso as p
-        where p.idPercurso = new.idPercurso;
-		if new.Veiculo != oldVeiculo then
-			if isVeiculoEncomendaValid(Veiculo, new.idEncomenda) = 1
+        declare FaltamTipos tinyint;
+        select p.Veiculo_idVeiculo from Percurso as p
+        where p.idPercurso = new.idPercurso into oldVeiculo;
+		if new.Veiculo_idVeiculo != oldVeiculo then
+			select exists(
+			select it.TiposConservacao_idTiposConservacao 
+			from EncomendaItem as ei
+			inner join ItemTipo as it on it.Item_idItem = ei.Item_idItem
+            inner join Encomenda as E on E.Percurso_idPercurso = new.idPercurso
+			where ei.Encomenda_idEncomenda = e.idEncomenda and
+			it.TiposConservacao_idTiposConservacao not in 
+			(select vt.TiposConservacao_idTiposConservacao from VeiculoTipo as vt 
+				where vt.Veiculo_idVeiculo = new.Veiculo_idVeiculo)) into FaltamTipos;
+			if FaltamTipos = 1
             then signal sqlstate '45000' set Message_text = "Veículo não satisfaz todos os tipos de Itens que constam do Percurso"; end if;
 		end if;
 	end; $$
